@@ -363,13 +363,13 @@ const Daftar = () => {
 
   useEffect(() => {
     const fetchTakenNumbers = async () => {
-      const response = await fetch('/api/numberStart');
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/numberStart`);
       const data = await response.json();
       setTakenNumbers(data);
     };
 
     const fetchRaceClasses = async () => {
-      const response = await fetch('/api/raceClasses');
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/raceClasses`);
       const data = await response.json();
       setRaceClasses(data);
     };
