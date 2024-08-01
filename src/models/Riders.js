@@ -29,7 +29,12 @@ const RidersSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    raceClass: [{ type: String, required: true }], // Mengubah menjadi array of strings
+    raceClass: [
+      {
+        name: { type: String, required: true },
+        price: { type: Number },
+      },
+    ], // Mengubah menjadi array of strings
     img: {
       type: String,
     },

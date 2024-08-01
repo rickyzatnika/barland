@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const ClassSchema = new mongoose.Schema(
+const ClassItemSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -10,11 +10,27 @@ const ClassSchema = new mongoose.Schema(
     },
   },
   {
+    _id: false,
+  }
+);
+
+const RaceClassesSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    classes: {
+      type: [ClassItemSchema],
+      required: true,
+    },
+  },
+  {
     timestamps: true,
   }
 );
 
 mongoose.models = {};
-const RaceClasses = mongoose.model("RaceClasses", ClassSchema);
+const RaceClasses = mongoose.model("RaceClasses", RaceClassesSchema);
 
 export default RaceClasses;

@@ -353,6 +353,7 @@ const Daftar = () => {
     phone: '',
     raceClass: [], // Array of objects
     totalPrice: 0,
+
   });
   const [takenNumbers, setTakenNumbers] = useState([]);
   const [raceClasses, setRaceClasses] = useState([]);
@@ -364,12 +365,14 @@ const Daftar = () => {
   useEffect(() => {
     const fetchTakenNumbers = async () => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/numberStart`);
+      // const response = await fetch(`/api/numberStart`);
       const data = await response.json();
       setTakenNumbers(data);
     };
 
     const fetchRaceClasses = async () => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/raceClasses`);
+      // const response = await fetch(`/api/raceClasses`);
       const data = await response.json();
       setRaceClasses(data);
     };
@@ -382,12 +385,11 @@ const Daftar = () => {
 
   useEffect(() => {
     const totalPrice = formData.raceClass.reduce((total, selectedClass) => {
-      const raceClass = raceClasses.find(cls => cls.name === selectedClass);
-      return total + (raceClass ? raceClass.price : 0);
+      return total + selectedClass.price;
     }, 0);
 
     setFormData(prev => ({ ...prev, totalPrice }));
-  }, [formData.raceClass, raceClasses]);
+  }, [formData.raceClass]);
 
 
   const handleChange = (e) => {
@@ -402,14 +404,20 @@ const Daftar = () => {
     setPhoto(e.target.files[0]);
   };
 
-  const handleClassChange = (e) => {
-    const { value, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      raceClass: checked
-        ? [...prev.raceClass, value]
-        : prev.raceClass.filter((cls) => cls !== value),
-    }));
+
+  // ---------------------
+
+  const handleClassChange = (event) => {
+    const { value, checked } = event.target;
+    const [className, classPrice] = value.split(',');
+
+    setFormData(prevData => {
+      const updatedClasses = checked
+        ? [...(prevData.raceClass || []), { name: className, price: Number(classPrice) }]
+        : (prevData.raceClass || []).filter(selectedClass => selectedClass.name !== className);
+
+      return { ...prevData, raceClass: updatedClasses };
+    });
   };
 
   const handleSubmit = async (event) => {
@@ -427,6 +435,9 @@ const Daftar = () => {
   };
 
   const handleSave = async () => {
+
+    setLoading(true);
+
     const img = await uploadImage();
 
     setFormData((prev) => ({
@@ -436,13 +447,14 @@ const Daftar = () => {
 
     const res = await fetch('/api/daftar', {
       method: 'POST',
-      body: JSON.stringify(formData),
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ ...formData, img }),
+
     });
 
-    setLoading(true);
+
 
     if (res.ok) {
       const timeoutId = setTimeout(() => {
@@ -487,7 +499,7 @@ const Daftar = () => {
           body: formData,
         }
       );
-      console.log(res.ok ? "success" : null)
+
       const data = await res.json();
       const img = data["secure_url"];
       return img;
@@ -533,30 +545,34 @@ const Daftar = () => {
           </div>
         )}
         {step === "3" && (
-          <div className="">
+          <div className="p-2">
             <h2 className="w-full mb-6 text-xl bg-gradient-to-tr from-green-400 to-lime-500 text-center py-4 uppercase font-bold text-gray-600">Pilih Kelas :</h2>
             <div className="flex flex-wrap items-start gap-6">
               {raceClasses.map((raceClass) => (
-                <label key={raceClass.name}>
-                  <input
-                    type="checkbox"
-                    value={raceClass.name}
-                    checked={formData.raceClass.includes(raceClass.name)}
-                    onChange={handleClassChange}
-                    className='mr-2 active:bg-black cursor-pointer'
-                  />
-                  {raceClass.name} - {raceClass.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
-                </label>
+                <div key={raceClass.title} className="w-full mb-4">
+                  <h3 className="text-lg font-semibold mb-2">{raceClass.title}</h3>
+                  {raceClass.classes.map((cls) => (
+                    <label key={cls.name} className="block mb-2">
+                      <input
+                        type="checkbox"
+                        value={`${cls.name},${cls.price}`}
+                        checked={formData.raceClass.some(selectedClass => selectedClass.name === cls.name)}
+                        onChange={handleClassChange}
+                        className='mr-2 cursor-pointer'
+                      />
+                      {cls.name} - {cls.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
+                    </label>
+                  ))}
+                </div>
               ))}
             </div>
             <button onClick={() => setStep("4")} className="bg-blue-500 text-white py-2 px-4 rounded mt-4">Lanjut</button>
           </div>
         )}
-
         {step === "4" && (
           <div className="">
             <h1 className='text-xl text-center bg-gradient-to-tr from-green-400 to-lime-500 py-4 font-bold text-gray-600'>INFORMASI PEMBAYARAN</h1>
-            <div className='flex flex-col md:flex-row gap-10'>
+            <div className='flex flex-col gap-10'>
               <div className='border rounded-b-md border-gray-400 px-4 py-4'>
                 <ul className='p-4'>
                   <li className='list-decimal'>Pembayaran biaya pendaftaran dapat melalui Transfer Bank atau langsung dilokasi kepada penyelenggara.</li>
@@ -570,15 +586,15 @@ const Daftar = () => {
 
                     </ul>
                   </li>
-                  <li className='list-decimal'>Upload dan simpan bukti pembayaran.</li>
+                  <li className='list-decimal'>Upload dan simpan bukti pembayaran :</li>
                   <li className='list-decimal'>Transfer dana selain kepada No.REK yang tertera diatas, tidak sah.</li>
                 </ul>
                 <p>Total Pembayaran Anda sebesar : {formData.totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })} </p>
               </div>
               <div className=''>
                 <h2 className="text-xl mb-4">Upload Bukti Pembayaran</h2>
-                <input type="file" onChange={handleFileChange} className="border p-2" />
-                <button onClick={() => setStep("5")} className="bg-blue-500 text-white py-2 px-4 rounded mt-4">Lanjut</button>
+                <input type="file" onChange={handleFileChange} name="img" className="border p-2" />
+                <button onClick={() => setStep("5")} className="bg-blue-500 text-white py-3 px-4 rounded mt-4">Lanjut</button>
               </div>
             </div>
           </div>
@@ -621,12 +637,9 @@ const Daftar = () => {
               </div>
               <div className=" flex gap-4 border border-gray-300 py-3 px-4 rounded">
                 <h3 className="text-sm font-bold text-gray-600">Kelas yang diikuti:</h3>
-                <p className='text-sm text-gray-600'>{formData.raceClass.join(" - ")}</p>
+                <p className='text-sm text-gray-600'> {formData.raceClass.map(cls => `${cls.name} - ${cls.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`).join(", ")}</p>
               </div>
-              {/* <div className=" flex gap-4 border border-gray-300 py-3 px-4 rounded">
-                <h3 className="text-sm font-bold text-gray-600">Total Harga:</h3>
-                <p className='text-sm text-gray-600'>{formData.totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</p>
-              </div> */}
+
             </div>
             <div className='flex w-full mt-3'>
               <button onClick={handleSave} className="bg-green-500 w-full text-white py-2 px-4 rounded mt-4">

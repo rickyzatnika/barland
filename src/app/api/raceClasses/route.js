@@ -22,12 +22,17 @@ export const GET = async (req = NextRequest) => {
 export const POST = async (req = NextRequest) => {
   await connect();
 
-  const { name, price } = await req.json();
+  const { title, classes } = await req.json();
 
   try {
+    // Validasi input
+    if (!title || !Array.isArray(classes)) {
+      return new NextResponse("Invalid data", { status: 400 });
+    }
+
     const newRaceClass = new RaceClasses({
-      name,
-      price,
+      title,
+      classes,
     });
     await newRaceClass.save();
     return new NextResponse("Created Successfully", { status: 201 });
