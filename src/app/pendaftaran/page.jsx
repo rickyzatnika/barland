@@ -545,11 +545,11 @@ const Daftar = () => {
           </div>
         )}
         {step === "3" && (
-          <div className="p-2">
+          <div className="p-2 overflow-y-auto w-full h-full">
             <h2 className="w-full mb-6 text-xl bg-gradient-to-tr from-green-400 to-lime-500 text-center py-4 uppercase font-bold text-gray-600">Pilih Kelas :</h2>
-            <div className="flex flex-wrap items-start gap-6">
+            <div className="flex flex-wrap items-start gap-2">
               {raceClasses.map((raceClass) => (
-                <div key={raceClass.title} className="w-full mb-4">
+                <div key={raceClass.title} className="w-full mb-3">
                   <h3 className="text-lg font-semibold mb-2">{raceClass.title}</h3>
                   {raceClass.classes.map((cls) => (
                     <label key={cls.name} className="block mb-2">
@@ -570,7 +570,7 @@ const Daftar = () => {
           </div>
         )}
         {step === "4" && (
-          <div className="">
+          <div className="overflow-y-auto w-full h-full">
             <h1 className='text-xl text-center bg-gradient-to-tr from-green-400 to-lime-500 py-4 font-bold text-gray-600'>INFORMASI PEMBAYARAN</h1>
             <div className='flex flex-col gap-10'>
               <div className='border rounded-b-md border-gray-400 px-4 py-4'>
