@@ -35,6 +35,15 @@ export const POST = async (req = NextRequest) => {
     totalPrice,
   } = await req.json();
 
+  if (nik.length !== 16 || nik.length > 16) {
+    return new NextResponse(
+      JSON.stringify({
+        message: "NIK Invalid, pastikan tidak lebih dari 16 digit.",
+      }),
+      { status: 400 }
+    );
+  }
+
   try {
     const newRiders = new Riders({
       name,
