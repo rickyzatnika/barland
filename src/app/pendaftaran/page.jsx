@@ -727,7 +727,7 @@ const Daftar = () => {
               <button onClick={handleSave} className="bg-gradient-to-tr from-green-400 to-lime-500 text-md text-white py-2 px-4 rounded mt-4 w-full">
                 {loading ? 'Loading...' : 'Submit'}
               </button>
-              <button onClick={() => setIsModalOpen(false)} className="bg-red-400 w-full text-md text-white py-2 px-4 rounded mt-4">Cancel</button>
+              <button onClick={() => setStep("1")} className="bg-red-400 w-full text-md text-white py-2 px-4 rounded mt-4">Cancel</button>
             </div>
           </div>
         )}
