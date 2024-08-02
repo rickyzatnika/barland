@@ -552,7 +552,7 @@ const Daftar = () => {
       )}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {step === "2" && (
-          <div className="h-[85vh] w-full sm:h-[90vh] sm:pb-14 overflow-hidden antialiased">
+          <div className="h-full w-full sm:h-[90vh] sm:pb-14 overflow-hidden antialiased">
             <h2 className="text-lg py-4 text-center sm:text-xl bg-gradient-to-tr from-green-400 to-lime-500 text-gray-50 dark:text-white mb-4">Pilih Nomor Start 1 - 300:</h2>
             <div className='px-4 pb-4'>
               <div className='flex items-center gap-2'>
@@ -565,7 +565,7 @@ const Daftar = () => {
               </div>
               <p className='text-xs italic text-red-500 mt-2 font-semibold'>Notes : 1 Nomor Start untuk 1 Pembalap di semua kelas yang diikuti</p>
             </div>
-            <div className="h-full pt-3 pb-24 sm:py-12 px-4 grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 2xl:grid-cols-12  gap-[1px] sm:gap-2 no-scrollbar overflow-y-scroll">
+            <div className="h-full pt-3 pb-14 sm:py-12 px-4 grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 2xl:grid-cols-12  gap-[1px] sm:gap-2 no-scrollbar overflow-y-scroll">
 
               {[...Array(300).keys()].map((num) => (
                 <button
