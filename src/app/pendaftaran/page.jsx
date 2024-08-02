@@ -337,6 +337,7 @@ import Modal from '@/components/Modal';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const Daftar = () => {
   const [step, setStep] = useState("1");
@@ -358,9 +359,10 @@ const Daftar = () => {
   const [takenNumbers, setTakenNumbers] = useState([]);
   const [raceClasses, setRaceClasses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [recaptchaToken, setRecaptchaToken] = useState("");
   const CLOUD_NAME = "inkara-id";
   const UPLOAD_PRESET = "myBlog_project_nextjs";
+  const SECRET = "6Lf7CR4qAAAAAJ7hgQnouK4fA0c58Z1fxEm_6d5a";
 
   useEffect(() => {
     const fetchTakenNumbers = async () => {
@@ -420,6 +422,10 @@ const Daftar = () => {
     });
   };
 
+  const handleRecaptchaChange = (token) => {
+    setRecaptchaToken(token);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -429,6 +435,11 @@ const Daftar = () => {
     }
     if (formData.kis.length !== 8) {
       toast.error("NIS Invalid, pastikan tidak lebih dari 8 digit");
+      return;
+    }
+
+    if (!recaptchaToken) {
+      toast.error("Please complete the reCAPTCHA");
       return;
     }
 
@@ -454,6 +465,8 @@ const Daftar = () => {
 
 
 
+
+
   const handleSave = async () => {
 
     setLoading(true);
@@ -470,7 +483,7 @@ const Daftar = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ ...formData, img }),
+      body: JSON.stringify({ ...formData, img, recaptchaToken }),
 
     });
 
@@ -542,31 +555,37 @@ const Daftar = () => {
           <form onSubmit={handleSubmit} className='px-3 md:px-6 py-8 md:py-12 bg-green-900/5 shadow-md'>
             <div className="grid gap-3 md:gap-6 mb-6 md:grid-cols-2">
               <div>
-                <label for="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Lengkap :</label>
+                <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Lengkap :</label>
                 <input onChange={handleChange} type="text" name="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
               </div>
               <div>
-                <label for="address" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat :</label>
+                <label htmlFor="address" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat :</label>
                 <input onChange={handleChange} type="text" name="address" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
               </div>
               <div>
-                <label for="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nomor Handphone :</label>
+                <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nomor Handphone :</label>
                 <input onChange={handleChange} type="tel" name="phone" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" pattern="^(\+62|62)?[\s-]?0?8[1-9]{1}\d{1}[\s-]?\d{4}[\s-]?\d{2,5}$" required />
               </div>
               <div>
-                <label for="nik" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No.Identitas/NIK :</label>
+                <label htmlFor="nik" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No.Identitas/NIK :</label>
                 <input onChange={handleChange} type="number" name="nik" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
               </div>
               <div>
-                <label for="kis" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No. KIS :</label>
+                <label htmlFor="kis" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No. KIS :</label>
                 <input onChange={handleChange} type="number" name="kis" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
               </div>
               <div>
-                <label for="team" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Team :</label>
+                <label htmlFor="team" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Team :</label>
                 <input onChange={handleChange} type="text" name="team" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
               </div>
             </div>
-            <button className="bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded" type="submit">Lanjut</button>
+            <div className='my-3 flex flex-col gap-4'>
+              <ReCAPTCHA
+                sitekey={SECRET}
+                onChange={handleRecaptchaChange}
+              />
+              <button className="w-max h-max bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded" type="submit">Lanjut</button>
+            </div>
           </form>
         </div>
       )}
