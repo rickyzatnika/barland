@@ -565,7 +565,7 @@ const Daftar = () => {
               </div>
               <p className='text-xs italic text-red-500 mt-2 font-semibold'>Notes : 1 Nomor Start untuk 1 Pembalap di semua kelas yang diikuti</p>
             </div>
-            <div className="h-full pt-3 pb-14 sm:py-12 px-4 grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 2xl:grid-cols-12  gap-[1px] sm:gap-2 no-scrollbar overflow-y-scroll">
+            <div className="h-full pt-3 pb-24 sm:py-12 px-4 grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 2xl:grid-cols-12  gap-[1px] sm:gap-2 no-scrollbar overflow-y-scroll">
 
               {[...Array(300).keys()].map((num) => (
                 <button
@@ -586,7 +586,7 @@ const Daftar = () => {
             <div className='pb-6 px-4'>
               <p className='text-gray-500 italic text-md'>Silahkan pilih satu atau beberapa kelas yang ingin diikuti</p>
             </div>
-            <div className="bg-white grid gap-3 mb-2 md:grid-cols-2 ">
+            <div className="bg-white pb-6 grid gap-3 mb-2 md:grid-cols-2 ">
               {raceClasses.map((raceClass) => (
                 <div key={raceClass.title} className="w-full bg-orange-100 mb-3">
                   <h3 className="text-md bg-orange-400 py-2 px-3 uppercase font-semibold mb-2">{raceClass.title}</h3>
@@ -607,8 +607,8 @@ const Daftar = () => {
                   ))}
                 </div>
               ))}
+              <button onClick={() => setStep("4")} className="bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded">Lanjut</button>
             </div>
-            <button onClick={() => setStep("4")} className="bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded">Lanjut</button>
           </div>
         )}
         {step === "4" && (
