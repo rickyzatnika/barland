@@ -14,8 +14,8 @@ const TableListClass = () => {
 
   useEffect(() => {
     const fetchRaceClasses = async () => {
-      // const response = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/raceClasses`);
-      const response = await fetch(`/api/raceClasses`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/raceClasses`);
+      // const response = await fetch(`/api/raceClasses`);
       const data = await response.json();
       setRaceClasses(data);
     };

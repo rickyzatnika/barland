@@ -424,7 +424,11 @@ const Daftar = () => {
     event.preventDefault();
 
     if (formData.nik.length !== 16) {
-      toast.error("NIK harus terdiri dari 16 digit");
+      toast.error("NIK Invalid, pastikan tidak lebih dari 16 digit");
+      return;
+    }
+    if (formData.kis.length !== 8) {
+      toast.error("NIS Invalid, pastikan tidak lebih dari 8 digit");
       return;
     }
 
@@ -528,11 +532,11 @@ const Daftar = () => {
           <form onSubmit={handleSubmit} className='px-3 md:px-6 py-8 md:py-12 bg-green-900/5 shadow-md'>
             <div className="grid gap-3 md:gap-6 mb-6 md:grid-cols-2">
               <div>
-                <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Lengkap :</label>
+                <label for="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Lengkap :</label>
                 <input onChange={handleChange} type="text" name="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
               </div>
               <div>
-                <label for="last_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat :</label>
+                <label for="address" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat :</label>
                 <input onChange={handleChange} type="text" name="address" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
               </div>
               <div>
@@ -540,15 +544,15 @@ const Daftar = () => {
                 <input onChange={handleChange} type="tel" name="phone" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" pattern="^(\+62|62)?[\s-]?0?8[1-9]{1}\d{1}[\s-]?\d{4}[\s-]?\d{2,5}$" required />
               </div>
               <div>
-                <label for="visitors" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No.Identitas/NIK :</label>
+                <label for="nik" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No.Identitas/NIK :</label>
                 <input onChange={handleChange} type="number" name="nik" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
               </div>
               <div>
-                <label for="visitors" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No. KIS :</label>
+                <label for="kis" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No. KIS :</label>
                 <input onChange={handleChange} type="number" name="kis" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
               </div>
               <div>
-                <label for="company" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Team :</label>
+                <label for="team" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Team :</label>
                 <input onChange={handleChange} type="text" name="team" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
               </div>
             </div>
