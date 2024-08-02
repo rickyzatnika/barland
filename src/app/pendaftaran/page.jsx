@@ -422,6 +422,12 @@ const Daftar = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (formData.nik.length !== 16) {
+      toast.error("NIK harus terdiri dari 16 digit");
+      return;
+    }
+
     setStep("2");
     setIsModalOpen(true);
   };
