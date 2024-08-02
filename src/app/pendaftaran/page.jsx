@@ -444,6 +444,16 @@ const Daftar = () => {
     setStep("3");
   };
 
+  const handleNextStep = () => {
+    if (formData.raceClass.length === 0) {
+      toast.error("Silahkan pilih setidaknya satu kelas.");
+      return;
+    }
+    setStep("4");
+  };
+
+
+
   const handleSave = async () => {
 
     setLoading(true);
@@ -617,7 +627,7 @@ const Daftar = () => {
                   ))}
                 </div>
               ))}
-              <button onClick={() => setStep("4")} className="w-full sm:w-max bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded">Lanjut</button>
+              <button onClick={handleNextStep} className="w-full sm:w-max bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded">Lanjut</button>
             </div>
           </div>
         )}
@@ -627,24 +637,26 @@ const Daftar = () => {
             <div className='flex flex-col gap-4 pb-6'>
               <div className='border rounded-b-md border-gray-400 px-4 pt-2 pb-4'>
                 <ul className='p-4 text-md flex flex-col gap-2 text-gray-600'>
-                  <li className='list-decimal'>Pembayaran biaya pendaftaran dapat melalui Transfer Bank atau langsung dilokasi kepada penyelenggara.</li>
+                  <li className='list-decimal'>Pembayaran dapat melalui Transfer Bank atau langsung dilokasi kepada panitia penyelenggara.</li>
                   <li className='list-decimal'>
                     Untuk pembayaran melalui Transfer Bank, kirim ke No.REK berikut :
-                    <ul className='px-2'>
+                    <ul className='p-2'>
 
                       <li className='list-inside list-disc'>No Rekening: XXXXXXXXXX</li>
                       <li className='list-inside list-disc'>Atas Nama: XXXXXX</li>
                       <li className='list-inside list-disc'>Bank: XXXX</li>
+                      <li className='list-inside list-disc'>Kode Bank: XXXX</li>
 
                     </ul>
                   </li>
                   <li className='list-decimal'>Upload dan simpan bukti pembayaran :</li>
-                  <li className='list-decimal'>Transfer dana selain kepada No.REK yang tertera diatas, tidak sah.</li>
+                  <li className='list-decimal'>Transfer selain kepada No.REK yang tertera diatas, tidak sah!</li>
+
                 </ul>
                 <p className='text-gray-700 font-semibold'><span className='text-gray-500 text-sm'>Total Pembayaran Anda sebesar</span> : {formData.totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })} </p>
               </div>
               <div className='pb-3'>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file <span className='text-xs text-red-500 italic'>(optional)</span></label>
                 <input onChange={handleFileChange} name="img" className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" />
               </div>
               <button onClick={() => setStep("5")} className="w-full sm:w-max bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded mt-6">Lanjut</button>
