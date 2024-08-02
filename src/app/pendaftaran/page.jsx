@@ -542,6 +542,12 @@ const Daftar = () => {
   };
 
 
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setStep("1");
+  }
+
+
 
   return (
     <div className='w-full h-full py-0 sm:py-14'>
@@ -625,7 +631,7 @@ const Daftar = () => {
             <div className='pb-6 px-4'>
               <p className='text-gray-500 italic text-md'>Silahkan pilih satu atau beberapa kelas yang ingin diikuti</p>
             </div>
-            <div className="bg-white pb-8 grid gap-0 sm:gap-3 mb-0 sm:mb-2 md:grid-cols-2 ">
+            <div className="bg-white pb-6 grid gap-0 sm:gap-3 mb-0 sm:mb-2 md:grid-cols-2 ">
               {raceClasses.map((raceClass) => (
                 <div key={raceClass.title} className="w-full bg-orange-100 mb-4">
                   <h3 className="text-md bg-orange-400 py-2 px-3 uppercase font-semibold mb-2">{raceClass.title}</h3>
@@ -640,7 +646,7 @@ const Daftar = () => {
                         onChange={handleClassChange}
                         className='mr-2 w-4 h-4 text-green-400 bg-gray-100 border-gray-300 rounded focus:ring-green-400 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
                       />
-                      {cls.name}
+                      <span className='uppercase'>{cls.name}</span>
                       <span className='hidden'>{cls.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                     </label>
                   ))}
@@ -727,7 +733,7 @@ const Daftar = () => {
               <button onClick={handleSave} className="bg-gradient-to-tr from-green-400 to-lime-500 text-md text-white py-2 px-4 rounded mt-4 w-full">
                 {loading ? 'Loading...' : 'Submit'}
               </button>
-              <button onClick={() => setStep("1")} className="bg-red-400 w-full text-md text-white py-2 px-4 rounded mt-4">Cancel</button>
+              <button onClick={handleCancel} className="bg-red-400 w-full text-md text-white py-2 px-4 rounded mt-4">Cancel</button>
             </div>
           </div>
         )}
