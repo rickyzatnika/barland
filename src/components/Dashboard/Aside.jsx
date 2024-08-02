@@ -1,15 +1,15 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
-import { useEffect } from "react";
 import { FaUserCog } from "react-icons/fa";
 import { RiCalendarEventFill } from "react-icons/ri";
 import { IoIosHome } from "react-icons/io";
 import { LuActivitySquare } from "react-icons/lu";
 import { MdFeaturedPlayList } from "react-icons/md";
+import { MdAdminPanelSettings } from "react-icons/md";
 
 
 
@@ -47,26 +47,31 @@ const asideLink = [
 ];
 
 const Aside = () => {
-  const { data: session, status } = useSession();
-  const router = useRouter();
+  const { data: session } = useSession();
 
-  useEffect(() => {
-    if (!session?.user || status === "unauthenticated") {
-      router.push("/");
-    }
-  }, [router, session, status]);
+  const pathname = usePathname();
+
+
 
   return (
-    <div className="fixed py-5 px-4 left-0 top-3 z-10 ">
-      <p>{session?.user?.name}</p>
-      {asideLink.map((item) => (
-        <div key={item?.id}>
-          <Link href={item?.link} className="flex  gap-2">
-            <span>{item?.icon}</span>
-            <h3>{item?.title}</h3>
-          </Link>
-        </div>
-      ))}
+    <div className="h-screen border-r-2 flex items-center flex-col justify-between fixed py-6 left-0 top-0 z-10 ">
+      <Link href="/" className="flex gap-1 items-center justify-center border-b pb-2 w-full">
+        <MdAdminPanelSettings size={40} className="w-full text-lime-500" />
+        <p className="uppercase w-full">{session?.user?.name}</p>
+      </Link>
+      <div>
+        {asideLink.map((item) => (
+          <div key={item?.id} className="w-full flex flex-col px-2  gap-3 justify-between">
+            <Link href={item?.link} className={`w-full text-sm uppercase rounded  flex text-gray-600 dark:text-gray-400 gap-2 py-2.5 px-4 mb-6 transition-all ease-linear duration-100 ${pathname === item?.link ? "second text-white" : "bg-slate-100 hover:bg-[#081225] hover:text-white delay-75"}`}>
+              <span>{item?.icon}</span>
+              <h3>{item?.title}</h3>
+            </Link>
+          </div>
+        ))}
+      </div>
+      <div></div>
+      <div></div>
+      <button onClick={() => signOut()} type="button" className="w-full focus:outline-none text-white bg-lime-400 hover:bg-lime-500 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-green-800">Logout</button>
     </div>
   );
 };

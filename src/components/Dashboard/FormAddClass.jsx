@@ -36,6 +36,7 @@ const FormAddClass = ({ setShowModal }) => {
         console.log("Race class created successfully");
         setShowModal(false);
         toast.success("Kelas berhasil dibuat");
+
       } else {
         console.error("Error creating race class:", response.statusText);
       }
@@ -46,7 +47,7 @@ const FormAddClass = ({ setShowModal }) => {
 
   return (
     <>
-      <div tabindex="-1" aria-hidden="true" className="overflow-y-auto  mx-auto fixed top-0 right-0 bg-black/20 z-50 justify-center  items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+      <div tabindex="-1" aria-hidden="true" className="overflow-y-auto  mx-auto fixed top-0 right-0 bg-black/40 backdrop-blur-sm z-50 justify-center  items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div className="relative p-4 w-full mx-auto max-w-xl max-h-full">
           {/* <!-- Modal content --> */}
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -128,27 +129,30 @@ const FormAddClass = ({ setShowModal }) => {
                     </div>
                   </div>
                 ))}
-                <button type="button" onClick={handleAddClass}>
-                  Add Class
+                <button className="w-max h-max m-auto py-2 px-4 second rounded-xl text-white" type="button" onClick={handleAddClass}>
+                  <span className="flex items-center justify-center">
+                    <svg
+                      className="me-1 -ms-1 w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    Tambah
+                  </span>
                 </button>
               </div>
               <button
                 type="submit"
-                className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="text-white inline-flex items-center bg-gradient-to-tr from-green-400 to-lime-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
-                <svg
-                  className="me-1 -ms-1 w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                Add new className
+
+                Simpan
               </button>
             </form>
           </div>

@@ -25,7 +25,7 @@ const Navbar = () => {
         <Link className={`${pathname === "/about" ? "text-lime-500 border-b border-lime-500 pb-1" : "text-gray-400/70 dark:text-gray-400 hover:text-lime-500 pb-1"}`} prefetch={false} href="/about">About</Link>
         <Link className={`${pathname === "/help" ? "text-lime-500 border-b border-lime-500 pb-1" : "text-gray-400/70 dark:text-gray-400 hover:text-lime-500 pb-1"}`} prefetch={false} href="/help">Help</Link>
         {session?.user?.role === "admin" &&
-          <Link className={`${pathname === "/dashboard" ? "text-green-500 border-b border-green-500 pb-1" : "text-gray-400/70 hover:text-green-500 pb-1"}`} prefetch={false} href="/dashboard">Dashboard</Link>
+          <Link className={`${pathname === "/dashboard" ? "text-lime-500 border-b border-green-500 pb-1" : "text-gray-400/70 hover:text-lime-500 pb-1"}`} prefetch={false} href="/dashboard">Dashboard</Link>
         }
         <AuthLink />
       </div>
