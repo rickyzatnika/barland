@@ -586,9 +586,9 @@ const Daftar = () => {
             <div className='pb-6 px-4'>
               <p className='text-gray-500 italic text-md'>Silahkan pilih satu atau beberapa kelas yang ingin diikuti</p>
             </div>
-            <div className="bg-white pb-6 grid gap-3 mb-2 md:grid-cols-2 ">
+            <div className="bg-white pb-4 grid gap-3 mb-2 md:grid-cols-2 ">
               {raceClasses.map((raceClass) => (
-                <div key={raceClass.title} className="w-full bg-orange-100 mb-3">
+                <div key={raceClass.title} className="w-full bg-orange-100">
                   <h3 className="text-md bg-orange-400 py-2 px-3 uppercase font-semibold mb-2">{raceClass.title}</h3>
                   {raceClass.classes.map((cls) => (
                     <label key={cls.name} className="block mb-3 text-sm px-3 ">
@@ -607,7 +607,7 @@ const Daftar = () => {
                   ))}
                 </div>
               ))}
-              <button onClick={() => setStep("4")} className="bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded">Lanjut</button>
+              <button onClick={() => setStep("4")} className="w-full bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded">Lanjut</button>
             </div>
           </div>
         )}
@@ -636,7 +636,7 @@ const Daftar = () => {
               <div className=''>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
                 <input onChange={handleFileChange} name="img" className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" />
-                <button onClick={() => setStep("5")} className="bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded mt-6">Lanjut</button>
+                <button onClick={() => setStep("5")} className="w-full bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded mt-6">Lanjut</button>
               </div>
             </div>
           </div>
