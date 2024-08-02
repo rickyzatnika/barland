@@ -43,10 +43,10 @@ const TableRiders = ({ riders }) => {
       )}
 
       <table className="w-full max-w-7xl table-auto text-left">
-        <thead>
-          <tr>
+        <thead className="border-b border-gray-100 bg-gray-50 ">
+          <tr className="">
             {TABLE_HEAD.map((head) => (
-              <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th key={head} className="">
                 <p
                   variant="small"
                   color="blue-gray"
@@ -58,7 +58,7 @@ const TableRiders = ({ riders }) => {
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody className="px-4">
           {riders.map((rider) => (
             <tr key={rider?._id} className="even:bg-blue-gray-50/50">
               <td className="p-4">

@@ -13,3 +13,7 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
+.second {
+  background-color: #081225;
+}

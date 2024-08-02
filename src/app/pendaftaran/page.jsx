@@ -511,26 +511,62 @@ const Daftar = () => {
 
 
   return (
-    <div className='w-full h-[calc(100vh-80px)] py-0 sm:py-14'>
+    <div className='w-full h-full py-0 sm:py-14'>
       {step === "1" && (
-        <div className='w-full px-2 sm:px-12 md:px-20 lg:px-28 2xl:px-32'>
-          <form className="bg-slate-50 px-2 py-4  sm:px-12 md:px-20 lg:px-28 shadow-md sm:py-14 flex flex-col space-y-6 rounded-md" onSubmit={handleSubmit}>
-            <h1 className="uppercase py-4 text-xl text-center ">Form Pendaftaran</h1>
-            <input className="border py-3 px-4" type="text" name="name" placeholder="Nama Lengkap" required onChange={handleChange} />
-            <input className="border py-3 px-4" type="text" name="address" placeholder="Alamat" required onChange={handleChange} />
-            <input className="border py-3 px-4" type="number" name="phone" placeholder="Nomor Handphone" required onChange={handleChange} />
-            <input className="border py-3 px-4" type="text" name="team" placeholder="Team" required onChange={handleChange} />
-            <input className="border py-3 px-4" type="number" name="kis" placeholder="Nomor KIS" required onChange={handleChange} />
-            <input className="border py-3 px-4" type="text" name="nik" placeholder="NIK KTP" required onChange={handleChange} />
-            <button className="bg-blue-500 text-white py-2 px-4 rounded" type="submit">Lanjut</button>
+        <div className='w-full pb-6 px-2 sm:px-12 md:px-20 lg:px-28 2xl:px-32'>
+          <div className='pb-3 leading-relaxed border-lime-600 border-b-2 pt-2'>
+            <h1 className='text-2xl uppercase text-gray-900 dark:text-white'>Formulir Pendaftaran</h1>
+            <p className='text-gray-600 text-sm dark:text-white'>Calon Peserta EVENT BALAP PILPRES 2024</p>
+            <span className='text-xs text-red-500'>*Mohon diisi dan Lengkapi</span>
+          </div>
+          <form onSubmit={handleSubmit} className='px-3 md:px-6 py-8 md:py-12 bg-green-900/5 shadow-md'>
+            <div className="grid gap-3 md:gap-6 mb-6 md:grid-cols-2">
+              <div>
+                <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Lengkap :</label>
+                <input onChange={handleChange} type="text" name="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+              </div>
+              <div>
+                <label for="last_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat :</label>
+                <input onChange={handleChange} type="text" name="address" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+              </div>
+              <div>
+                <label for="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nomor Handphone :</label>
+                <input onChange={handleChange} type="tel" name="phone" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" pattern="^(\+62|62)?[\s-]?0?8[1-9]{1}\d{1}[\s-]?\d{4}[\s-]?\d{2,5}$" required />
+              </div>
+              <div>
+                <label for="visitors" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No.Identitas/NIK :</label>
+                <input onChange={handleChange} type="number" name="nik" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+              </div>
+              <div>
+                <label for="visitors" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No. KIS :</label>
+                <input onChange={handleChange} type="number" name="kis" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+              </div>
+              <div>
+                <label for="company" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Team :</label>
+                <input onChange={handleChange} type="text" name="team" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+              </div>
+            </div>
+            <button className="bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded" type="submit">Lanjut</button>
           </form>
         </div>
       )}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {step === "2" && (
           <div className="h-[85vh] w-full sm:h-[90vh] sm:pb-14 overflow-hidden antialiased">
-            <h2 className="text-md py-2 sm:text-xl mb-4">Pilih Nomor Start 1 - 300:</h2>
-            <div className="h-full pb-14 grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 2xl:grid-cols-12  gap-[1px] sm:gap-2 no-scrollbar overflow-y-scroll">
+            <h2 className="text-lg py-4 text-center sm:text-xl bg-gradient-to-tr from-green-400 to-lime-500 text-gray-50 dark:text-white mb-4">Pilih Nomor Start 1 - 300:</h2>
+            <div className='px-4 pb-4'>
+              <div className='flex items-center gap-2'>
+                <div className='w-4 h-4 bg-green-400' />
+                <p className='text-gray-600 text-md dark:text-gray-300'>Nomor Masih Tersedia</p>
+              </div>
+              <div className='flex items-center gap-2'>
+                <div className='w-4 h-4 bg-red-600' />
+                <p className='text-gray-600 text-md dark:text-gray-300'>Nomor Sudah Terpilih</p>
+              </div>
+              <p className='text-xs italic text-red-500 mt-2 font-semibold'>Notes : 1 Nomor Start untuk 1 Pembalap di semua kelas yang diikuti</p>
+            </div>
+            <div className="h-full py-3 sm:py-12 px-4 grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 2xl:grid-cols-12  gap-[1px] sm:gap-2 no-scrollbar overflow-y-scroll">
+
               {[...Array(300).keys()].map((num) => (
                 <button
                   key={num}
@@ -546,35 +582,41 @@ const Daftar = () => {
         )}
         {step === "3" && (
           <div className="p-2 overflow-y-auto w-full h-full">
-            <h2 className="w-full mb-6 text-xl bg-gradient-to-tr from-green-400 to-lime-500 text-center py-4 uppercase font-bold text-gray-600">Pilih Kelas :</h2>
-            <div className="flex flex-wrap items-start gap-2">
+            <h2 className="w-full mb-2 text-md md:text-xl bg-gradient-to-tr from-green-400 to-lime-500 text-center py-4 uppercase font-bold text-white">Pilih Kelas</h2>
+            <div className='pb-6 px-4'>
+              <p className='text-gray-500 italic text-md'>Silahkan pilih satu atau beberapa kelas yang ingin diikuti</p>
+            </div>
+            <div className="bg-white grid gap-3 mb-2 md:grid-cols-2 ">
               {raceClasses.map((raceClass) => (
-                <div key={raceClass.title} className="w-full mb-3">
-                  <h3 className="text-lg font-semibold mb-2">{raceClass.title}</h3>
+                <div key={raceClass.title} className="w-full bg-orange-100 mb-3">
+                  <h3 className="text-md bg-orange-400 py-2 px-3 uppercase font-semibold mb-2">{raceClass.title}</h3>
                   {raceClass.classes.map((cls) => (
-                    <label key={cls.name} className="block mb-2">
+                    <label key={cls.name} className="block mb-3 text-sm px-3 ">
                       <input
+
                         type="checkbox"
+                        id="green-checkbox"
                         value={`${cls.name},${cls.price}`}
                         checked={formData.raceClass.some(selectedClass => selectedClass.name === cls.name)}
                         onChange={handleClassChange}
-                        className='mr-2 cursor-pointer'
+                        className='mr-2 w-4 h-4 text-green-400 bg-gray-100 border-gray-300 rounded focus:ring-green-400 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
                       />
-                      {cls.name} - {cls.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
+                      {cls.name}
+                      <span className='hidden'>{cls.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                     </label>
                   ))}
                 </div>
               ))}
             </div>
-            <button onClick={() => setStep("4")} className="bg-blue-500 text-white py-2 px-4 rounded mt-4">Lanjut</button>
+            <button onClick={() => setStep("4")} className="bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded">Lanjut</button>
           </div>
         )}
         {step === "4" && (
           <div className="overflow-y-auto w-full h-full">
-            <h1 className='text-xl text-center bg-gradient-to-tr from-green-400 to-lime-500 py-4 font-bold text-gray-600'>INFORMASI PEMBAYARAN</h1>
-            <div className='flex flex-col gap-10'>
-              <div className='border rounded-b-md border-gray-400 px-4 py-4'>
-                <ul className='p-4'>
+            <h1 className='text-xl text-center bg-gradient-to-tr from-green-400 to-lime-500 py-4 font-bold text-white/90'>INFORMASI PEMBAYARAN</h1>
+            <div className='flex flex-col gap-4'>
+              <div className='border rounded-b-md border-gray-400 px-4 pt-2 pb-4'>
+                <ul className='p-4 text-md flex flex-col gap-2 text-gray-600'>
                   <li className='list-decimal'>Pembayaran biaya pendaftaran dapat melalui Transfer Bank atau langsung dilokasi kepada penyelenggara.</li>
                   <li className='list-decimal'>
                     Untuk pembayaran melalui Transfer Bank, kirim ke No.REK berikut :
@@ -589,19 +631,19 @@ const Daftar = () => {
                   <li className='list-decimal'>Upload dan simpan bukti pembayaran :</li>
                   <li className='list-decimal'>Transfer dana selain kepada No.REK yang tertera diatas, tidak sah.</li>
                 </ul>
-                <p>Total Pembayaran Anda sebesar : {formData.totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })} </p>
+                <p className='text-gray-700 font-semibold'><span className='text-gray-500 text-sm'>Total Pembayaran Anda sebesar</span> : {formData.totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })} </p>
               </div>
               <div className=''>
-                <h2 className="text-xl mb-4">Upload Bukti Pembayaran</h2>
-                <input type="file" onChange={handleFileChange} name="img" className="border p-2" />
-                <button onClick={() => setStep("5")} className="bg-blue-500 text-white py-3 px-4 rounded mt-4">Lanjut</button>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
+                <input onChange={handleFileChange} name="img" className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" />
+                <button onClick={() => setStep("5")} className="bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded mt-6">Lanjut</button>
               </div>
             </div>
           </div>
         )}
         {step === "5" && (
           <div className="p-1 sm:p-4 h-[85vh] overflow-y-auto">
-            <h2 className="text-xl bg-gradient-to-tr from-green-400 to-lime-500 text-center py-4 uppercase font-bold text-gray-600">Informasi Pendaftar</h2>
+            <h2 className="text-xl bg-gradient-to-tr from-green-400 to-lime-500 text-center py-4 uppercase font-bold text-white/90">Informasi Pendaftar</h2>
             <div className="flex flex-col space-y-1 antialiased">
               <div className=" flex gap-4 border border-gray-300 py-3 px-4 rounded">
                 <h3 className="text-sm font-bold text-gray-600">Nama Lengkap :</h3>
@@ -633,19 +675,18 @@ const Daftar = () => {
               </div>
               <div className=" flex gap-4 border border-gray-300 py-3 px-4 rounded">
                 <h3 className="text-sm font-bold text-gray-600">Pembayaran:</h3>
-                {formData.img === "" ? <p className='text-sm text-red-500'>Belum Upload</p> : <p className='text-sm text-gray-600'>Dalam proses pengecekan</p>}
+                {!photo ? <p className='text-sm text-gray-600'>Dilokasi</p> : <p className='text-sm text-gray-600'>Transfer</p>}
               </div>
               <div className=" flex gap-4 border border-gray-300 py-3 px-4 rounded">
                 <h3 className="text-sm font-bold text-gray-600">Kelas yang diikuti:</h3>
-                <p className='text-sm text-gray-600'> {formData.raceClass.map(cls => `${cls.name} - ${cls.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`).join(", ")}</p>
+                <p className='text-sm text-gray-600'> {formData.raceClass.map(cls => `${cls.name}`).join(", ")}</p>
               </div>
-
             </div>
             <div className='flex w-full mt-3'>
-              <button onClick={handleSave} className="bg-green-500 w-full text-white py-2 px-4 rounded mt-4">
+              <button onClick={handleSave} className="bg-gradient-to-tr from-green-400 to-lime-500 text-md text-white py-2 px-4 rounded mt-4 w-full">
                 {loading ? 'Loading...' : 'Submit'}
               </button>
-              <button onClick={() => setIsModalOpen(false)} className="bg-red-400 w-full text-white py-2 px-4 rounded mt-4">Cancel</button>
+              <button onClick={() => setIsModalOpen(false)} className="bg-red-400 w-full text-md text-white py-2 px-4 rounded mt-4">Cancel</button>
             </div>
           </div>
         )}
@@ -655,3 +696,5 @@ const Daftar = () => {
 };
 
 export default Daftar;
+
+
