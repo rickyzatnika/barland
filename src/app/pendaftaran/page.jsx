@@ -565,7 +565,7 @@ const Daftar = () => {
               </div>
               <p className='text-xs italic text-red-500 mt-2 font-semibold'>Notes : 1 Nomor Start untuk 1 Pembalap di semua kelas yang diikuti</p>
             </div>
-            <div className="h-full py-3 sm:py-12 px-4 grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 2xl:grid-cols-12  gap-[1px] sm:gap-2 no-scrollbar overflow-y-scroll">
+            <div className="h-full pt-3 pb-14 sm:py-12 px-4 grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 2xl:grid-cols-12  gap-[1px] sm:gap-2 no-scrollbar overflow-y-scroll">
 
               {[...Array(300).keys()].map((num) => (
                 <button
