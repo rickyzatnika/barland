@@ -565,7 +565,7 @@ const Daftar = () => {
               </div>
               <p className='text-xs italic text-red-500 mt-2 font-semibold'>Notes : 1 Nomor Start untuk 1 Pembalap di semua kelas yang diikuti</p>
             </div>
-            <div className="h-full pt-3 pb-60 px-4 grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 2xl:grid-cols-12  gap-[1px] sm:gap-2 no-scrollbar overflow-y-scroll">
+            <div className="h-full pt-3 pb-60 sm:pb-52 px-4 grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 2xl:grid-cols-12  gap-[1px] sm:gap-2 no-scrollbar overflow-y-scroll">
 
               {[...Array(300).keys()].map((num) => (
                 <button
@@ -586,7 +586,7 @@ const Daftar = () => {
             <div className='pb-6 px-4'>
               <p className='text-gray-500 italic text-md'>Silahkan pilih satu atau beberapa kelas yang ingin diikuti</p>
             </div>
-            <div className="bg-white pb-4 grid gap-3 mb-2 md:grid-cols-2 ">
+            <div className="bg-white pb-8 grid gap-0 sm:gap-3 mb-0 sm:mb-2 md:grid-cols-2 ">
               {raceClasses.map((raceClass) => (
                 <div key={raceClass.title} className="w-full bg-orange-100">
                   <h3 className="text-md bg-orange-400 py-2 px-3 uppercase font-semibold mb-2">{raceClass.title}</h3>
@@ -607,14 +607,14 @@ const Daftar = () => {
                   ))}
                 </div>
               ))}
-              <button onClick={() => setStep("4")} className="w-full bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded">Lanjut</button>
+              <button onClick={() => setStep("4")} className="w-full sm:w-max bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded">Lanjut</button>
             </div>
           </div>
         )}
         {step === "4" && (
           <div className="overflow-y-auto w-full h-full">
             <h1 className='text-xl text-center bg-gradient-to-tr from-green-400 to-lime-500 py-4 font-bold text-white/90'>INFORMASI PEMBAYARAN</h1>
-            <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-4 pb-6'>
               <div className='border rounded-b-md border-gray-400 px-4 pt-2 pb-4'>
                 <ul className='p-4 text-md flex flex-col gap-2 text-gray-600'>
                   <li className='list-decimal'>Pembayaran biaya pendaftaran dapat melalui Transfer Bank atau langsung dilokasi kepada penyelenggara.</li>
@@ -633,11 +633,11 @@ const Daftar = () => {
                 </ul>
                 <p className='text-gray-700 font-semibold'><span className='text-gray-500 text-sm'>Total Pembayaran Anda sebesar</span> : {formData.totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })} </p>
               </div>
-              <div className=''>
+              <div className='pb-3'>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
                 <input onChange={handleFileChange} name="img" className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" />
-                <button onClick={() => setStep("5")} className="w-full bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded mt-6">Lanjut</button>
               </div>
+              <button onClick={() => setStep("5")} className="w-full sm:w-max bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded mt-6">Lanjut</button>
             </div>
           </div>
         )}
