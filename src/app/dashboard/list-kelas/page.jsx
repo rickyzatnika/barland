@@ -4,6 +4,7 @@ import { formatCurrency } from "@/utils/formatCurrency";
 import useSWR from "swr";
 import React, { useState } from "react";
 import { RiDeleteBin2Line } from "react-icons/ri";
+import { toast } from "react-toastify";
 
 
 const TABLE_HEAD = ["Kelas", "Harga", "Action"];
