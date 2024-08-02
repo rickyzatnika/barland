@@ -6,7 +6,7 @@ import { IoIosHome } from "react-icons/io";
 import { MdOutlineEmojiEvents, MdOutlineSpaceDashboard } from "react-icons/md";
 import { BiSolidBookContent } from "react-icons/bi";
 import { FaRegAddressBook } from "react-icons/fa";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 
@@ -58,7 +58,7 @@ const MobileNav = () => {
         ) : (
           <div onClick={() => setShowMenu(false)} className="text-gray-600 flex gap-2 w-full border-b pb-2 border-gray-400">
             <FaRegAddressBook size={24} />
-            <button className="cursor-pointer">Logout</button>
+            <button onClick={() => signOut()} className="cursor-pointer">Logout</button>
           </div>
         )}
       </div>
