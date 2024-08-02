@@ -588,7 +588,7 @@ const Daftar = () => {
             </div>
             <div className="bg-white pb-8 grid gap-0 sm:gap-3 mb-0 sm:mb-2 md:grid-cols-2 ">
               {raceClasses.map((raceClass) => (
-                <div key={raceClass.title} className="w-full bg-orange-100">
+                <div key={raceClass.title} className="w-full bg-orange-100 mb-4">
                   <h3 className="text-md bg-orange-400 py-2 px-3 uppercase font-semibold mb-2">{raceClass.title}</h3>
                   {raceClass.classes.map((cls) => (
                     <label key={cls.name} className="block mb-3 text-sm px-3 ">
