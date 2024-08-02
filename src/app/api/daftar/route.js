@@ -1,9 +1,6 @@
 import Riders from "@/models/Riders";
 import connect from "@/utils/connect";
 import { NextRequest, NextResponse } from "next/server";
-import axios from "axios";
-
-const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
 
 export const GET = async (req = NextRequest) => {
   await connect();
@@ -39,14 +36,8 @@ export const POST = async (req = NextRequest) => {
     recaptchaToken,
   } = await req.json();
 
-  // Verifikasi token reCAPTCHA
-  const recaptchaVerificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`;
-
   try {
-    const response = await axios.post(recaptchaVerificationUrl);
-    const { success } = response.data;
-
-    if (!success) {
+    if (!recaptchaToken) {
       return new NextResponse(
         JSON.stringify({ message: "Invalid reCAPTCHA" }),
         { status: 400 }
