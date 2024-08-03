@@ -62,7 +62,7 @@ const TableRiders = () => {
 
   const exportPDF = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar/export-pdf`);
+      const response = await fetch(`/api/daftar/export-pdf`);
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -78,7 +78,7 @@ const TableRiders = () => {
 
   const exportExcel = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar/export-excel`);
+      const response = await fetch(`/api/daftar/export-excel`);
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
