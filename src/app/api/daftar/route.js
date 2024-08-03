@@ -5,7 +5,18 @@ import { NextRequest, NextResponse } from "next/server";
 export const GET = async (req = NextRequest) => {
   await connect();
   try {
-    const riders = await Riders.find({});
+    const url = new URL(req.url);
+    const query = url.searchParams.get("q");
+    let riders;
+
+    if (query) {
+      const searchRegex = new RegExp(query, "i"); // Case-insensitive search
+      riders = await Riders.find({
+        $or: [{ name: searchRegex }, { kis: searchRegex }],
+      });
+    } else {
+      riders = await Riders.find({});
+    }
 
     return new NextResponse(JSON.stringify(riders), { status: 200 });
   } catch (error) {

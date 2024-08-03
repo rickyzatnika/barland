@@ -329,8 +329,6 @@
 
 // export default Daftar;
 
-
-
 "use client"
 
 import Modal from '@/components/Modal';
@@ -344,6 +342,14 @@ const Daftar = () => {
   const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState("");
   const router = useRouter();
+  const [takenNumbers, setTakenNumbers] = useState([]);
+  const [raceClasses, setRaceClasses] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState("");
+  const CLOUD_NAME = "inkara-id";
+  const UPLOAD_PRESET = "myBlog_project_nextjs";
+  const SECRET = "6Lf7CR4qAAAAAJ7hgQnouK4fA0c58Z1fxEm_6d5a";
+
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -354,15 +360,9 @@ const Daftar = () => {
     phone: '',
     raceClass: [], // Array of objects
     totalPrice: 0,
-
+    recaptchaToken,
   });
-  const [takenNumbers, setTakenNumbers] = useState([]);
-  const [raceClasses, setRaceClasses] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState("");
-  const CLOUD_NAME = "inkara-id";
-  const UPLOAD_PRESET = "myBlog_project_nextjs";
-  const SECRET = "6Lf7CR4qAAAAAJ7hgQnouK4fA0c58Z1fxEm_6d5a";
+
 
   useEffect(() => {
     const fetchTakenNumbers = async () => {
@@ -407,7 +407,7 @@ const Daftar = () => {
   };
 
 
-  // ---------------------
+
 
   const handleClassChange = (event) => {
     const { value, checked } = event.target;
@@ -464,13 +464,9 @@ const Daftar = () => {
   };
 
 
-
-
-
   const handleSave = async () => {
 
     setLoading(true);
-
     const img = await uploadImage();
 
     setFormData((prev) => ({
@@ -486,8 +482,6 @@ const Daftar = () => {
       body: JSON.stringify({ ...formData, img, recaptchaToken }),
 
     });
-
-
 
     if (res.ok) {
       const timeoutId = setTimeout(() => {
@@ -570,7 +564,7 @@ const Daftar = () => {
               </div>
               <div>
                 <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nomor Handphone :</label>
-                <input onChange={handleChange} type="tel" name="phone" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" pattern="^(\+62|62)?[\s-]?0?8[1-9]{1}\d{1}[\s-]?\d{4}[\s-]?\d{2,5}$" required />
+                <input onChange={handleChange} type="tel" name="phone" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-400 focus:border-lime-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
               </div>
               <div>
                 <label htmlFor="nik" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No.Identitas/NIK :</label>
@@ -652,8 +646,8 @@ const Daftar = () => {
                   ))}
                 </div>
               ))}
-              <button onClick={handleNextStep} className="w-full sm:w-max bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded">Lanjut</button>
             </div>
+            <button onClick={handleNextStep} className="w-full sm:w-max bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded">Lanjut</button>
           </div>
         )}
         {step === "4" && (

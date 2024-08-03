@@ -20,7 +20,7 @@ export default function DashboardLayout({ children }) {
 
   useLayoutEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 620 && window.innerWidth <= 1920) {
+      if (window.innerWidth >= 872 && window.innerWidth <= 1920) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
@@ -66,13 +66,11 @@ export default function DashboardLayout({ children }) {
   }
 
   return (
-    <div className="w-full h-full flex">
-      <div className="basis-52">
+    <div className="w-full flex h-full gap-1">
+      <div className=" relative flex-1">
         <Aside />
       </div>
-      <div className="relative flex-grow w-full h-full px-4 py-4">
-        {children}
-      </div>
+      <div className="w-[87%] mx-auto  h-full px-4 py-4">{children}</div>
     </div>
   );
 }
