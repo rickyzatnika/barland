@@ -26,7 +26,7 @@ const UserPage = () => {
       mutate(); // Update data
     }
 
-  }, [data]);
+  }, [data, mutate]);
 
 
   const handleShowModal = (id) => {
