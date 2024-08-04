@@ -16,7 +16,7 @@ const UserPage = () => {
   const [users, setUsers] = useState([]);
 
 
-  const { data, mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/user`, fetcher);
+  const { data, mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/user`, fetcher);
 
   useEffect(() => {
     if (data) {
