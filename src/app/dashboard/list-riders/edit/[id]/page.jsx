@@ -8,8 +8,6 @@ import { formatCurrency } from "@/utils/formatCurrency";
 
 const EditRiders = ({ params }) => {
 
-
-
   const router = useRouter();
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
@@ -58,7 +56,6 @@ const EditRiders = ({ params }) => {
       if (img !== null) {
         body.img = img;
       }
-
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar/${params.id}`, {
         headers: {
           "Content-Type": "application/json",
@@ -71,7 +68,7 @@ const EditRiders = ({ params }) => {
 
       if (res.status === 200) {
         const setTimeoutId = setTimeout(() => {
-          toast.success("Berhasil menyimpan data");
+          toast.success(`${name} berhasil diperbaharui`);
           setLoading(false);
           router.push(`/dashboard/list-riders`);
         }, 3000);
@@ -81,12 +78,8 @@ const EditRiders = ({ params }) => {
         toast.error(data.message);
       }
 
-
-
     } catch (error) {
       toast.error("Ups something went wrong", error);
-    } finally {
-      setLoading(false);
     }
   };
 

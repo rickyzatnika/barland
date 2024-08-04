@@ -53,15 +53,15 @@ const Aside = () => {
 
 
   return (
-    <div className="h-screen w-max shadow-md bg-white border-r-2 flex items-center flex-col justify-between fixed py-6 left-0 top-0 z-10 ">
+    <div className="h-screen px-2 w-max shadow-md bg-white border-r-2 flex items-center flex-col justify-between fixed py-6 left-0 top-0 z-10 ">
       <Link href="/" className="flex items-center  border-b pb-2 w-full">
         <MdAdminPanelSettings size={40} className="w-full text-lime-500" />
         <p className="uppercase w-full">{session?.user?.name}</p>
       </Link>
       <div>
         {asideLink.map((item) => (
-          <div key={item?.id} className="w-full flex flex-col px-2  gap-3 justify-between">
-            <Link href={item?.link} className={`w-full text-sm uppercase rounded  flex text-gray-600 dark:text-gray-400 gap-2 py-2.5 px-4 mb-6 transition-all ease-linear duration-100 ${pathname === item?.link ? "second text-white" : "bg-slate-100 hover:bg-[#081225] shadow-inner shadow-slate-300 hover:shadow-md hover:text-white "}`}>
+          <div key={item?.id} className="w-full flex flex-col  gap-3 justify-between">
+            <Link href={item?.link} className={`w-full text-sm uppercase rounded  flex text-gray-600 dark:text-gray-400 gap-2 py-2.5 px-4 mb-6 transition-all ease-linear duration-100 ${pathname === item?.link ? "second text-white" : "bg-gray-50 shadow-inner shadow-gray-200 hover:bg-[#081225]  hover:shadow-md hover:text-white "}`}>
               <span>{item?.icon}</span>
               <h3>{item?.title}</h3>
             </Link>

@@ -1,7 +1,7 @@
 "use client";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { TbEyeClosed } from "react-icons/tb";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
@@ -13,9 +13,9 @@ import Image from "next/image";
 
 const Login = () => {
 
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
-
+  const [loading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [activeButton, setActiveButton] = useState("login");
 
@@ -25,6 +25,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const name = e.target[0].value;
     const password = e.target[1].value;
 
@@ -45,15 +46,22 @@ const Login = () => {
         body: JSON.stringify({ name, password }),
       })
 
+      const error = await res.json();
+
       if (res.status === 200) {
-        signIn("credentials", {
-          name: name,
-          password: password,
-        });
+        const timeOutId = setTimeout(() => {
+          setLoading(false);
+          signIn("credentials", {
+            name: name,
+            password: password,
+          });
+        }, 3000)
+
+        return () => clearTimeout(timeOutId);
+      } else {
+        toast.error(error.message);
+        setLoading(false);
       }
-      const errorData = await res.json();
-      toast.error(errorData.message);
-      return;
 
     } catch (error) {
       toast.error(error.message);
@@ -61,9 +69,16 @@ const Login = () => {
 
   };
 
-  if (status === "authenticated") {
-    return router.push("/");
-  }
+  useEffect(() => {
+    if (session) {
+      if (session.user.role === 'admin') {
+        router.push('/dashboard');
+      } else {
+        router.push('/');
+      }
+    }
+  }, [router, session]);
+
 
   return (
     <>
@@ -101,7 +116,10 @@ const Login = () => {
 
                 </div>
                 <button className="py-3 px-6 uppercase text-slate-100 transition-all duration-150 ease-linear bg-gradient-to-tr from-green-500 to-lime-400  hover:bg-green-500 hover:text-white rounded-md" type="submit">
-                  {status === "loading" ? "Loading..." : "Login"}
+                  {loading ? <div className="flex gap-2 items-center justify-center">
+                    <span className=" text-white">Loading... </span>
+                    <span className="loader"></span>
+                  </div> : "Masuk"}
                 </button>
               </form>
             }

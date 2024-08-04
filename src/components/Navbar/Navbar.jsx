@@ -9,26 +9,36 @@ import { useSession } from "next-auth/react"
 
 const Navbar = () => {
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const pathname = usePathname();
 
   const isDashboard = pathname.startsWith('/dashboard');
 
   return (
-    <div className={`w-full h-20 bg-white dark:bg-white flex items-center justify-between  top-0 left-0 z-50 shadow-sm px-4 sm:px-12 md:px-20 lg:px-28 2xl:px-32 ${isDashboard ? "hidden" : "fixed"}`}>
-      <Link prefetch={false} href={"/"}>
-        <Image src="/logo.jpeg" alt="" width={56} height={56} className="w-14 h-14" priority={true} />
-      </Link>
-      <div className="hidden sm:flex items-center gap-6 text-sm uppercase">
-        <Link className={`${pathname === "/" ? "text-lime-500 border-b border-lime-500 pb-1" : "text-gray-400/70 dark:text-gray-400 hover:text-lime-500 pb-1"}`} prefetch={false} href="/">Home</Link>
-        <Link className={`${pathname === "/events" ? "text-lime-500 border-b border-lime-500 pb-1" : "text-gray-400/70 dark:text-gray-400 hover:text-lime-500 pb-1"}`} prefetch={false} href="/events">Event</Link>
-        <Link className={`${pathname === "/about" ? "text-lime-500 border-b border-lime-500 pb-1" : "text-gray-400/70 dark:text-gray-400 hover:text-lime-500 pb-1"}`} prefetch={false} href="/about">About</Link>
-        <Link className={`${pathname === "/help" ? "text-lime-500 border-b border-lime-500 pb-1" : "text-gray-400/70 dark:text-gray-400 hover:text-lime-500 pb-1"}`} prefetch={false} href="/help">Help</Link>
-        {session?.user?.role === "admin" &&
-          <Link className={`${pathname === "/dashboard" ? "text-lime-500 border-b border-green-500 pb-1" : "text-gray-400/70 hover:text-lime-500 pb-1"}`} prefetch={false} href="/dashboard">Dashboard</Link>
-        }
-        <AuthLink />
+    <div className={`w-full h-20 second flex items-center justify-between fixed top-0 right-0 left-0 z-50 shadow-sm px-4 sm:px-12 md:px-20 lg:px-28 2xl:px-32 ${isDashboard ? "hidden" : "fixed"}`}>
+
+      <div className="flex flex-1">
+        <Link className="" prefetch={false} href={"/"}>
+          <Image src="/logo.jpeg" alt="" width={56} height={56} className="w-14 h-14" priority={true} />
+        </Link>
       </div>
+
+      <div className="hidden text-center sm:flex flex-1 items-center gap-8 tracking-widest text-sm uppercase">
+        <Link className={`font-medium ${pathname === "/" ? "text-lime-500 border-b border-lime-500 pb-1" : "text-gray-300/50 dark:text-gray-400 hover:text-lime-500 pb-1"}`} prefetch={false} href="/">Home</Link>
+        <Link className={`font-medium ${pathname === "/events" ? "text-lime-500 border-b border-lime-500 pb-1" : "text-gray-300/50 dark:text-gray-400 hover:text-lime-500 pb-1"}`} prefetch={false} href="/events">Event</Link>
+        <Link className={`font-medium ${pathname === "/about" ? "text-lime-500 border-b border-lime-500 pb-1" : "text-gray-300/50 dark:text-gray-400 hover:text-lime-500 pb-1"}`} prefetch={false} href="/about">About</Link>
+        <Link className={`font-medium ${pathname === "/help" ? "text-lime-500 border-b border-lime-500 pb-1" : "text-gray-300/50 dark:text-gray-400 hover:text-lime-500 pb-1"}`} prefetch={false} href="/help">Help</Link>
+        {status === "authenticated" || session?.user?.role === "user" && (<Link className={`font-medium ${pathname === "/help" ? "text-lime-500 border-b border-lime-500 pb-1" : "text-gray-300/50 dark:text-gray-400 hover:text-lime-500 pb-1"}`} prefetch={false} href="/profile">Profile</Link>)}
+        {session?.user?.role === "admin" &&
+          <Link className={`font-medium ${pathname === "/dashboard" ? "text-lime-500 border-b border-green-500 pb-1" : "text-gray-300/50 hover:text-lime-500 pb-1"}`} prefetch={false} href="/dashboard">Dashboard</Link>
+        }
+
+      </div>
+
+
+
+      <AuthLink />
+
       <MobileNav />
     </div>
   )

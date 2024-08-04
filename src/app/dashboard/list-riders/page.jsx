@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 import { SiMicrosoftexcel } from "react-icons/si";
 import { GrDocumentPdf } from "react-icons/gr";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import useSWR from "swr";
 
 
 const TABLE_HEAD = [
@@ -26,6 +26,8 @@ const TABLE_HEAD = [
   "Action",
 ];
 
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
 const TableRiders = () => {
   const [showImage, setShowImage] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -33,23 +35,28 @@ const TableRiders = () => {
   const [showModal, setShowModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [riders, setRiders] = useState([]);
-  const router = useRouter();
+  const [noData, setNoData] = useState(false);
+
+  // fetch user data use SWR
+
+  const { data, mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar?q=${searchQuery}`, fetcher);
+
 
   useEffect(() => {
-    const fetchRiders = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar?q=${searchQuery}`);
-        const data = await response.json();
-        // Mengurutkan data berdasarkan nama
-        const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
-        setRiders(sortedData);
-      } catch (error) {
-        console.error("Error fetching riders:", error);
-      }
-    };
+    if (data) {
+      // Mengurutkan data hanya jika data ada
+      const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
+      setRiders(sortedData);
+      mutate(); // Update data
+    }
 
-    fetchRiders();
-  }, [searchQuery]);
+    if (!data?.length) {
+      setNoData(true);
+    } else {
+      setNoData(false);
+    }
+
+  }, [data, searchQuery]); // Tambahkan data ke dependency array
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
@@ -102,21 +109,53 @@ const TableRiders = () => {
     if (!deleteId) return; // Jika tidak ada ID yang diset, tidak lakukan apa-apa
 
     try {
+      // Cari nama rider yang akan dihapus dari state
+      const riderToDelete = riders.find(rider => rider._id === deleteId);
+      const riderName = riderToDelete ? riderToDelete.name : "Rider";
+
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar/${deleteId}`, {
         method: "DELETE",
       });
+
       if (res.status === 200) {
-        toast.success("Post deleted successfully");
+        toast.success(`${riderName} dihapus`);
         setShowModal(false);
-        setDeleteId(null);
-        router.push('/dashboard/list-riders'); // Navigasi setelah hapus berhasil
+        // Perbarui state riders jika diperlukan
+        setRiders(prevRiders => prevRiders.filter(rider => rider._id !== deleteId));
+        mutate(); // Memuat ulang data
       } else {
-        toast.error("Failed to delete item");
+        toast.error("Gagal menghapus rider");
       }
     } catch (error) {
-      toast.error("Ups something went wrong");
+      toast.error("Ups, sesuatu yang salah");
     }
   };
+
+
+  // backup handleDelete
+  // const handleDelete = async () => {
+  //   if (!deleteId) return; // Jika tidak ada ID yang diset, tidak lakukan apa-apa
+
+  //   try {
+  //     const res = await fetch(`${process.env.NEXT_PUBLIC_API_DEV}/api/daftar/${deleteId}`, {
+  //       method: "DELETE",
+  //     });
+  //     if (res.status === 200) {
+  //       toast.success("successfully");
+  //       setShowModal(false);
+  //       setDeleteId(null);
+  //       mutate(); // Memuat ulang data
+  //     } else {
+  //       toast.error("Failed to delete item");
+  //     }
+  //   } catch (error) {
+  //     toast.error("Ups something went wrong");
+  //   }
+  // };
+
+
+
+
 
   return (
     <>
@@ -139,25 +178,21 @@ const TableRiders = () => {
         </div>
       )}
 
-      <div className="w-full flex items-center justify-between border-b-2 py-0.5">
+      <div className="w-full flex items-center justify-between border-b pb-1">
         <div className="flex flex-col items-start">
-          <h1 className="text-lg font-semibold antialiased text-gray-900 dark:text-gray-200">DAFTAR RIDERS</h1>
-          <div className="flex gap-2 items-center">
-            <h2 className="text-sm font-semibold antialiased text-gray-700 dark:text-gray-200">
-              Total Riders :
-            </h2>
-            <p className="text-sm font-semibold antialiased text-gray-700 dark:text-gray-200">{riders?.length} Orang</p>
-          </div>
+          <h1 className="text-lg font-semibold antialiased text-gray-600 dark:text-gray-200">DAFTAR RIDERS</h1>
+          {noData ? <h3 className="w-full text-gray-600 font-medium text-sm">Belum ada data yang masuk...</h3> :
+            <div className="flex gap-2 items-center">
+              <h2 className="text-sm antialiased text-gray-500 dark:text-gray-200">
+                Total Riders :
+              </h2>
+              <p className="text-sm antialiased text-gray-500 dark:text-gray-200">{riders?.length} Orang</p>
+            </div>
+          }
+
         </div>
 
-        <div className="flex items-center gap-6">
-          <div className="flex gap-2 ">
-            <p className="text-sm font-medium text-gray-700 dark:text-gray-400">Export :</p>
-            <div className="flex gap-4 ">
-              <button className="text-gray-500 dark:text-gray-400 hover:text-gray-700" onClick={exportPDF}><GrDocumentPdf size={20} /></button>
-              <button className="text-gray-500 dark:text-gray-400 hover:text-gray-700" onClick={exportExcel}><SiMicrosoftexcel size={20} /></button>
-            </div>
-          </div>
+        <div className="flex items-center justify-center gap-6">
           <form className=" max-w-xs ">
             <div className="relative">
               <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -170,9 +205,9 @@ const TableRiders = () => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                   />
                 </svg>
@@ -187,11 +222,24 @@ const TableRiders = () => {
               />
             </div>
           </form>
+          <div className="flex flex-col items-center justify-center  ">
+            <p className="text-sm font-medium text-gray-700 dark:text-gray-400">Export :</p>
+            <div className="flex gap-2 pt-1">
+              <button className="group hover:text-gray-300 relative second p-2 rounded dark:text-gray-400 text-red-500" onClick={exportPDF}><GrDocumentPdf size={14} />
+                <span className="hidden group-hover:block absolute -top-3 -left-8 rounded py-0.5 px-1 text-xs bg-white text-gray-600">PDF</span>
+              </button>
+              <button className="group hover:text-gray-300 relative second p-2 rounded dark:text-gray-400 text-green-500" onClick={exportExcel}><SiMicrosoftexcel size={14} />
+                <span className="hidden group-hover:block absolute -top-3 -left-8 rounded py-0.5 px-1 text-xs bg-white text-gray-600">Excel</span>
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
-      <div class="my-8 relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full table-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead class="text-xs uppercase second text-white dark:bg-gray-700 dark:text-gray-400">
+      <div className="my-8 relative overflow-x-auto shadow-md sm:rounded-lg">
+
+        <table className="w-full table-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-xs uppercase second text-white dark:bg-gray-700 dark:text-gray-400">
             <tr className="">
               {TABLE_HEAD.map((head) => (
                 <th key={head} className="px-6 py-3">
@@ -200,7 +248,9 @@ const TableRiders = () => {
               ))}
             </tr>
           </thead>
+
           <tbody>
+
             {riders.map((rider, i) => (
               <tr
                 key={rider?._id}
@@ -262,6 +312,7 @@ const TableRiders = () => {
       </div>
     </>
   );
+
 };
 
 export default TableRiders;

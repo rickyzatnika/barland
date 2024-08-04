@@ -2,10 +2,17 @@
 
 import { useState } from "react";
 import { toast } from "react-toastify";
+import useSWR from "swr";
 
 const FormAddClass = ({ setShowModal }) => {
   const [title, setTitle] = useState("");
   const [classes, setClasses] = useState([{ name: "", price: 0 }]);
+
+
+  // fetch user data use SWR
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  const { mutate } = useSWR("/api/raceClasses", fetcher);
+
 
   const handleChange = (index, event) => {
     const { name, value } = event.target;
@@ -24,7 +31,7 @@ const FormAddClass = ({ setShowModal }) => {
     const data = { title, classes };
 
     try {
-      const response = await fetch("/api/raceClasses", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/raceClasses`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,12 +40,13 @@ const FormAddClass = ({ setShowModal }) => {
       });
 
       if (response.ok) {
-        console.log("Race class created successfully");
+
         setShowModal(false);
         toast.success("Kelas berhasil dibuat");
+        mutate();
 
       } else {
-        console.error("Error creating race class:", response.statusText);
+        toast.error("Error creating race class");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -47,7 +55,7 @@ const FormAddClass = ({ setShowModal }) => {
 
   return (
     <>
-      <div tabindex="-1" aria-hidden="true" className="overflow-y-auto  mx-auto fixed top-0 right-0 bg-black/40 backdrop-blur-sm z-50 justify-center  items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+      <div tabIndex="-1" aria-hidden="true" className="overflow-y-auto  mx-auto fixed top-0 right-0 bg-black/40 backdrop-blur-sm z-50 justify-center  items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div className="relative p-4 w-full mx-auto max-w-xl max-h-full">
           {/* <!-- Modal content --> */}
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -70,9 +78,9 @@ const FormAddClass = ({ setShowModal }) => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                   />
                 </svg>
@@ -84,7 +92,7 @@ const FormAddClass = ({ setShowModal }) => {
               <div className="grid gap-4 mb-4 grid-cols-2">
                 <div className="col-span-2">
                   <label
-                    for="name"
+                    htmlFor="title"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Title
@@ -103,7 +111,7 @@ const FormAddClass = ({ setShowModal }) => {
                 {classes.map((classItem, index) => (
                   <div key={index}>
                     <div className="col-span-2 sm:col-span-1">
-                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                         Name:
                         <input
                           type="text"
@@ -116,7 +124,7 @@ const FormAddClass = ({ setShowModal }) => {
                       </label>
                     </div>
                     <div className="col-span-2 sm:col-span-1">
-                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                         Price:
                         <input
                           type="number"
@@ -138,9 +146,9 @@ const FormAddClass = ({ setShowModal }) => {
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                        clip-rule="evenodd"
+                        clipRule="evenodd"
                       ></path>
                     </svg>
                     Tambah
