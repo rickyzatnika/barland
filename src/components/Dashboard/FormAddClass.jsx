@@ -39,7 +39,7 @@ const FormAddClass = ({ setShowModal }) => {
         body: JSON.stringify(data),
       });
 
-      const error = await res.json();
+      const errorData = await res.json();
 
       if (res.status === 201) {
 
@@ -47,15 +47,15 @@ const FormAddClass = ({ setShowModal }) => {
           setLoading(false);
           setShowModal(false);
           toast.success(`Kelas ditambahkan`);
-          mutate();
+
         }, 3000);
         return () => clearTimeout(timeoutId);
       } else {
-        toast.error(error.message);
+        toast.error(errorData.message);
       }
     } catch (error) {
       console.error("Error:", error);
-      toast.error(error.message);
+      toast.error(error);
     }
   };
 

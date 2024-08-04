@@ -61,7 +61,7 @@ const FormAddUser = ({ setShowModal }) => {
         body: JSON.stringify({ name, phone, password, role }),
       });
 
-      const error = await res.json();
+      const errorData = await res.json();
 
       if (res.status === 201) {
 
@@ -73,12 +73,12 @@ const FormAddUser = ({ setShowModal }) => {
         }, 3000);
         return () => clearTimeout(timeoutId);
       } else {
-        toast.error(error.message);
+        toast.error(errorData.message);
       }
 
     } catch (error) {
       console.log(error.message);
-      toast.error(error.message);
+      toast.error(error);
     }
   };
 
