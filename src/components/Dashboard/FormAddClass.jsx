@@ -52,6 +52,7 @@ const FormAddClass = ({ setShowModal }) => {
         return () => clearTimeout(timeoutId);
       } else {
         toast.error(errorData.message);
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error:", error.message);
