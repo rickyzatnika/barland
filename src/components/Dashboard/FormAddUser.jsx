@@ -16,7 +16,7 @@ const FormAddUser = ({ setShowModal }) => {
   const [loading, setLoading] = useState(false);
   // fetch user data use SWR
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const { mutate } = useSWR("/api/user", fetcher);
+  const { mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/user`, fetcher);
 
 
   const handlePasswordVisible = () => {
@@ -76,7 +76,6 @@ const FormAddUser = ({ setShowModal }) => {
         toast.error(errorData.message);
         setLoading(false);
       }
-
     } catch (error) {
       console.log(error.message);
       toast.error(error.message);
