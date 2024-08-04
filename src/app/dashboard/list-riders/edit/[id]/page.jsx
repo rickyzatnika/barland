@@ -154,7 +154,10 @@ const EditRiders = ({ params }) => {
               <button type="button" onClick={() => setRaceClass([...raceClass, { name: '', price: '' }])} className="text-lime-500">Tambah Kelas</button>
             </div>
             <button type="submit" className="text-white bg-gradient-to-tr from-green-400 to-lime-500 hover:bg-gradient-to-tl hover:from-green-400 hover:to-lime-500 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">
-              {loading ? "Loading..." : "Simpan"}
+              {loading ? <div className="flex gap-2 items-center justify-center">
+                <span className=" text-white">Loading... </span>
+                <span className="loader"></span>
+              </div> : "Simpan"}
             </button>
           </form>
         </div>

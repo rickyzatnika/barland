@@ -12,7 +12,7 @@ import { useState } from "react";
 
 
 const FormRegister = ({ setActiveButton }) => {
-  const router = useRouter();
+
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
@@ -61,6 +61,7 @@ const FormRegister = ({ setActiveButton }) => {
         body: JSON.stringify({ name, phone, password }),
       });
 
+      const error = await res.json();
 
       if (res.status === 201) {
 
@@ -71,11 +72,9 @@ const FormRegister = ({ setActiveButton }) => {
 
         }, 3000);
         return () => clearTimeout(timeoutId);
+      } else {
+        toast.error(error.message);
       }
-
-      const errorData = await res.json();
-      toast.error(errorData.message)
-      return;
 
     } catch (error) {
       console.log(error.message);
@@ -123,7 +122,12 @@ const FormRegister = ({ setActiveButton }) => {
         </div>
       </div>
       <button className="px-4 py-3 rounded uppercase transition-all duration-150 ease-linear bg-gradient-to-tr from-green-500 to-lime-400 text-slate-100 hover:bg-green-500 hover:text-white" type="submit">
-        {loading ? "Loading..." : "Submit"}
+        {loading ?
+          <div className="flex gap-2 items-center justify-center">
+            <span className=" text-white">Loading... </span>
+            <span className="loader"></span>
+          </div> : "Submit"
+        }
       </button>
     </form>
 

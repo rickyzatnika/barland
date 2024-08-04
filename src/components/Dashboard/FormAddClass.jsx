@@ -7,7 +7,7 @@ import useSWR from "swr";
 const FormAddClass = ({ setShowModal }) => {
   const [title, setTitle] = useState("");
   const [classes, setClasses] = useState([{ name: "", price: 0 }]);
-
+  const [loading, setLoading] = useState(false);
 
   // fetch user data use SWR
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -27,11 +27,11 @@ const FormAddClass = ({ setShowModal }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setLoading(true);
     const data = { title, classes };
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/raceClasses`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/raceClasses`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,17 +39,23 @@ const FormAddClass = ({ setShowModal }) => {
         body: JSON.stringify(data),
       });
 
-      if (response.ok) {
+      const error = await res.json();
 
-        setShowModal(false);
-        toast.success("Kelas berhasil dibuat");
-        mutate();
+      if (res.status === 201) {
 
+        const timeoutId = setTimeout(() => {
+          setLoading(false);
+          setShowModal(false);
+          toast.success(`Kelas ditambahkan`);
+          mutate();
+        }, 3000);
+        return () => clearTimeout(timeoutId);
       } else {
-        toast.error("Error creating race class");
+        toast.error(error.message);
       }
     } catch (error) {
       console.error("Error:", error);
+      toast.error(error.message);
     }
   };
 
@@ -155,12 +161,13 @@ const FormAddClass = ({ setShowModal }) => {
                   </span>
                 </button>
               </div>
-              <button
-                type="submit"
-                className="text-white inline-flex items-center bg-gradient-to-tr from-green-400 to-lime-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-
-                Simpan
+              <button type="submit" className="text-white inline-flex items-center bg-gradient-to-tr from-green-400 to-lime-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                {loading ?
+                  <div className="flex gap-2 items-center justify-center">
+                    <span className=" text-white">Loading... </span>
+                    <span className="loader"></span>
+                  </div> : "Simpan"
+                }
               </button>
             </form>
           </div>

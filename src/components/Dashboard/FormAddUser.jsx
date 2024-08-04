@@ -136,7 +136,10 @@ const FormAddUser = ({ setShowModal }) => {
             <option value="user">User</option>
           </select>
           <button className="px-4 py-3 rounded uppercase transition-all duration-150 ease-linear bg-gradient-to-tr from-green-500 to-lime-400 text-slate-100 hover:bg-green-500 hover:text-white" type="submit">
-            {loading ? "Loading..." : "Submit"}
+            {loading ? <div className="flex gap-2 items-center justify-center">
+              <span className=" text-white">Loading... </span>
+              <span className="loader"></span>
+            </div> : "Submit"}
           </button>
         </form>
       </div>
