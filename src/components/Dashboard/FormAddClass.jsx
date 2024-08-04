@@ -31,7 +31,7 @@ const FormAddClass = ({ setShowModal }) => {
     const data = { title, classes };
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/raceClasses`, {
+      const res = await fetch(`/api/raceClasses`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
