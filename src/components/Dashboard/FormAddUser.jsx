@@ -78,7 +78,7 @@ const FormAddUser = ({ setShowModal }) => {
 
     } catch (error) {
       console.log(error.message);
-      toast.error(error);
+      toast.error(error.message);
     }
   };
 

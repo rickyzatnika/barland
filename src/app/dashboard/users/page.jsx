@@ -46,6 +46,8 @@ const UserPage = () => {
         method: "DELETE",
       });
 
+      const errorData = await res.json();
+
       if (res.status === 200) {
         toast.success(`${userName} dihapus`);
         setShowDeleteModal(false);
@@ -53,10 +55,10 @@ const UserPage = () => {
         setUsers(prevUsers => prevUsers.filter(user => user._id !== deleteId));
         mutate(); // Memuat ulang data
       } else {
-        toast.error("Gagal menghapus user");
+        toast.error(errorData.message);
       }
     } catch (error) {
-      toast.error("Ups, sesuatu yang salah");
+      toast.error(error.message);
     }
   };
 

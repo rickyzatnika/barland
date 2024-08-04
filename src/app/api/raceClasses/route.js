@@ -27,7 +27,9 @@ export const POST = async (req = NextRequest) => {
   try {
     // Validasi input
     if (!title || !Array.isArray(classes)) {
-      return new NextResponse("Invalid data", { status: 400 });
+      return new NextResponse(JSON.stringify({ message: "Invalid Data" }), {
+        status: 400,
+      });
     }
 
     const newRaceClass = new RaceClasses({
@@ -35,9 +37,19 @@ export const POST = async (req = NextRequest) => {
       classes,
     });
     await newRaceClass.save();
-    return new NextResponse("Created Successfully", { status: 201 });
+    return new NextResponse(
+      JSON.stringify({ message: "Kelas berhasil ditambahkan" }),
+      {
+        status: 201,
+      }
+    );
   } catch (error) {
     console.log(error.message);
-    return new NextResponse(error.message, { status: 500 });
+    return new NextResponse(
+      JSON.stringify({ message: "Maaf ada kesalahan pada server." }),
+      {
+        status: 500,
+      }
+    );
   }
 };

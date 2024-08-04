@@ -54,8 +54,9 @@ const FormAddClass = ({ setShowModal }) => {
         toast.error(errorData.message);
       }
     } catch (error) {
-      console.error("Error:", error);
-      toast.error(error);
+      console.error("Error:", error.message);
+      toast.error(error.message);
+      setLoading(false);
     }
   };
 
