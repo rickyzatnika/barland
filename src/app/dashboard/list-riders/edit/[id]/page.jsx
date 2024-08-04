@@ -4,10 +4,10 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Image from "next/image";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 const EditRiders = ({ params }) => {
-  const CLOUD_NAME = "inkara-id";
-  const UPLOAD_PRESET = "myBlog_project_nextjs";
+
 
 
   const router = useRouter();
@@ -18,9 +18,9 @@ const EditRiders = ({ params }) => {
   const [kis, setKis] = useState("");
   const [team, setTeam] = useState("");
   const [numberStart, setNumberStart] = useState("");
-  const [totalPrice, setTotalPrice] = useState("");
-
-  const [photo, setPhoto] = useState('');
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [preview, setPreview] = useState("");
+  const [raceClass, setRaceClass] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -36,23 +36,25 @@ const EditRiders = ({ params }) => {
       setTeam(rider?.team);
       setNumberStart(rider?.numberStart);
       setTotalPrice(rider?.totalPrice);
-      setPhoto(rider?.img);
+      setPreview(rider?.img);
+      setRaceClass(rider?.raceClass);
     }
     getRiderById();
   }, [params.id]);
+
+  // useEffect untuk menghitung totalPrice berdasarkan raceClass
+  useEffect(() => {
+    const newTotalPrice = raceClass.reduce((sum, cls) => sum + parseFloat(cls.price || 0), 0);
+    setTotalPrice(newTotalPrice);
+  }, [raceClass]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     setLoading(true);
     try {
-      let img = null;
-      if (photo) {
-        img = await uploadImage();
-      }
-
-      const body = { name, address, kis, nik, phone, team, numberStart, totalPrice };
-
+      let img = preview;
+      const body = { name, address, kis, nik, phone, team, numberStart, totalPrice, raceClass };
       if (img !== null) {
         body.img = img;
       }
@@ -65,121 +67,116 @@ const EditRiders = ({ params }) => {
         body: JSON.stringify(body),
       });
 
-      if (!res.ok) {
-        toast.error("Terjadi kesalahan saat menyimpan data");
-        return;
+      const data = await res.json();
+
+      if (res.status === 200) {
+        const setTimeoutId = setTimeout(() => {
+          toast.success("Berhasil menyimpan data");
+          setLoading(false);
+          router.push(`/dashboard/list-riders`);
+        }, 3000);
+
+        return () => clearTimeout(setTimeoutId);
+      } else {
+        toast.error(data.message);
       }
 
-      await res.json();
-      const setTimeoutId = setTimeout(() => {
-        toast.success("Berhasil menyimpan data");
-        setLoading(false);
-        router.push(`/dashboard/list-riders`);
-      }, 3000);
 
-      return () => clearTimeout(setTimeoutId);
+
     } catch (error) {
-      console.log(error);
+      toast.error("Ups something went wrong", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const uploadImage = async () => {
-    if (!photo) return;
-    const formData = new FormData();
-
-    formData.append("file", photo);
-    formData.append("upload_preset", UPLOAD_PRESET);
-
-    try {
-      const res = await fetch(
-        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      const data = await res.json();
-      const img = data["secure_url"];
-
-      return img;
-    } catch (error) {
-      console.log(error);
-    }
+  // Handle raceClass change
+  const handleRaceClassChange = (index, field, value) => {
+    const newRaceClass = [...raceClass];
+    newRaceClass[index][field] = value;
+    setRaceClass(newRaceClass);
   };
 
   return (
     <>
-      <div className="w-full h-full">
-        <h2 className="mb-6">Edit</h2>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-          <input
-            type="text"
-            placeholder="Title"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="px-4 py-3 bg-zinc-100 focus:outline-indigo-400"
-          />
-          <input
-            type="text"
-            placeholder="Description"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            className="px-4 py-3 bg-zinc-100 focus:outline-indigo-400"
-          />
-          <input
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="px-4 py-3 bg-zinc-100 focus:outline-indigo-400"
-          />
-          <input
-            value={nik}
-            className="px-4 py-3 bg-zinc-100 focus:outline-indigo-400"
-            onChange={(e) => setNik(e.target.value)}
-          />
+      <div className=" second text-white">
+        <h1 className="py-4 px-4">Edit Riders</h1>
+      </div>
+      <div className="w-full flex gap-4 py-8 px-4 bg-slate-50">
+        <div className="flex flex-col w-full ">
+          <form onSubmit={handleSubmit} className="w-full">
+            <div className="mb-5">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white " />
+            </div>
+            <div className="mb-5">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat</label>
+              <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white " />
+            </div>
+            <div className="mb-5">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No.Handphone</label>
+              <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white " />
+            </div>
+            <div className="mb-5">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No.Identitas/NIK</label>
+              <input type="number" value={nik} onChange={(e) => setNik(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white " />
+            </div>
+            <div className="mb-5">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No.KIS</label>
+              <input type="number" value={kis} onChange={(e) => setKis(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white " />
+            </div>
+            <div className="mb-5">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Team</label>
+              <input type="text" value={team} onChange={(e) => setTeam(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white " />
+            </div>
+            <div className="mb-5">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nomor Start</label>
+              <input type="text" value={numberStart} onChange={(e) => setNumberStart(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white " />
+            </div>
+            <div className="mb-5">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Biaya Pendaftaran</label>
+              <input type="text" value={totalPrice} onChange={(e) => setTotalPrice(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white " />
+            </div>
+            <div className="mb-5">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kelas Balap</label>
+              {raceClass.map((cls, index) => (
+                <div key={index} className="flex gap-2 mb-2">
+                  <input
+                    type="text"
+                    value={cls.name}
+                    onChange={(e) => handleRaceClassChange(index, 'name', e.target.value)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    placeholder="Nama Kelas"
+                  />
+                  <input
+                    type="number"
+                    value={cls.price}
+                    onChange={(e) => handleRaceClassChange(index, 'price', e.target.value)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    placeholder="Harga Kelas"
+                  />
+                  <button type="button" onClick={() => setRaceClass(raceClass.filter((_, i) => i !== index))} className="text-red-500">Hapus</button>
+                </div>
+              ))}
+              <button type="button" onClick={() => setRaceClass([...raceClass, { name: '', price: '' }])} className="text-lime-500">Tambah Kelas</button>
+            </div>
+            <button type="submit" className="text-white bg-gradient-to-tr from-green-400 to-lime-500 hover:bg-gradient-to-tl hover:from-green-400 hover:to-lime-500 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">
+              {loading ? "Loading..." : "Simpan"}
+            </button>
+          </form>
+        </div>
+        {preview || preview === "" ?
+          <div className="w-full">
+            <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-5">Bukti Pembayaran</h3>
+            <Image src={preview} alt="bukti-pembayaran" width={350} height={350} priority={true} className="object-contain" />
+          </div> :
+          <div className="w-full">
+            <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-5">Pembayaran</h3>
+            <p>Bayar Dilokasi sebesar {formatCurrency(totalPrice)} </p>
+          </div>
 
-          <input
-            value={kis}
-            className="px-4 py-3 bg-zinc-100 focus:outline-indigo-400"
-            onChange={(e) => setKis(e.target.value)}
-          />
+        }
 
-          <input
-            value={team}
-            className="px-4 py-3 bg-zinc-100 focus:outline-indigo-400"
-            onChange={(e) => setTeam(e.target.value)}
-          />
-          <input
-            value={totalPrice}
-            className="px-4 py-3 bg-zinc-100 focus:outline-indigo-400"
-            onChange={(e) => setTotalPrice(e.target.value)}
-          />
-
-          {
-            photo && (
-              <Image src={photo} alt="" width={45} height={45} />
-            )
-          }
-          <input
-            type="file"
-            id="image"
-            onChange={(e) => setPhoto(e.target.files[0])}
-            className="file-input text-sm text-zinc-500 bg-zinc-100 file-input-bordered w-full max-w-xs"
-          />
-
-          <button
-            className="uppercase text-sm w-max px-6 py-2 rounded-md border-none bg-gradient-to-tr from-green-400 to-lime-500  text-white "
-            type="submit"
-          >
-            {loading ? (
-              <div className="flex items-center gap-1">
-                <span className="capitalize">Loading...</span>{" "}
-                <span className="loading loading-spinner loading-xs "></span>
-              </div>
-            ) : (
-              <p>Simpan</p>
-            )}
-          </button>
-        </form>
       </div>
     </>
   );

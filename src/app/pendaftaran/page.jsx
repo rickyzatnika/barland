@@ -348,7 +348,6 @@ const Daftar = () => {
   const [recaptchaToken, setRecaptchaToken] = useState("");
   const CLOUD_NAME = "inkara-id";
   const UPLOAD_PRESET = "myBlog_project_nextjs";
-  const SECRET = "6Lf7CR4qAAAAAJ7hgQnouK4fA0c58Z1fxEm_6d5a";
 
   const [formData, setFormData] = useState({
     name: '',
@@ -581,7 +580,7 @@ const Daftar = () => {
             </div>
             <div className='my-3 flex flex-col gap-4'>
               <ReCAPTCHA
-                sitekey={SECRET}
+                sitekey="6Lf7CR4qAAAAAJ7hgQnouK4fA0c58Z1fxEm_6d5a"
                 onChange={handleRecaptchaChange}
               />
               <button className="w-max h-max bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded" type="submit">Lanjut</button>

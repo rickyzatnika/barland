@@ -18,8 +18,24 @@ export async function GET(req, { params: { id } }) {
 export async function PUT(req = NextRequest, { params: { id } }) {
   await connect();
   const body = await req.json();
+  const { numberStart } = body;
 
   try {
+    // Cek apakah nomor start sudah digunakan oleh pembalap lain
+    const existingRider = await Riders.findOne({
+      numberStart,
+      _id: { $ne: id },
+    });
+
+    if (existingRider) {
+      return new NextResponse(
+        JSON.stringify({
+          message: "Nomor start sudah digunakan oleh pembalap lain",
+        }),
+        { status: 400 }
+      );
+    }
+
     const updateRider = await Riders.findByIdAndUpdate(
       id,
       { $set: { ...body } },
