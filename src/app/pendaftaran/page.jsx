@@ -674,10 +674,12 @@ const Daftar = () => {
                 <p className='text-gray-700 font-semibold'><span className='text-gray-500 text-sm'>Total Pembayaran Anda sebesar</span> : {formData.totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })} </p>
               </div>
               <div className='pb-3'>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file <span className='text-xs text-red-500 italic'>(optional)</span></label>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input">Upload file <span className='text-xs text-red-500 italic'>(optional)</span></label>
                 <input onChange={handleFileChange} name="img" className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" />
               </div>
-              <button onClick={() => setStep("5")} className="w-full sm:w-max bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded mt-6">Lanjut</button>
+              <button onClick={() => setStep("5")} className="w-full sm:w-max bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded mt-6">
+                {photo === null || photo === "" ? "Bayar dilokasi" : "Lanjut"}
+              </button>
             </div>
           </div>
         )}
