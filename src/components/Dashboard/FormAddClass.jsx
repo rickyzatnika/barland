@@ -11,7 +11,7 @@ const FormAddClass = ({ setShowModal }) => {
 
   // fetch user data use SWR
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const { mutate } = useSWR("/api/raceClasses", fetcher);
+  const { mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/raceClasses`, fetcher);
 
 
   const handleChange = (index, event) => {
@@ -47,7 +47,7 @@ const FormAddClass = ({ setShowModal }) => {
           setLoading(false);
           setShowModal(false);
           toast.success(`Kelas ditambahkan`);
-
+          mutate();
         }, 3000);
         return () => clearTimeout(timeoutId);
       } else {

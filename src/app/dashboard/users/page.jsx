@@ -42,7 +42,7 @@ const UserPage = () => {
       const userToDelete = users.find(user => user._id === deleteId);
       const userName = userToDelete ? userToDelete.name : "User";
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_DEV}/api/user/${deleteId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/user/${deleteId}`, {
         method: "DELETE",
       });
 
@@ -139,7 +139,7 @@ const UserPage = () => {
         {showDeleteModal && deleteId && (
           <div className="fixed top-0 left-0 w-full h-screen shadow-lg z-50 bg-black/30 text-white flex items-center justify-center">
             <div className="second py-8 px-6 rounded">
-              <p className="text-lg py-2">Anda akan menghapus {users.find(r => r._id === deleteId)?.name}</p>
+              <p className="text-lg py-2">Anda yakin ingin menghapus <br /> {users.find(r => r._id === deleteId)?.name} ?</p>
               <div className="flex gap-3 pt-6">
                 <button className="py-1.5 px-4 bg-gradient-to-tr rounded from-green-400 to-lime-500 hover:bg-gradient-to-tl hover:from-green-400 hover:to-lime-500" onClick={handleDelete}>Ya Hapus</button>
                 <button className="py-1.5 px-4 bg-red-500 hover:bg-red-600 rounded" onClick={() => setShowDeleteModal(false)}>Batal</button>

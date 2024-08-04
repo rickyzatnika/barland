@@ -56,7 +56,7 @@ const TableRiders = () => {
       setNoData(false);
     }
 
-  }, [data, searchQuery]); // Tambahkan data ke dependency array
+  }, [data, mutate, searchQuery]); // Tambahkan data ke dependency array
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
