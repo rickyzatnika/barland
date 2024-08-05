@@ -24,7 +24,7 @@ const BarChart = () => {
     labels: data?.map(rider => rider.name),
     datasets: [
       {
-        label: 'My First Dataset',
+        label: 'Rp.',
         data: data?.map(item => item.totalPrice),
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
