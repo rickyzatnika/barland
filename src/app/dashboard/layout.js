@@ -3,9 +3,8 @@
 import Aside from "@/components/Dashboard/Aside";
 import ResizeAttention from "@/components/ResizeAttention";
 import { useSession } from "next-auth/react";
-
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function DashboardLayout({ children }) {
   const { status } = useSession();
@@ -20,11 +19,13 @@ export default function DashboardLayout({ children }) {
   return (
     <>
       <ResizeAttention />
-      <div className="w-full flex h-full gap-1">
-        <div className=" relative flex-1">
+      <div className="w-full flex h-full">
+        <div className="basis-[14%]">
           <Aside />
         </div>
-        <div className="w-[87%] mx-auto  h-full px-4 py-4">{children}</div>
+        <div className="w-full basis-[86%] overflow-x-auto bg-gray-100 h-full px-3 py-4">
+          {children}
+        </div>
       </div>
     </>
   );

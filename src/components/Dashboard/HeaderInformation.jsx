@@ -1,41 +1,93 @@
 "use client"
+import { useEffect, useState } from "react";
 import { CiViewBoard } from "react-icons/ci";
+import useSWR from "swr";
+import { IoIosArrowRoundForward } from "react-icons/io";
+import Link from "next/link";
 
 
 
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const HeaderInformation = () => {
+
+  const [riders, setRiders] = useState([]);
+  const [user, setUser] = useState([]);
+  const [classes, setClasses] = useState([])
+
+
+  // const { data: dataRiders } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/daftar`, fetcher);
+  // const { data: dataUser } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/user`, fetcher);
+  // const { data: dataClass } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/daftar`, fetcher);
+
+  const { data: dataRiders } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher);
+  const { data: dataUser } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/user`, fetcher);
+  const { data: dataClass } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher);
+
+
+
+  useEffect(() => {
+
+    setRiders(dataRiders);
+    setUser(dataUser);
+    setClasses(dataClass);
+
+
+  }, [dataClass, dataRiders, dataUser]);
+
+
   return (
     <div className='items-center justify-start flex gap-3'>
-      <div className="max-w-64 flex  justify-items-end flex-col gap-3 w-full px-4 py-3 bg-gray-50">
+      <div className="shadow-lg rounded-lg flex  justify-items-end flex-col gap-3 w-full px-4 py-3 bg-gray-50">
         <div className="flex gap-4">
           <CiViewBoard size={24} />
           <div className="flex-col flex gap-3">
-            <p className="text-sm text-gray-700">Total Riders</p>
-            <p className="text-lg text-gray-500">Data</p>
-            <p className="text-sm text-gray-500">Another Data</p>
+            <p className="text-sm text-gray-600">Total Riders</p>
+            <p className="text-lg text-gray-700 font-medium">{riders?.length} Orang</p>
+            <div className="text-sm text-lime-500 ">
+              <Link href="/dashboard/list-riders" className="flex gap-1 items-center group">
+                <p>Lihat Detail</p>
+                <div className="relative right-0 transition-all duration-300 ease-in-out group-hover:-right-2">
+                  <IoIosArrowRoundForward size={20} />
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
       {/* 2 */}
-      <div className="max-w-64 flex  justify-items-end flex-col gap-3 w-full px-4 py-3 bg-gray-50">
+      <div className="shadow-lg rounded-lg flex  justify-items-end flex-col gap-3 w-full px-4 py-3 bg-gray-50">
         <div className="flex gap-4">
           <CiViewBoard size={24} />
           <div className="flex-col flex gap-3">
-            <p className="text-sm text-gray-700">Total User</p>
-            <p className="text-lg text-gray-500">Data</p>
-            <p className="text-sm text-gray-500">Another Data</p>
+            <p className="text-sm text-gray-600">Total User</p>
+            <p className="text-lg text-gray-700 font-medium">{user?.length} Orang</p>
+            <div className="text-sm text-lime-500 ">
+              <Link href="/dashboard/users" className="flex gap-1 items-center group">
+                <p>Lihat Detail</p>
+                <div className="relative right-0 transition-all duration-300 ease-in-out group-hover:-right-2">
+                  <IoIosArrowRoundForward size={20} />
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
       {/* 3 */}
-      <div className="max-w-64 flex  justify-items-end flex-col gap-3 w-full px-4 py-3 bg-gray-50">
+      <div className="shadow-lg rounded-lg flex  justify-items-end flex-col gap-3 w-full px-4 py-3 bg-gray-50">
         <div className="flex gap-4">
           <CiViewBoard size={24} />
           <div className="flex-col flex gap-3">
-            <p className="text-sm text-gray-700">Total Class</p>
-            <p className="text-lg text-gray-500">Data</p>
-            <p className="text-sm text-gray-500">Another Data</p>
+            <p className="text-sm text-gray-700">Total Kelas Balap</p>
+            <p className="text-lg text-gray-700 font-medium">{classes?.length} Kelas</p>
+            <div className="text-sm text-lime-500 ">
+              <Link href="/dashboard/list-kelas" className="flex gap-1 items-center group">
+                <p>Lihat Detail</p>
+                <div className="relative right-0 transition-all duration-300 ease-in-out group-hover:-right-2">
+                  <IoIosArrowRoundForward size={20} />
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

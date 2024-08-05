@@ -38,7 +38,10 @@ const TableRiders = () => {
   const [noData, setNoData] = useState(false);
 
   // fetch user data use SWR
+  // Development
+  // const { data, mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/daftar?q=${searchQuery}`, fetcher);
 
+  // PRODUCTION
   const { data, mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar?q=${searchQuery}`, fetcher);
 
 
@@ -130,32 +133,6 @@ const TableRiders = () => {
       toast.error("Ups, sesuatu yang salah");
     }
   };
-
-
-  // backup handleDelete
-  // const handleDelete = async () => {
-  //   if (!deleteId) return; // Jika tidak ada ID yang diset, tidak lakukan apa-apa
-
-  //   try {
-  //     const res = await fetch(`${process.env.NEXT_PUBLIC_API_DEV}/api/daftar/${deleteId}`, {
-  //       method: "DELETE",
-  //     });
-  //     if (res.status === 200) {
-  //       toast.success("successfully");
-  //       setShowModal(false);
-  //       setDeleteId(null);
-  //       mutate(); // Memuat ulang data
-  //     } else {
-  //       toast.error("Failed to delete item");
-  //     }
-  //   } catch (error) {
-  //     toast.error("Ups something went wrong");
-  //   }
-  // };
-
-
-
-
 
   return (
     <>

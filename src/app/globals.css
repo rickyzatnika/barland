@@ -37,3 +37,17 @@
     transform: rotate(360deg);
   }
 }
+
+.triangle {
+  background: none;
+  width: 0;
+  height: 0;
+  border-left: 19px solid transparent; /* Adjust the size of the triangle */
+  border-right: 19px solid transparent;
+  border-bottom: 38px solid #e2e2e2; /* Color of the triangle */
+  transform: rotate(90deg); /* Rotate to position the triangle appropriately */
+  position: absolute;
+  right: 0;
+  bottom: 22px;
+  transform: translateY(50%) rotate(-90deg);
+}

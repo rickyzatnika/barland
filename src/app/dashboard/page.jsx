@@ -9,20 +9,21 @@ const HeaderInformation = dynamic(() => import('@/components/Dashboard/HeaderInf
 const Dashboard = () => {
   return (
     <div className='w-full '>
-      <h1>Dashboard</h1>
-
-      <div className='my-8'>
-        <HeaderInformation />
-        <div className='flex gap-6 items-center my-12'>
-          <div className="flex-1">
-            <h2>Riders Total Price</h2>
-            <BarChart />
-          </div>
-          <div className="flex-1 max-w-sm">
-            <h2>Total Price of All Riders</h2>
-            <ChartTotalPrice />
+      <div className='py-4 shadow-lg px-6 second text-gray-300 w-full rounded-md'>
+        <h1>Dashboard</h1>
+      </div>
+      <div className='w-full my-8 flex gap-3'>
+        <div className='flex flex-col basis-9/12 '>
+          <HeaderInformation />
+          <div className='flex flex-col shadow-lg gap-4 w-full my-6 bg-gray-50 py-6 rounded-lg px-6'>
+            <h2 className='text-sm text-gray-700 font-medium'>Data Transaksi Keseluruhan Pembayaran Tunai dan Transfer </h2>
+            <div className='flex flex-col gap-6'>
+              <BarChart />
+              <ChartTotalPrice />
+            </div>
           </div>
         </div>
+        <div className='basis-3/12'>rightbar</div>
       </div>
     </div>
   );

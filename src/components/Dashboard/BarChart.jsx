@@ -11,17 +11,30 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { useEffect, useState } from 'react';
 
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const BarChart = () => {
 
+  const [sortData, setSortData] = useState([]);
+
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const { data, mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher);
+  const { data, mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/daftar`, fetcher);
+
+  useEffect(() => {
+    if (data) {
+
+      const dataSort = data.sort((a, b) => a.name.localeCompare(b.name))
+      return setSortData(dataSort);
+    }
+    mutate();
+
+  }, [data, mutate])
 
   const chartData = {
-    labels: data?.map(rider => rider.name),
+    labels: sortData?.map(rider => rider.name),
     datasets: [
       {
         label: 'Rp.',
@@ -33,7 +46,11 @@ const BarChart = () => {
     ],
   };
 
-  return <Bar data={chartData} />;
+  return (
+    <div className='px-6 py-4 w-full'>
+      <Bar data={chartData} />
+    </div>
+  )
 };
 
 export default BarChart;
