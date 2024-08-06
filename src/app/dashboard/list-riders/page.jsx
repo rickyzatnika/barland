@@ -166,7 +166,6 @@ const TableRiders = () => {
               <p className="text-sm antialiased text-gray-500 dark:text-gray-200">{riders?.length} Orang</p>
             </div>
           }
-
         </div>
 
         <div className="flex items-center justify-center gap-6">
