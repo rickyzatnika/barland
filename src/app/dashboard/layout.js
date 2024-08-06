@@ -11,7 +11,10 @@ export default function DashboardLayout({ children }) {
   const router = useRouter();
 
   useEffect(() => {
-    if (session?.user?.role !== "admin" || status === "unauthenticated") {
+    if (
+      (session && session?.user?.role === "user") ||
+      status === "unauthenticated"
+    ) {
       router.push("/");
     }
   }, [router, session, status]);
