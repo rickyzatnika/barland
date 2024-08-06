@@ -7,14 +7,14 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function DashboardLayout({ children }) {
-  const { status } = useSession();
+  const { session, status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
-    if (status === "unauthenticated") {
+    if (session?.user?.role !== "admin" || status === "unauthenticated") {
       router.push("/");
     }
-  }, [router, status]);
+  }, [router, session, status]);
 
   return (
     <>
