@@ -92,7 +92,7 @@ const Navbar = () => {
         ) : (
           ""
         )}
-        {session?.user?.role === "admin" &&
+        {session?.user?.role === "admin" ||
           session?.user?.role === "master" && (
             <Link
               className={`font-medium ${pathname === "/dashboard"
