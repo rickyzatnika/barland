@@ -42,6 +42,10 @@ const RidersSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    isPayment: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
