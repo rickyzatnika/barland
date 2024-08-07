@@ -38,7 +38,7 @@ export const asideLink = [
   },
   {
     id: "6",
-    title: "Data Seklom",
+    title: "Seklom",
     icon: <RiDatabaseLine size={24} />,
     link: "/dashboard/seklom",
   },

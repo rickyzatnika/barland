@@ -3,7 +3,6 @@
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MdAdminPanelSettings } from "react-icons/md";
 import { asideLink } from "@/utils/asideLink";
 import Image from "next/image";
 import DarkModeToggle from "../Darkmode/DarkMode";

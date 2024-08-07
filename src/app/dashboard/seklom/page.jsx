@@ -194,8 +194,8 @@ const SeklomPage = () => {
         </div>
       </div>
       <div className="relative overflow-x-auto ">
-        <table className="w-full table-auto text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-sm uppercase second text-white dark:bg-gray-700 dark:text-gray-200">
+        <table className="w-full table-auto text-left rtl:text-right text-gray-500 dark:text-gray-300">
+          <thead className="text-sm uppercase second text-gray-100 dark:bg-gray-700 dark:text-gray-300">
             <tr className="">
               {TABLE_HEAD.map((head) => (
                 <th key={head} className="px-6 py-5">
@@ -208,7 +208,7 @@ const SeklomPage = () => {
             {riders.map((rider, i) => (
               <tr
                 key={rider?._id}
-                className="bg-white text-xs font-medium border-b dark:bg-gray-800 dark:border-gray-700"
+                className="bg-white text-sm font-medium border-b dark:bg-gray-800 dark:border-gray-700"
               >
                 <td className="px-6 py-4 capitalize antialiased leading-relaxed">{i + 1}.</td>
                 <td className="px-6 py-4 capitalize antialiased leading-relaxed"><p className="w-32">{rider?.name}</p></td>

@@ -228,7 +228,7 @@ const TableRiders = () => {
             {riders.map((rider, i) => (
               <tr
                 key={rider?._id}
-                className="bg-white text-xs font-medium border-b dark:bg-gray-800 dark:border-gray-700"
+                className="bg-white text-sm font-medium border-b dark:bg-gray-800 dark:border-gray-700"
               >
                 <td className="px-6 py-4 capitalize antialiased leading-relaxed">{i + 1}.</td>
                 <td className="px-6 py-4 capitalize antialiased leading-relaxed"><p className="w-32">{rider?.name}</p></td>
