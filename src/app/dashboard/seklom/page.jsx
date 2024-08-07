@@ -21,6 +21,7 @@ const SeklomPage = () => {
   const [team, setTeam] = useState("");
   const [numberStart, setNumberStart] = useState("");
   const [raceClass, setRaceClass] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(false);
 
 
@@ -92,24 +93,25 @@ const SeklomPage = () => {
   }, [updateId]);
 
 
-  // Handle raceClass change
+  useEffect(() => {
+    const total = raceClass.reduce((total, cls) => total + (parseFloat(cls.price) || 0), 0);
+    setTotalPrice(total);
+  }, [raceClass]);
+
   const handleRaceClassChange = (index, field, value) => {
     const newRaceClass = [...raceClass];
     newRaceClass[index][field] = value;
     setRaceClass(newRaceClass);
   };
 
-  // Form submit Edit User By user._id
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setLoading(true);
-    try {
 
+    try {
       const riderToDelete = riders.find(rider => rider._id === updateId);
       const riderName = riderToDelete ? riderToDelete.name : "Rider";
-
-      const body = { name, team, numberStart, raceClass };
+      const body = { name, team, numberStart, raceClass, totalPrice };
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar/${updateId}`, {
         headers: {
@@ -122,20 +124,15 @@ const SeklomPage = () => {
       const data = await res.json();
 
       if (res.status === 200) {
-        const setTimeoutId = setTimeout(() => {
-          toast.success(`${riderName} berhasil diperbaharui`);
-          setLoading(false);
-          setShowModal(false);
-          mutate();
-        }, 3000);
-
-        return () => clearTimeout(setTimeoutId);
+        toast.success(`${riderName} berhasil diperbaharui`);
+        setLoading(false);
+        setShowModal(false);
+        mutate();
       } else {
         toast.error(data.message);
       }
-
     } catch (error) {
-      toast.error("Ups something went wrong", error);
+      toast.error("Ups something went wrong", error.message);
     }
   };
 
