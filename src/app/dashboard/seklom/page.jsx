@@ -85,6 +85,7 @@ const SeklomPage = () => {
         setTeam(rider?.team);
         setNumberStart(rider?.numberStart);
         setRaceClass(rider?.raceClass);
+        setTotalPrice(rider?.totalPrice);
       }
       getRiderById();
     } else {
@@ -99,11 +100,6 @@ const SeklomPage = () => {
   }, [raceClass]);
 
 
-  const handleRaceClassChange = (index, field, value) => {
-    const newRaceClass = [...raceClass];
-    newRaceClass[index][field] = value;
-    setRaceClass(newRaceClass);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -136,6 +132,13 @@ const SeklomPage = () => {
       toast.error("Ups something went wrong", error.message);
     }
   };
+
+  const handleRaceClassChange = (index, field, value) => {
+    const newRaceClass = [...raceClass];
+    newRaceClass[index][field] = value;
+    setRaceClass(newRaceClass);
+  };
+
 
 
   return (
