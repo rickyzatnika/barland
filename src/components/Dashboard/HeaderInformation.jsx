@@ -16,13 +16,13 @@ const HeaderInformation = () => {
   const [classes, setClasses] = useState([])
 
 
-  const { data: dataRiders } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/daftar`, fetcher);
-  const { data: dataUser } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/user`, fetcher);
-  const { data: dataClass } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/daftar`, fetcher);
+  // const { data: dataRiders } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/daftar`, fetcher);
+  // const { data: dataUser } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/user`, fetcher);
+  // const { data: dataClass } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/daftar`, fetcher);
 
-  // const { data: dataRiders } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher);
-  // const { data: dataUser } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/user`, fetcher);
-  // const { data: dataClass } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher);
+  const { data: dataRiders } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher);
+  const { data: dataUser } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/user`, fetcher);
+  const { data: dataClass } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher);
 
 
 

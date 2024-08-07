@@ -11,7 +11,7 @@ const FormAddClass = ({ setShowModal }) => {
 
   // fetch user data use SWR
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const { mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/raceClasses`, fetcher);
+  const { mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/raceClasses`, fetcher);
 
 
   const handleChange = (index, event) => {
@@ -31,7 +31,7 @@ const FormAddClass = ({ setShowModal }) => {
     const data = { title, classes };
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_DEV}/api/raceClasses`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/raceClasses`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
