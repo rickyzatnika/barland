@@ -1,18 +1,18 @@
 "use client"
 
-// pages/dashboard.js
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import BarChart from '@/components/Dashboard/BarChart';
-
 import { TbLogout } from "react-icons/tb";
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 
 
-const ChartTotalPrice = dynamic(() => import('@/components/Dashboard/ChartTotalPrice'), { ssr: false });
 const HeaderInformation = dynamic(() => import('@/components/Dashboard/HeaderInformation'), { ssr: false });
 
 const Dashboard = () => {
+
+
+  const { data: session } = useSession();
 
   const [currentTime, setCurrentTime] = useState('');
 
@@ -39,34 +39,38 @@ const Dashboard = () => {
 
 
   return (
-    <div className='w-full '>
-      <div className="flex items justify-between pb-4 px-2 w-full border-b border-gray-400 dark:border-gray-800 ">
-        <div>
-          <h1 className='text-lg font-medium uppercase'>Dashboard</h1>
-          <p className='text-xs italic'>{currentTime}</p>
+
+    <>
+      <div className="flex items-center justify-between pb-4 px-2 max-w-full border-b border-gray-400 dark:border-gray-800 ">
+        <div className='flex flex-col '>
+          <h1 className='text-md font-medium uppercase'>Dashboard</h1>
+          <h3 className="text-sm">Hi {session?.user?.name}, Enjoy your work.</h3>
         </div>
-        <div className='flex justify-between items-center gap-3'>
-          <h3>Admin</h3>
-          <div className='relative group'>
-            <TbLogout size={28} onClick={() => signOut()} className='cursor-pointer ' />
-            <span className='hidden group-hover:block text-[10px] absolute -top-2 -left-12 py-1 px-2 bg-black rounded-lg text-gray-200'>Logout</span>
-          </div>
+
+        <div className='relative group flex justify-between items-center gap-3'>
+          <TbLogout size={28} onClick={() => signOut()} className='cursor-pointer ' />
+          <span className='hidden group-hover:block text-[10px] absolute -top-2 -left-12 py-1 px-2 bg-black rounded-lg text-gray-200'>Logout</span>
         </div>
       </div>
-      <div className='w-full my-8 flex gap-3'>
+      <div className='w-full  flex gap-3'>
         <div className='flex flex-col basis-9/12 '>
+          <div className='w-full bg-gray-100 shadow-md dark:bg-slate-800 my-3 rounded-lg'>
+            <p className='text-xs text-center py-2 capitalize'>{currentTime} WIB</p>
+          </div>
           <HeaderInformation />
-          <div className='flex flex-col shadow-lg gap-4 w-full my-6  py-6 rounded-lg px-6'>
+          <div className='flex flex-col shadow-lg gap-4 w-full my-6 bg-gray-100 dark:bg-slate-800 py-6 rounded-lg px-6'>
             <h2 className='text-sm font-medium'>Data Transaksi Keseluruhan Pembayaran Tunai dan Transfer </h2>
-            <div className='flex flex-col gap-6'>
-              <BarChart />
-              <ChartTotalPrice />
-            </div>
+            <BarChart />
           </div>
         </div>
-        <div className='basis-3/12'>rightbar</div>
+        <div className='basis-3/12 h-full my-3'>
+          <div className='bg-gray-100 shadow-lg dark:bg-slate-800 w-full h-full min-h-screen px-4 py-6 rounded-lg'>
+            RightSide
+          </div>
+        </div>
       </div>
-    </div>
+    </>
+
   );
 };
 

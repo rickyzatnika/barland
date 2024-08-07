@@ -1,26 +1,19 @@
-import { useEffect } from 'react';
+"use client"
 
-const Modal = ({ children, isOpen, onClose }) => {
-  useEffect(() => {
-    const handleEscape = (event) => {
-      if (event.key === 'Escape') {
-        onClose();
-      }
-    };
+import { ThemeContext } from '@/context/ThemeContext';
+import { useContext, useEffect } from 'react';
 
-    document.addEventListener('keydown', handleEscape);
+const Modal = ({ children, isOpen, handleCancel }) => {
 
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-    };
-  }, [onClose]);
+  const { theme } = useContext(ThemeContext)
+
 
   if (!isOpen) return null;
 
   return (
-    <div className="w-full px-4 h-[100vh] fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 ">
-      <div className="bg-white shadow-md w-full h-full overflow-y-auto sm:w-4/5 px-4 pb-8 pt-6 rounded-lg">
-        <button onClick={onClose} className="absolute top-2  text-white right-2 text-4xl">&times;</button>
+    <div className="w-full px-4 h-[100vh] fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm ">
+      <div className={`shadow-md w-full h-full overflow-y-auto sm:w-4/5 px-4 pb-8 pt-6 rounded-lg ${theme === "light" ? "light" : "dark"}`}>
+        <button onClick={handleCancel} className="absolute top-2 text-gray-500 bg-gray-100/90 hover:bg-gray-100 hover:text-gray-600 px-2 rounded-md right-6 text-3xl">&times;</button>
         {children}
       </div>
     </div>

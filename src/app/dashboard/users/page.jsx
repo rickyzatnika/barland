@@ -5,7 +5,7 @@ import { RiDeleteBin2Line } from "react-icons/ri";
 import { toast } from "react-toastify";
 import FormAddUser from "@/components/Dashboard/FormAddUser";
 
-const TABLE_HEAD = ["Nama", "No.Handphone", "Role", "Action"];
+const TABLE_HEAD = ["No", "Nama", "No.Handphone", "Role", "Action"];
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -63,29 +63,12 @@ const UserPage = () => {
   };
 
 
-
-  // const handleDelete = async (id) => {
-  //   try {
-  //     const res = await fetch(`/api/user/${id}`, {
-  //       method: "DELETE",
-  //     });
-
-  //     if (res.status === 200) {
-  //       toast.success("User deleted.");
-  //       mutate();
-  //     }
-  //   } catch (error) {
-  //     toast.error("maaf sepertinya ada kesalahan pada server.", error);
-  //   }
-
-  // };
-
   return (
     <>
-      <div className="w-full flex items-center justify-between border-b pb-4">
+      <div className="w-full flex items-center justify-between border-b border-gray-400 dark:border-gray-800 pb-5">
         <button
           onClick={() => setShowModal((prev) => !prev)}
-          className="text-gray-200 second py-2 px-5 rounded shadow-lg hover:bg-[#000]"
+          className="second dark:bg-slate-800 text-gray-50 py-2 px-5 rounded shadow-lg"
           type="button"
         >
           Add User
@@ -93,34 +76,38 @@ const UserPage = () => {
       </div>
       <div className="relative overflow-x-auto my-8 sm:rounded-lg">
         {showModal && <FormAddUser setShowModal={setShowModal} />}
-        <table className="w-full table-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase second ">
+        <table className="w-full shadow-md table-auto text-sm text-left ">
+          <thead className="text-md text-gray-700 uppercase second ">
             <tr>
               {TABLE_HEAD.map((head) => (
-                <th key={head} className=" text-white px-6 py-4">
+                <th key={head} className=" px-6 py-4 second dark:bg-slate-800 text-gray-50">
                   {head}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {users?.map((user) => (
+            {users?.map((user, i) => (
               <React.Fragment key={user?._id}>
-                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                  <td className="px-6 bg-slate-100/60 py-4 font-medium text-gray-600 whitespace-nowrap dark:text-white">
+                <tr className={`px-6 py-4 text-sm font-medium text-gray-700 dark:text-gray-100 ${user?.role === "user" ? "bg-gray-100 dark:bg-slate-600" : "bg-gray-200 dark:bg-slate-700"}`}>
+                  <td className="px-6 py-4 border-b border-gray-300 dark:border-gray-500 whitespace-nowrap">
+                    {i + 1}
+                  </td>
+                  <td className="px-6 py-4 border-b border-gray-300 dark:border-gray-500 capitalize whitespace-nowrap">
                     {user?.name}
                   </td>
-                  <td className="bg-slate-100/60 px-6 py-4 text-gray-600 whitespace-nowrap dark:text-white font-medium text-md">
+                  <td className="px-6 py-4 border-b border-gray-300 dark:border-gray-500 whitespace-nowrap">
                     {user?.phone}
                   </td>
-                  <td className="bg-slate-100/60 px-6 py-4 text-gray-600 whitespace-nowrap dark:text-white font-medium text-md">
+                  <td className="px-6 py-4 border-b border-gray-300 dark:border-gray-500 capitalize whitespace-nowrap">
                     {user?.role}
                   </td>
-                  <td className="px-8 py-4 bg-slate-100/60 ">
+                  <td className="px-8 py-4 border-b border-gray-300 dark:border-gray-500 whitespace-nowrap">
 
                     <button
                       className="relative group"
                       onClick={() => handleShowModal(user?._id)}
+                      disabled={user?.role === "master" ? true : false}
                     >
                       <RiDeleteBin2Line
                         className="hover:text-red-500"

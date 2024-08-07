@@ -16,7 +16,7 @@ const FormAddUser = ({ setShowModal }) => {
   const [loading, setLoading] = useState(false);
   // fetch user data use SWR
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const { mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/user`, fetcher);
+  const { mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/user`, fetcher);
 
 
   const handlePasswordVisible = () => {
@@ -55,7 +55,7 @@ const FormAddUser = ({ setShowModal }) => {
 
     try {
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/user`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_DEV}/api/user`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, phone, password, role }),

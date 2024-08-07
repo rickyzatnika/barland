@@ -16,13 +16,13 @@ const HeaderInformation = () => {
   const [classes, setClasses] = useState([])
 
 
-  // const { data: dataRiders } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/daftar`, fetcher);
-  // const { data: dataUser } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/user`, fetcher);
-  // const { data: dataClass } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/daftar`, fetcher);
+  const { data: dataRiders } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/daftar`, fetcher);
+  const { data: dataUser } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/user`, fetcher);
+  const { data: dataClass } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/daftar`, fetcher);
 
-  const { data: dataRiders } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher);
-  const { data: dataUser } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/user`, fetcher);
-  const { data: dataClass } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher);
+  // const { data: dataRiders } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher);
+  // const { data: dataUser } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/user`, fetcher);
+  // const { data: dataClass } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher);
 
 
 
@@ -38,12 +38,12 @@ const HeaderInformation = () => {
 
   return (
     <div className='items-center justify-start flex gap-3'>
-      <div className="shadow-lg rounded-lg flex  justify-items-end flex-col gap-3 w-full px-4 py-3 bg-gray-50">
+      <div className="shadow-lg rounded-lg flex  justify-items-end flex-col gap-3 w-full px-4 py-3 bg-gray-100 dark:bg-slate-800 ">
         <div className="flex gap-4">
           <CiViewBoard size={24} />
           <div className="flex-col flex gap-3">
-            <p className="text-sm text-gray-600">Total Riders</p>
-            <p className="text-lg text-gray-700 font-medium">{riders?.length} Orang</p>
+            <p className="text-sm">Total Riders</p>
+            <p className="text-lg font-medium">{riders?.length} Orang</p>
             <div className="text-sm text-lime-500 ">
               <Link href="/dashboard/list-riders" className="flex gap-1 items-center group">
                 <p>Lihat Detail</p>
@@ -56,12 +56,12 @@ const HeaderInformation = () => {
         </div>
       </div>
       {/* 2 */}
-      <div className="shadow-lg rounded-lg flex  justify-items-end flex-col gap-3 w-full px-4 py-3 bg-gray-50">
+      <div className="shadow-lg rounded-lg flex  justify-items-end flex-col gap-3 w-full px-4 py-3 bg-gray-100 dark:bg-slate-800 ">
         <div className="flex gap-4">
           <CiViewBoard size={24} />
           <div className="flex-col flex gap-3">
-            <p className="text-sm text-gray-600">Total User</p>
-            <p className="text-lg text-gray-700 font-medium">{user?.length} Orang</p>
+            <p className="text-sm">Total User</p>
+            <p className="text-lg font-medium">{user?.length} Orang</p>
             <div className="text-sm text-lime-500 ">
               <Link href="/dashboard/users" className="flex gap-1 items-center group">
                 <p>Lihat Detail</p>
@@ -74,12 +74,12 @@ const HeaderInformation = () => {
         </div>
       </div>
       {/* 3 */}
-      <div className="shadow-lg rounded-lg flex  justify-items-end flex-col gap-3 w-full px-4 py-3 bg-gray-50">
+      <div className="shadow-lg rounded-lg flex  justify-items-end flex-col gap-3 w-full px-4 py-3 bg-gray-100 dark:bg-slate-800 ">
         <div className="flex gap-4">
           <CiViewBoard size={24} />
           <div className="flex-col flex gap-3">
-            <p className="text-sm text-gray-700">Total Kelas Balap</p>
-            <p className="text-lg text-gray-700 font-medium">{classes?.length} Kelas</p>
+            <p className="text-sm ">Kelas Balap</p>
+            <p className="text-lg font-medium">{classes?.length} Kelas</p>
             <div className="text-sm text-lime-500 ">
               <Link href="/dashboard/list-kelas" className="flex gap-1 items-center group">
                 <p>Lihat Detail</p>

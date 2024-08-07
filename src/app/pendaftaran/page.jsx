@@ -102,8 +102,8 @@ const Daftar = () => {
       toast.error("NIK Invalid, pastikan tidak lebih dari 16 digit");
       return;
     }
-    if (formData.kis.length !== 8) {
-      toast.error("NIS Invalid, pastikan tidak lebih dari 8 digit");
+    if (formData.kis.length < 4 || formData.kis.length > 4) {
+      toast.error("NIS Invalid, pastikan tidak lebih atau kurang dari 4 digit");
       return;
     }
 
@@ -166,7 +166,7 @@ const Daftar = () => {
           raceClass: [],
           totalPrice: 0, // Reset total price
         });
-        router.push('/events');
+        router.push('/');
         setIsModalOpen(false);
         setLoading(false);
         toast.success('Data terkirim');
@@ -224,7 +224,7 @@ const Daftar = () => {
             </div>
             <Image src="/flag.png" alt='race-flag' width={100} height={100} style={{ width: "auto", height: "auto" }} priority={true} />
           </div>
-          <form onSubmit={handleSubmit} className='px-3 md:px-6 py-8 md:py-12 bg-green-900/5 shadow-md'>
+          <form onSubmit={handleSubmit} className='px-3 md:px-6 py-8 rounded-md md:py-12 bg-slate-50 dark:bg-slate-800 shadow-lg shadow-gray-200 dark:shadow-slate-950'>
             <div className="grid gap-3 md:gap-6 mb-6 md:grid-cols-2">
               <div>
                 <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Lengkap :</label>
@@ -261,18 +261,18 @@ const Daftar = () => {
           </form>
         </div>
       )}
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+      <Modal isOpen={isModalOpen} handleCancel={handleCancel} setStep={setStep}>
         {step === "2" && (
           <div className="h-[95vh] w-full sm:h-[90vh] sm:pb-14 overflow-hidden antialiased">
-            <h2 className="text-lg py-4 text-center sm:text-xl bg-gradient-to-tr from-green-400 to-lime-500 text-gray-50 dark:text-white mb-4">Pilih Nomor Start 1 - 300:</h2>
+            <h2 className="text-lg py-4 text-center sm:text-xl bg-gradient-to-r from-lime-500 via-lime-400 to-lime-500 text-gray-50 dark:text-white mb-4">Pilih Nomor Start 1 - 300:</h2>
             <div className='px-4 pb-4'>
               <div className='flex items-center gap-2'>
-                <div className='w-4 h-4 bg-green-400' />
-                <p className='text-gray-600 text-md dark:text-gray-300'>Nomor Masih Tersedia</p>
+                <div className='w-4 h-4 bg-gradient-to-t from-lime-600/80 via-lime-500/80  to-lime-400/80' />
+                <p className='font-medium text-sm'>Nomor Masih Tersedia</p>
               </div>
               <div className='flex items-center gap-2'>
                 <div className='w-4 h-4 bg-red-600' />
-                <p className='text-gray-600 text-md dark:text-gray-300'>Nomor Sudah Terpilih</p>
+                <p className='font-medium text-sm'>Nomor Sudah Terpilih</p>
               </div>
               <p className='text-xs italic text-red-500 mt-2 font-semibold'>Notes : 1 Nomor Start untuk 1 Pembalap di semua kelas yang diikuti</p>
             </div>
@@ -283,7 +283,7 @@ const Daftar = () => {
                   key={num}
                   onClick={() => handleNumberSelect(num + 1)}
                   disabled={takenNumbers.includes(num + 1)}
-                  className={`p-4 border rounded ${takenNumbers.includes(num + 1) ? 'bg-red-600 cursor-not-allowed' : 'bg-green-400 hover:bg-green-500 cursor-pointer'}`}
+                  className={`p-4 border rounded ${takenNumbers.includes(num + 1) ? 'bg-red-600 cursor-not-allowed' : 'bg-gradient-to-t from-lime-600/80 via-lime-500/80  to-lime-400/80 shadow-md text-gray-50 hover:bg-gradient-to-t hover:from-lime-600 hover:via-lime-500 hover:to-lime-400 transition-all duration-200 ease-linear cursor-pointer'}`}
                 >
                   {num + 1}
                 </button>
@@ -295,9 +295,9 @@ const Daftar = () => {
           <div className="p-2 overflow-y-auto w-full h-full">
             <h2 className="w-full mb-2 text-md md:text-xl bg-gradient-to-tr from-green-400 to-lime-500 text-center py-4 uppercase font-bold text-white">Pilih Kelas</h2>
             <div className='pb-6 px-4'>
-              <p className='text-gray-500 italic text-md'>Silahkan pilih satu atau beberapa kelas yang ingin diikuti</p>
+              <p className='italic text-md'>Silahkan pilih satu atau beberapa kelas yang ingin diikuti</p>
             </div>
-            <div className="bg-white pb-6 grid gap-0 sm:gap-3 mb-0 sm:mb-2 md:grid-cols-2 ">
+            <div className="pb-6 grid gap-0 sm:gap-3 mb-0 sm:mb-2 md:grid-cols-2 ">
               {raceClasses.map((raceClass) => (
                 <div key={raceClass.title} className="w-full bg-orange-100 mb-4">
                   <h3 className="text-md bg-orange-400 py-2 px-3 uppercase font-semibold mb-2">{raceClass.title}</h3>
@@ -310,9 +310,9 @@ const Daftar = () => {
                         value={`${cls.name},${cls.price}`}
                         checked={formData.raceClass.some(selectedClass => selectedClass.name === cls.name)}
                         onChange={handleClassChange}
-                        className='mr-2 w-4 h-4 text-green-400 bg-gray-100 border-gray-300 rounded focus:ring-green-400 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                        className='mr-2 w-4 h-4 text-green-400 bg-white dark:bg-slate-950  rounded border-none outline-none ring-0 focus:ring-none focus:outline-none focus:ring-offset-0 focus:border-none'
                       />
-                      <span className='uppercase'>{cls.name}</span>
+                      <span className='uppercase dark:text-slate-900 font-medium'>{cls.name}</span>
                       <span className='hidden'>{cls.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                     </label>
                   ))}
@@ -327,7 +327,7 @@ const Daftar = () => {
             <h1 className='text-xl text-center bg-gradient-to-tr from-green-400 to-lime-500 py-4 font-bold text-white/90'>INFORMASI PEMBAYARAN</h1>
             <div className='flex flex-col gap-4 pb-12 sm:pb-4'>
               <div className='border rounded-b-md border-gray-400 px-4 pt-2 pb-4'>
-                <ul className='p-4 text-md flex flex-col gap-2 text-gray-600'>
+                <ul className='p-4 text-md flex flex-col gap-2 leading-relaxed'>
                   <li className='list-decimal'>Pembayaran dapat melalui Transfer Bank atau langsung dilokasi kepada panitia penyelenggara.</li>
                   <li className='list-decimal'>
                     Untuk pembayaran melalui Transfer Bank, kirim ke No.REK berikut :
@@ -344,13 +344,13 @@ const Daftar = () => {
                   <li className='list-decimal'>Transfer selain kepada No.REK yang tertera diatas, tidak sah!</li>
 
                 </ul>
-                <p className='text-gray-700 font-semibold'><span className='text-gray-500 text-sm'>Total Pembayaran Anda sebesar</span> : {formData.totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })} </p>
+                <p className='font-semibold'><span className='text-sm'>Total Pembayaran Anda sebesar</span> : {formData.totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })} </p>
               </div>
               <div className='pb-3'>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input">Upload file <span className='text-xs text-red-500 italic'>(optional)</span></label>
                 <input onChange={handleFileChange} name="img" className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" />
               </div>
-              <button onClick={() => setStep("5")} className="w-full sm:w-max bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded mt-6">
+              <button onClick={() => setStep("5")} className="w-full sm:w-max bg-gradient-to-tr from-green-400 to-lime-500 hover:bg-gradient-to-tl hover:from-green-400 hover:to-lime-500 hover:scale-95 text-sm text-white py-2 px-4 rounded mt-6">
                 {photo === null || photo === "" ? "Bayar dilokasi" : "Lanjut"}
               </button>
             </div>
@@ -358,53 +358,54 @@ const Daftar = () => {
         )}
         {step === "5" && (
           <div className="p-1 sm:p-4 h-[85vh] overflow-y-auto">
-            <h2 className="text-xl bg-gradient-to-tr from-green-400 to-lime-500 text-center py-4 uppercase font-bold text-white/90">Informasi Pendaftar</h2>
+            <h2 className="text-xl bg-gradient-to-tr from-green-400 to-lime-500 text-center py-4 uppercase font-bold text-white">Informasi Pendaftar</h2>
+            <p className='text-sm text-center py-3'>Periksa Kembali data Anda. Jika sudah benar klik tombol submit dibawah</p>
             <div className="flex flex-col space-y-1 antialiased">
-              <div className=" flex gap-4 border border-gray-300 py-3 px-4 rounded">
-                <h3 className="text-sm font-bold text-gray-600">Nama Lengkap :</h3>
-                <p className='text-sm text-gray-600'>{formData.name}</p>
+              <div className=" flex gap-2 border-b border-gray-300 dark:border-slate-700  py-3 px-4">
+                <h3 className="text-sm font-bold ">Nama Lengkap :</h3>
+                <p className='text-sm '>{formData.name}</p>
               </div>
-              <div className=" flex gap-4 border border-gray-300 py-3 px-4 rounded">
-                <h3 className="text-sm font-bold text-gray-600">Alamat:</h3>
-                <p className='text-sm text-gray-600'>{formData.address}</p>
+              <div className=" flex gap-2 border-b border-gray-300 dark:border-slate-700  py-3 px-4">
+                <h3 className="text-sm font-bold ">Alamat  :</h3>
+                <p className='text-sm '>{formData.address}</p>
               </div>
-              <div className=" flex gap-4 border border-gray-300 py-3 px-4 rounded">
-                <h3 className="text-sm font-bold text-gray-600">No. Handphone:</h3>
-                <p className='text-sm text-gray-600'>{formData.phone}</p>
+              <div className=" flex gap-2 border-b border-gray-300 dark:border-slate-700 py-3 px-4">
+                <h3 className="text-sm font-bold ">No.Handphone  :</h3>
+                <p className='text-sm '>{formData.phone}</p>
               </div>
-              <div className=" flex gap-4 border border-gray-300 py-3 px-4 rounded">
-                <h3 className="text-sm font-bold text-gray-600">NIK:</h3>
-                <p className='text-sm text-gray-600'>{formData.nik}</p>
+              <div className=" flex gap-2 border-b border-gray-300 dark:border-slate-700 py-3 px-4">
+                <h3 className="text-sm font-bold ">No.Identitas/NIK :</h3>
+                <p className='text-sm '>{formData.nik}</p>
               </div>
-              <div className=" flex gap-4 border border-gray-300 py-3 px-4 rounded">
-                <h3 className="text-sm font-bold text-gray-600">NO. KIS:</h3>
-                <p className='text-sm text-gray-600'>{formData.kis}</p>
+              <div className=" flex gap-2 border-b border-gray-300 dark:border-slate-700 py-3 px-4">
+                <h3 className="text-sm font-bold ">NO.KIS :</h3>
+                <p className='text-sm'>{formData.kis}</p>
               </div>
-              <div className=" flex gap-4 border border-gray-300 py-3 px-4 rounded">
-                <h3 className="text-sm font-bold text-gray-600">TEAM:</h3>
-                <p className='text-sm text-gray-600'>{formData.team}</p>
+              <div className=" flex gap-2 border-b border-gray-300 dark:border-slate-700 py-3 px-4">
+                <h3 className="text-sm font-bold ">TEAM :</h3>
+                <p className='text-sm'>{formData.team}</p>
               </div>
-              <div className=" flex gap-4 border border-gray-300 py-3 px-4 rounded">
-                <h3 className="text-sm font-bold text-gray-600">Nomor Start:</h3>
-                <p className='text-sm text-gray-600'>{formData.numberStart}</p>
+              <div className=" flex gap-2 border-b border-gray-300 dark:border-slate-700 py-3 px-4">
+                <h3 className="text-sm font-bold ">Nomor Start :</h3>
+                <p className='text-sm '>{formData.numberStart}</p>
               </div>
-              <div className=" flex gap-4 border border-gray-300 py-3 px-4 rounded">
-                <h3 className="text-sm font-bold text-gray-600">Pembayaran:</h3>
-                {!photo ? <p className='text-sm text-gray-600'>Dilokasi</p> : <p className='text-sm text-gray-600'>Transfer</p>}
+              <div className=" flex gap-2 border-b border-gray-300 dark:border-slate-700 py-3 px-4">
+                <h3 className="text-sm font-bold ">Pembayaran :</h3>
+                {!photo ? <p className='text-sm '>Dilokasi</p> : <p className='text-sm text-gray-600'>Transfer</p>}
               </div>
-              <div className=" flex gap-4 border border-gray-300 py-3 px-4 rounded">
-                <h3 className="text-sm font-bold text-gray-600">Kelas yang diikuti:</h3>
-                <p className='text-sm text-gray-600'> {formData.raceClass.map(cls => `${cls.name}`).join(", ")}</p>
+              <div className=" flex gap-2 border-b border-gray-300 dark:border-slate-700 py-3 px-4">
+                <h3 className="text-sm font-bold ">Kelas yang diikuti :</h3>
+                <p className='text-sm '> {formData.raceClass.map(cls => `${cls.name}`).join(", ")}</p>
               </div>
             </div>
-            <div className='flex w-full mt-3'>
-              <button onClick={handleSave} className="bg-gradient-to-tr from-green-400 to-lime-500 text-md text-white py-2 px-4 rounded mt-4 w-full">
+            <div className='flex gap-12 w-full mt-3'>
+              <button onClick={handleSave} className="text-white bg-gradient-to-tr from-green-400 to-lime-500 hover:bg-gradient-to-tl hover:from-green-400 hover:to-lime-500 hover:scale-95 text-sm py-2 px-4 rounded mt-4 w-full">
                 {loading ? <div className="flex gap-2 items-center justify-center">
                   <span className=" text-white">Loading... </span>
                   <span className="loader"></span>
                 </div> : "Submit"}
               </button>
-              <button onClick={handleCancel} className="bg-red-400 w-full text-md text-white py-2 px-4 rounded mt-4">Cancel</button>
+              <button onClick={handleCancel} className="bg-red-400 hover:bg-red-500 hover:scale-95 w-full text-sm text-white py-2 px-4 rounded mt-4">Cancel</button>
             </div>
           </div>
         )}

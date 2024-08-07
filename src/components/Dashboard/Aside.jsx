@@ -21,10 +21,9 @@ const Aside = () => {
 
   return (
     <div className="h-screen w-full min-h-screen flex items-center flex-col justify-between sticky left-0 top-0 z-10 ">
-      <div className="w-full flex py-5 items-start justify-between border-b border-gray-400 dark:border-gray-800 px-2 ">
+      <div className="w-full flex py-2.5 items-center justify-between border-b border-gray-400 dark:border-gray-800 px-2 ">
         <Link href="/" className="flex gap-2">
-          <Image src="/logo.png" alt="logo-barland" width={30} height={30} priority={true} style={{ width: "auto", height: "auto" }} />
-          <p className="capitalize">{session?.user?.name}</p>
+          <Image src="/logo.png" alt="logo-barland" width={40} height={40} priority={true} style={{ width: "auto", height: "auto" }} />
         </Link>
         <DarkModeToggle />
       </div>
@@ -32,7 +31,7 @@ const Aside = () => {
       {asideLink.map((item) => (
         <div key={item?.id} className="w-full  flex flex-col items-start  justify-start">
           <Link href={item?.link} className={`w-full gap-2 text-sm overflow-hidden relative uppercase flex items-center  py-2.5 px-4 transition-all  ease-linear duration-100 
-            ${pathname === item?.link ? `${theme === 'dark' ? 'bg-white text-gray-800' : 'second text-white'} ` : `${theme === 'dark' ? 'hover:bg-white hover:text-gray-800' : 'hover:bg-[#081225] hover:text-white'} hover:shadow-md`}`}>
+            ${pathname === item?.link ? `${theme === 'dark' ? 'bg-slate-800 text-gray-200' : 'second text-white'} ` : `${theme === 'dark' ? 'hover:bg-slate-800 hover:text-gray-200' : 'hover:bg-[#081225] hover:text-white'} hover:shadow-md`}`}>
             <span>{item?.icon}</span>
             <h3>{item?.title}</h3>
           </Link>

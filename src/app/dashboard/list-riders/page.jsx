@@ -157,13 +157,13 @@ const TableRiders = () => {
 
       <div className="w-full flex items-center justify-between border-b border-gray-400 dark:border-gray-800 pb-1.5">
         <div className="flex flex-col items-start">
-          <h1 className="text-lg font-semibold antialiased text-gray-600 dark:text-gray-200">DAFTAR RIDERS</h1>
-          {noData ? <h3 className="w-full text-gray-600 font-medium text-sm">Belum ada data yang masuk...</h3> :
+          <h1 className="text-lg font-semibold antialiased ">DAFTAR RIDERS</h1>
+          {noData ? <h3 className="w-full  font-medium text-sm">Belum ada data yang masuk...</h3> :
             <div className="flex gap-2 items-center">
-              <h2 className="text-sm antialiased text-gray-500 dark:text-gray-200">
+              <h2 className="text-sm antialiased ">
                 Total Riders :
               </h2>
-              <p className="text-sm antialiased text-gray-500 dark:text-gray-200">{riders?.length} Orang</p>
+              <p className="text-sm antialiased">{riders?.length} Orang</p>
             </div>
           }
         </div>
@@ -198,24 +198,22 @@ const TableRiders = () => {
               />
             </div>
           </form>
-          <div className="flex flex-col items-center justify-center  ">
-            <p className="text-sm font-medium text-gray-700 dark:text-gray-400">Export :</p>
-            <div className="flex gap-2 pt-1">
-              <button className="group hover:text-gray-300 relative second p-2 rounded dark:text-gray-400 text-red-500" onClick={exportPDF}><GrDocumentPdf size={14} />
-                <span className="hidden group-hover:block absolute -top-3 -left-8 rounded py-0.5 px-1 text-xs bg-white text-gray-600">PDF</span>
+          <div className="flex flex-col items-center justify-center">
+            <div className="flex gap-1 relative">
+              <button className="group hover:text-gray-300  second dark:bg-slate-800 p-2 rounded  text-red-500" onClick={exportPDF}><GrDocumentPdf size={18} />
+                <span className="hidden w-max  group-hover:block absolute -top-3 -left-16 rounded py-0.5 px-1 text-xs second text-gray-50">Export To PDF</span>
               </button>
-              <button className="group hover:text-gray-300 relative second p-2 rounded dark:text-gray-400 text-green-500" onClick={exportExcel}><SiMicrosoftexcel size={14} />
-                <span className="hidden group-hover:block absolute -top-3 -left-8 rounded py-0.5 px-1 text-xs bg-white text-gray-600">Excel</span>
+              <button className="group hover:text-gray-300  second dark:bg-slate-800 p-2 rounded  text-green-500" onClick={exportExcel}><SiMicrosoftexcel size={18} />
+                <span className="hidden w-max group-hover:block absolute -top-3 -left-10 rounded py-0.5 px-1 text-xs second text-gray-50">Export To Excel</span>
               </button>
             </div>
           </div>
 
         </div>
       </div>
-      <div className="my-8 relative overflow-x-auto shadow-md sm:rounded-lg">
-
-        <table className="w-full table-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs uppercase second text-white dark:bg-gray-700 dark:text-gray-400">
+      <div className="relative overflow-x-auto shadow-md ">
+        <table className="w-full table-auto text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-sm uppercase second text-white dark:bg-gray-700 dark:text-gray-200">
             <tr className="">
               {TABLE_HEAD.map((head) => (
                 <th key={head} className="px-6 py-3">
@@ -273,18 +271,18 @@ const TableRiders = () => {
               </tr>
             ))}
           </tbody>
-          {showModal && deleteId && (
-            <div className="fixed top-0 left-0 w-full h-screen shadow-lg z-50 bg-black/30 text-white flex items-center justify-center">
-              <div className="second py-8 px-6 rounded">
-                <p className="text-lg py-2">Anda yakin ingin menghapus Rider <br />{riders.find(r => r._id === deleteId)?.name}?</p>
-                <div className="flex gap-3 pt-6">
-                  <button className="py-1.5 px-4 bg-gradient-to-tr rounded from-green-400 to-lime-500 hover:bg-gradient-to-tl hover:from-green-400 hover:to-lime-500" onClick={handleDelete}>Ya Hapus</button>
-                  <button className="py-1.5 px-4 bg-red-500 hover:bg-red-600 rounded" onClick={() => setShowModal(false)}>Batal</button>
-                </div>
+        </table>
+        {showModal && deleteId && (
+          <div className="fixed top-0 left-0 w-full h-screen shadow-lg z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center">
+            <div className="bg-gray-100 dark:bg-slate-800 py-8 px-6 rounded shadow-lg shadow-gray-600 dark:shadow-slate-950">
+              <p className="text-lg py-2">Anda yakin ingin menghapus Rider <br />{riders.find(r => r._id === deleteId)?.name} ?</p>
+              <div className="flex gap-3 pt-6">
+                <button className="py-1.5 px-4 text-white/90 bg-gradient-to-tr rounded from-green-400 to-lime-500 hover:bg-gradient-to-tl hover:from-green-400 hover:to-lime-500" onClick={handleDelete}>Ya, Hapus</button>
+                <button className="py-1.5 px-4 text-white/90 bg-red-500 hover:bg-red-600 rounded" onClick={() => setShowModal(false)}>Batal</button>
               </div>
             </div>
-          )}
-        </table>
+          </div>
+        )}
       </div>
     </>
   );

@@ -92,10 +92,10 @@ const EditRiders = ({ params }) => {
 
   return (
     <>
-      <div className=" second text-white">
+      <div className=" second dark:bg-slate-800 text-white">
         <h1 className="py-4 px-4">Edit Riders</h1>
       </div>
-      <div className="w-full flex gap-4 py-8 px-4 bg-slate-50">
+      <div className="w-full flex gap-4 py-8 px-4 ">
         <div className="flex flex-col w-full ">
           <form onSubmit={handleSubmit} className="w-full">
             <div className="mb-5">

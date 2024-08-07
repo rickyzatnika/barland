@@ -142,20 +142,20 @@ const SeklomPage = () => {
 
   return (
     <>
-      <div className="w-full flex items-center justify-between border-b pb-1">
+      <div className="w-full flex items-center justify-between border-b border-gray-400 dark:border-gray-800 pb-1.5">
         <div className="flex flex-col items-start">
-          <h1 className="text-lg font-semibold antialiased text-gray-600 dark:text-gray-200">DAFTAR RIDERS</h1>
-          {noData ? <h3 className="w-full text-gray-600 font-medium text-sm">Belum ada data yang masuk...</h3> :
+          <h1 className="text-lg font-semibold antialiased ">DAFTAR RIDERS</h1>
+          {noData ? <h3 className="w-full  font-medium text-sm">Belum ada data yang masuk...</h3> :
             <div className="flex gap-2 items-center">
-              <h2 className="text-sm antialiased text-gray-500 dark:text-gray-200">
+              <h2 className="text-sm antialiased ">
                 Total Riders :
               </h2>
-              <p className="text-sm antialiased text-gray-500 dark:text-gray-200">{riders?.length} Orang</p>
+              <p className="text-sm antialiased">{riders?.length} Orang</p>
             </div>
           }
         </div>
 
-        <div className="flex items-center justify-center gap-6">
+        <div className="flex items-center justify-center gap-3">
           <form className=" max-w-xs ">
             <div className="relative">
               <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -185,65 +185,54 @@ const SeklomPage = () => {
               />
             </div>
           </form>
-          <div className="flex flex-col items-center justify-center  ">
-            <p className="text-sm font-medium text-gray-700 dark:text-gray-400">Export :</p>
-            <div className="flex gap-2 pt-1">
-              <button className="group hover:text-gray-300 relative second p-2 rounded dark:text-gray-400 text-green-500" onClick={exportExcel}><SiMicrosoftexcel size={14} />
-                <span className="hidden group-hover:block absolute -top-3 -left-8 rounded py-0.5 px-1 text-xs bg-white text-gray-600">Excel</span>
-              </button>
-            </div>
-          </div>
 
+          <div className="relative flex gap-1">
+            <button className="group hover:text-gray-300 second dark:bg-slate-800 p-2 rounded  text-green-500" onClick={exportExcel}><SiMicrosoftexcel size={18} />
+              <span className="hidden w-max group-hover:block absolute -top-3 -left-16 rounded py-0.5 px-1 text-xs second text-gray-50">Export to Excel</span>
+            </button>
+          </div>
         </div>
       </div>
-      <div className="relative overflow-x-auto my-8 sm:rounded-lg">
-        <table className="w-full table-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase second ">
-            <tr>
+      <div className="relative overflow-x-auto ">
+        <table className="w-full table-auto text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-sm uppercase second text-white dark:bg-gray-700 dark:text-gray-200">
+            <tr className="">
               {TABLE_HEAD.map((head) => (
-                <th key={head} className=" text-white px-6 py-4">
+                <th key={head} className="px-6 py-5">
                   {head}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {riders?.map((rider, i) => (
-              <React.Fragment key={rider?._id}>
-                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                  <td className="px-6 bg-slate-100/60 py-4 font-medium text-gray-600 whitespace-nowrap dark:text-white">
-                    {i + 1}
-                  </td>
-                  <td className="px-6 bg-slate-100/60 py-4 font-medium text-gray-600 whitespace-nowrap dark:text-white">
-                    {rider?.name}
-                  </td>
-                  <td className="bg-slate-100/60 px-6 py-4 text-gray-600 whitespace-nowrap dark:text-white font-medium text-md">
-                    {rider?.numberStart}
-                  </td>
-                  <td className="bg-slate-100/60 px-6 py-4 text-gray-600 whitespace-nowrap dark:text-white font-medium text-md">
-                    {rider?.team}
-                  </td>
-                  <td className="px-6 py-4 capitalize antialiased leading-relaxed ">
-                    <p className="w-64">{rider?.raceClass
-                      .map((cls) => `${cls?.name}`)
-                      .join("-")}</p>
-                  </td>
-                  <td className="bg-slate-100/60 px-6 py-4 text-gray-600 whitespace-nowrap dark:text-white font-medium text-md">
-                    <button onClick={() => handleShowModal(rider?._id)} >
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              </React.Fragment>
+            {riders.map((rider, i) => (
+              <tr
+                key={rider?._id}
+                className="bg-white text-xs font-medium border-b dark:bg-gray-800 dark:border-gray-700"
+              >
+                <td className="px-6 py-4 capitalize antialiased leading-relaxed">{i + 1}.</td>
+                <td className="px-6 py-4 capitalize antialiased leading-relaxed"><p className="w-32">{rider?.name}</p></td>
+                <td className="px-6 py-4 capitalize antialiased leading-relaxed"><p className="w-32">{rider?.team}</p></td>
+                <td className="px-6 py-4 capitalize antialiased leading-relaxed">{rider?.numberStart}</td>
+                <td className="px-6 py-4 capitalize antialiased leading-relaxed ">
+                  <p className="w-64">{rider?.raceClass
+                    .map((cls) => `${cls?.name}`)
+                    .join(" - ")}</p>
+                </td>
+                <td className="px-6 py-4 ">
+                  <button onClick={() => handleShowModal(rider?._id)} >
+                    Edit
+                  </button>
+                </td>
+              </tr>
             ))}
           </tbody>
-
         </table>
         {showModal && updateId && (
-          <div className="fixed top-0 left-0 w-full py-8 h-screen shadow-lg z-50 bg-black/30 text-white flex items-center justify-center">
-            <div className="bg-white h-full shadow-xl overflow-y-auto py-4 px-4 rounded max-w-md w-full">
+          <div className="fixed top-0 left-0 w-full py-8 h-screen shadow-lg z-50 bg-black/50 backdrop-blur-sm text-white flex items-center justify-center">
+            <div className="bg-gray-100 dark:bg-slate-800 h-full shadow-xl overflow-y-auto py-4 px-4 rounded max-w-md w-full">
               <div className=" mb-6 flex items-center justify-between">
-                <h3 className="text-md text-gray-700 font-medium antialiased -tracking-wide">Edit {name}</h3>
+                <h3 className="text-md text-slate-800 dark:text-gray-100 font-medium antialiased -tracking-wide">Edit {name}</h3>
                 <button onClick={() => setShowModal(false)} className=" text-sm p-1 rounded-lg hover:bg-gray-200 text-gray-400 hover:text-gray-800 font-medium">
                   <IoMdClose size={22} />
                 </button>
@@ -293,3 +282,6 @@ const SeklomPage = () => {
 };
 
 export default SeklomPage;
+
+
+

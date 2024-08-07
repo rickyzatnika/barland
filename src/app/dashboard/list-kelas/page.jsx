@@ -40,22 +40,22 @@ const TableListClass = () => {
 
   return (
     <>
-      <div className="w-full flex items-center justify-between border-b pb-4">
+      <div className="w-full flex items-center justify-between border-b border-gray-400 dark:border-gray-800 pb-5">
 
-        <button onClick={() => setShowModal(prev => !prev)} className="text-gray-200 second py-2 px-5 rounded shadow-lg hover:bg-[#000]" type="button">
+        <button onClick={() => setShowModal(prev => !prev)} className="py-2 px-5 second dark:bg-slate-800 text-gray-50 dark:text-gray-100 rounded shadow-lg " type="button">
           Buat Kelas
         </button>
       </div>
 
-      <div className="relative overflow-x-auto shadow-md my-8 sm:rounded-lg">
+      <div className="relative overflow-x-auto shadow-md my-8 ">
         {showModal &&
           <FormAddClass setShowModal={setShowModal} />
         }
-        <table className="w-full table-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table className="w-full table-auto text-left ">
+          <thead className="text-md uppercase ">
             <tr>
               {TABLE_HEAD.map((head) => (
-                <th key={head} className="second text-white px-6 py-4">
+                <th key={head} className="px-6 py-4 second dark:bg-slate-900 text-gray-50">
                   {head}
                 </th>
               ))}
@@ -64,21 +64,21 @@ const TableListClass = () => {
           <tbody>
             {data?.map((list) => (
               <React.Fragment key={list?._id}>
-                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                  <td className="px-6 bg-slate-200/60 py-4 uppercase font-semibold text-gray-700 whitespace-nowrap dark:text-white">
+                <tr className="bg-gray-200 dark:bg-slate-700  ">
+                  <td className="px-6 border-b text-gray-700 dark:text-slate-100 border-gray-300 dark:border-gray-500 text-sm py-2 uppercase font-semibold">
                     {list?.title}
                   </td>
-                  <td className="bg-slate-200/60 px-6 py-4 text-gray-700 whitespace-nowrap dark:text-white font-medium uppercase text-md">Harga</td>
-                  <td className="px-10 py-4 bg-slate-200/60 ">
-                    <button className="relative group" onClick={() => handleDelete(list?._id)}><RiDeleteBin2Line className="hover:text-red-500" size={28} />
-                      <span className="absolute top-0 -right-12 text-sm hidden font-medium text-red-500 group-hover:block"> delete</span>
+                  <td className=" px-6 py-4 border-b border-gray-300 dark:border-gray-500 font-medium uppercase text-sm">Harga</td>
+                  <td className="px-10 py-4 border-b border-gray-300 dark:border-gray-500">
+                    <button className="relative group" onClick={() => handleDelete(list?._id)}><RiDeleteBin2Line className="hover:text-red-500" size={24} />
+                      <span className="absolute top-0 -right-14 bg-slate-900 text-gray-50 dark:bg-gray-50 rounded-full py-0.5 px-2 text-xs hidden font-medium dark:text-red-500 group-hover:block"> delete</span>
                     </button>
                   </td>
                 </tr>
                 {list?.classes?.map((cls) => (
-                  <tr key={cls?.name} className="odd:bg-white  odd:dark:bg-gray-900 even:bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-700">
-                    <td className="px-8 py-4 uppercase ">{cls?.name}</td>
-                    <td className="px-6 py-4">{formatCurrency(cls?.price)}</td>
+                  <tr key={cls?.name} className="bg-gray-100 dark:bg-slate-600 border-b border-gray-300 dark:border-gray-500 ">
+                    <td className="px-8  py-4 text-sm font-medium text-gray-500/80 dark:text-slate-300/80 uppercase ">{cls?.name}</td>
+                    <td className="px-6  py-4 text-sm font-medium text-gray-500/80 dark:text-slate-300/80">{formatCurrency(cls?.price)}</td>
                     {/* Anda bisa menambahkan kolom kosong jika ingin menyelaraskan dengan kolom tombol aksi */}
                     <td className="px-6 py-4"></td>
                   </tr>
@@ -95,3 +95,4 @@ const TableListClass = () => {
 };
 
 export default TableListClass;
+
