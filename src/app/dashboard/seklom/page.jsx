@@ -94,9 +94,10 @@ const SeklomPage = () => {
 
 
   useEffect(() => {
-    const total = raceClass.reduce((total, cls) => total + (parseFloat(cls.price) || 0), 0);
-    setTotalPrice(total);
+    const newTotalPrice = raceClass.reduce((sum, cls) => sum + parseFloat(cls.price || 0), 0);
+    setTotalPrice(newTotalPrice);
   }, [raceClass]);
+
 
   const handleRaceClassChange = (index, field, value) => {
     const newRaceClass = [...raceClass];
