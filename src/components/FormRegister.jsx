@@ -91,20 +91,20 @@ const FormRegister = ({ setActiveButton }) => {
         type="text"
         placeholder="Nama Pengguna"
         name="name"
-        className="placeholder:text-sm placeholder:text-gray-400/80 px-4 py-3 rounded  w-full border-gray-300 border-2 bg-transparent text-zinc-500 outline-none  focus:outline-none focus:ring-0 focus:border-2   focus:border-green-400"
+        className="placeholder:text-sm placeholder:text-gray-400/80 px-4 py-3 rounded  w-full border-gray-300 border-2 bg-transparent text-gray-200 dark:text-gray-700 outline-none  focus:outline-none focus:ring-0 focus:border-2   focus:border-green-400"
       />
       <input
         type="number"
         placeholder="No.Handphone"
         name="phone"
-        className="placeholder:text-sm placeholder:text-gray-400/80 px-4 py-3 rounded  w-full border-gray-300 border-2 bg-transparent text-zinc-500 outline-none  focus:outline-none focus:ring-0 focus:border-2   focus:border-green-400"
+        className="placeholder:text-sm placeholder:text-gray-400/80 px-4 py-3 rounded  w-full border-gray-300 border-2 bg-transparent text-gray-200 dark:text-gray-700 outline-none  focus:outline-none focus:ring-0 focus:border-2   focus:border-green-400"
       />
       <div className="flex items-center justify-between relative">
         <input
           type={passwordVisible ? 'text' : 'password'}
           placeholder="Password"
           name="password"
-          className="placeholder:text-sm placeholder:text-gray-400/80 px-4 py-3 rounded  w-full border-gray-300 border-2 bg-transparent text-zinc-500 outline-none  focus:outline-none focus:ring-0 focus:border-2   focus:border-green-400"
+          className="placeholder:text-sm placeholder:text-gray-400/80 px-4 py-3 rounded  w-full border-gray-300 border-2 bg-transparent text-gray-200 dark:text-gray-700 outline-none  focus:outline-none focus:ring-0 focus:border-2   focus:border-green-400"
         />
         <div className="absolute right-3 cursor-pointer">
           {!passwordVisible ? <TbEyeClosed className="text-gray-400/80" onClick={() => handlePasswordVisible()} /> : <MdOutlineRemoveRedEye className="text-green-400" onClick={handlePasswordVisible} />}
@@ -115,7 +115,7 @@ const FormRegister = ({ setActiveButton }) => {
         <input
           type={confirmVisible ? 'text' : 'password'}
           placeholder="Konfirmasi Password"
-          className="placeholder:text-sm placeholder:text-gray-400/80 px-4 py-3 rounded  w-full border-gray-300 border-2 bg-transparent text-zinc-500 outline-none  focus:outline-none focus:ring-0 focus:border-2   focus:border-green-400"
+          className="placeholder:text-sm placeholder:text-gray-400/80 px-4 py-3 rounded  w-full border-gray-300 border-2 bg-transparent text-gray-200 dark:text-gray-700 outline-none  focus:outline-none focus:ring-0 focus:border-2   focus:border-green-400"
         />
         <div className="absolute right-3 cursor-pointer">
           {!confirmVisible ? <TbEyeClosed className="text-gray-400/80" onClick={() => handleConfirmVisible()} /> : <MdOutlineRemoveRedEye className="text-green-400" onClick={handleConfirmVisible} />}

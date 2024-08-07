@@ -6,6 +6,8 @@ import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer";
 import { ToastContainer } from "react-toastify";
 import Wrapper from "@/components/Wrapper";
+import { ThemeProvider } from "@/context/ThemeContext";
+import ThemeProviders from "@/provider/ThemeProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -23,13 +25,16 @@ export default function RootLayout({ children, session }) {
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <ToastContainer theme="dark" />
-
-        <AuthProvider session={session}>
-          <Navbar />
-          <Wrapper>{children}</Wrapper>
-          <Footer />
-        </AuthProvider>
+        <ThemeProvider>
+          <ThemeProviders>
+            <ToastContainer theme="dark" />
+            <AuthProvider session={session}>
+              <Navbar />
+              <Wrapper>{children}</Wrapper>
+              <Footer />
+            </AuthProvider>
+          </ThemeProviders>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -155,7 +155,7 @@ const TableRiders = () => {
         </div>
       )}
 
-      <div className="w-full flex items-center justify-between border-b pb-1">
+      <div className="w-full flex items-center justify-between border-b border-gray-400 dark:border-gray-800 pb-1.5">
         <div className="flex flex-col items-start">
           <h1 className="text-lg font-semibold antialiased text-gray-600 dark:text-gray-200">DAFTAR RIDERS</h1>
           {noData ? <h3 className="w-full text-gray-600 font-medium text-sm">Belum ada data yang masuk...</h3> :

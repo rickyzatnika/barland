@@ -26,7 +26,7 @@ export default function DashboardLayout({ children }) {
         <div className="basis-[14%]">
           <Aside />
         </div>
-        <div className="w-full basis-[86%] overflow-x-auto bg-gray-100 h-full px-3 py-4">
+        <div className="w-full basis-[86%] border-l border-gray-400 dark:border-gray-800 overflow-x-auto h-full px-3 py-4">
           {children}
         </div>
       </div>

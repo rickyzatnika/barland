@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import ReCAPTCHA from 'react-google-recaptcha';
+import Image from 'next/image';
 
 const Daftar = () => {
   const [step, setStep] = useState("1");
@@ -212,13 +213,16 @@ const Daftar = () => {
 
 
   return (
-    <div className='w-full h-full py-0 sm:py-14'>
+    <div className='w-full h-full py-8'>
       {step === "1" && (
         <div className='w-full pb-6 px-2 sm:px-12 md:px-20 lg:px-28 2xl:px-32'>
-          <div className='pb-3 leading-relaxed border-lime-600 border-b-2 pt-2'>
-            <h1 className='text-2xl uppercase text-gray-900 dark:text-white'>Formulir Pendaftaran</h1>
-            <p className='text-gray-600 text-sm dark:text-white'>Calon Peserta EVENT BALAP PILPRES 2024</p>
-            <span className='text-xs text-red-500'>*Mohon diisi dan Lengkapi</span>
+          <div className='w-full flex flex-col sm:flex-row items-start pb-4 border-b-2 border-gray-700 mb-6 justify-between'>
+            <div className='pb-3 leading-relaxed pt-2'>
+              <h1 className='text-2xl uppercase text-gray-900 dark:text-white'>Formulir Pendaftaran</h1>
+              <p className='text-gray-600 text-sm dark:text-white'>Calon Peserta EVENT BALAP PILPRES 2024</p>
+              <span className='text-xs text-red-500'>*Mohon diisi dan Lengkapi</span>
+            </div>
+            <Image src="/flag.png" alt='race-flag' width={100} height={100} style={{ width: "auto", height: "auto" }} priority={true} />
           </div>
           <form onSubmit={handleSubmit} className='px-3 md:px-6 py-8 md:py-12 bg-green-900/5 shadow-md'>
             <div className="grid gap-3 md:gap-6 mb-6 md:grid-cols-2">

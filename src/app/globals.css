@@ -14,6 +14,18 @@
   }
 }
 
+.dark {
+  background-color: #081225;
+  color: #d6d5d5;
+  transition: all 325ms linear;
+}
+
+.light {
+  background-color: #f7f7f7;
+  color: #081225;
+  transition: all 325ms linear;
+}
+
 .second {
   background-color: #081225;
 }
@@ -44,7 +56,7 @@
   height: 0;
   border-left: 19px solid transparent; /* Adjust the size of the triangle */
   border-right: 19px solid transparent;
-  border-bottom: 38px solid #e2e2e2; /* Color of the triangle */
+  border-bottom: 38px solid; /* Color of the triangle */
   transform: rotate(90deg); /* Rotate to position the triangle appropriately */
   position: absolute;
   right: 0;

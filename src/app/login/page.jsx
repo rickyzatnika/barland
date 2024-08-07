@@ -1,7 +1,7 @@
 "use client";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { TbEyeClosed } from "react-icons/tb";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
@@ -10,9 +10,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormRegister from "@/components/FormRegister";
 import Image from "next/image";
+import { ThemeContext } from "@/context/ThemeContext";
 
 const Login = () => {
 
+  const { theme } = useContext(ThemeContext);
   const { data: session } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -82,16 +84,18 @@ const Login = () => {
 
   return (
     <>
-      <div className="w-full h-[calc(100vh-80px)] relative px-2 py-20 sm:py-8 flex flex-col gap-2 items-center justify-center">
-        <div className="w-full h-full absolute left-0 top-0 -z-50">
-          <Image src="/race-flag.png" alt="race-flag" fill className="object-cover object-top sm:object-bottom" />
+      <div className="w-full h-full min-h-[calc(100vh-80px)] relative px-2 py-20 sm:py-8 flex flex-col gap-2 items-center justify-center">
+        <div className="w-full h-full blur-[2px] fixed left-0 top-0 ">
+          <Image src="/hexa.jpg" alt="race-flag" sizes="100%" priority={true} fill className="object-cover" />
         </div>
-        <div className="w-full  bg-white max-w-md rounded-xl shadow-lg  ">
-          <h2 className="text-center text-md pt-4 text-gray-600 font-bold">LOGIN FORM</h2>
-          <div className="w-full text-sm md:text-md flex p-5 flex-col gap-2 h-full px-6 ">
+        <div className={`relative z-40 w-full max-w-md rounded-xl shadow-lg ${theme === "light" ? "second text-gray-100" : "bg-white text-gray-700"}`}>
+          <h2 className="text-center text-lg pt-6 font-bold">
+            {activeButton === "login" ? "LOGIN FORM" : "REGISTER FORM"}
+          </h2>
+          <div className="w-full text-sm md:text-md py-6 flex flex-col gap-2 h-full px-6 ">
             <div className=" flex items-center gap-1 justify-center w-full overflow-hidden text-center">
-              <button className={`text-sm sm:text-md rounded-tl-xl text-center w-full py-3 sm:py-4 ${activeButton === "login" ? "bg-gradient-to-tr from-green-500 to-lime-400 text-white" : "bg-lime-100/70 hover:bg-lime-100 text-gray-400"}`} onClick={() => setActiveButton("login")}>MASUK</button>
-              <button className={`text-sm sm:text-md rounded-tr-xl  text-center w-full py-3 sm:py-4 ${activeButton === "register" ? "bg-gradient-to-tr from-green-500 to-lime-400 text-white" : "bg-lime-100/70 hover:bg-lime-100 text-gray-400"}`} onClick={() => setActiveButton("register")}>DAFTAR</button>
+              <button className={`text-sm sm:text-md rounded-tl-xl text-center w-full py-3 sm:py-4 ${activeButton === "login" ? "bg-gradient-to-tr from-green-500 to-lime-400 text-white" : " text-gray-400"}`} onClick={() => setActiveButton("login")}>MASUK</button>
+              <button className={`text-sm sm:text-md rounded-tr-xl  text-center w-full py-3 sm:py-4 ${activeButton === "register" ? "bg-gradient-to-tr from-green-500 to-lime-400 text-white" : " text-gray-400"}`} onClick={() => setActiveButton("register")}>DAFTAR</button>
             </div>
 
             {activeButton === "login" &&
@@ -101,14 +105,14 @@ const Login = () => {
                   placeholder="Nama Pengguna"
                   name="name"
                   required
-                  className="px-4 py-3 rounded placeholder:text-zinc-400  w-full border-gray-300 border-2 bg-transparent text-zinc-500 outline-none focus:outline-none focus:ring-0 focus:border-2  focus:border-green-400"
+                  className="px-4 py-3  dark:text-gray-900 rounded placeholder:text-zinc-400  w-full border-gray-300 border-2 bg-transparent text-gray-200 outline-none focus:outline-none focus:ring-0 focus:border-2  focus:border-green-400"
                 />
                 <div className="flex items-center justify-between relative">
                   <input
                     type={passwordVisible ? 'text' : 'password'}
                     placeholder="Password"
                     name="password"
-                    className="px-4 py-3 rounded  w-full border-gray-300 border-2 bg-transparent text-zinc-500 outline-none focus:outline-none focus:ring-0 focus:border-2  focus:border-green-400"
+                    className="px-4 py-3  dark:text-gray-900 rounded  w-full border-gray-300 border-2 bg-transparent text-gray-200 outline-none focus:outline-none focus:ring-0 focus:border-2  focus:border-green-400"
                   />
                   <div className="absolute right-3 cursor-pointer">
                     {!passwordVisible ? <TbEyeClosed className="text-gray-400/80" onClick={() => handlePasswordVisible()} /> : <MdOutlineRemoveRedEye className="text-green-400" onClick={handlePasswordVisible} />}
