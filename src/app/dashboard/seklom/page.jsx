@@ -261,10 +261,17 @@ const SeklomPage = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                         placeholder="Nama Kelas"
                       />
+                      <input
+                        type="number"
+                        value={cls.price}
+                        onChange={(e) => handleRaceClassChange(index, 'price', e.target.value)}
+                        className="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                        placeholder="Harga Kelas"
+                      />
                       <button type="button" onClick={() => setRaceClass(raceClass.filter((_, i) => i !== index))} className="text-red-400 text-xs shadow transition-all duration-100 ease-linear px-3 bg-gray-100 hover:bg-gray-200 hover:text-red-500 rounded-xl "><RiDeleteBin2Line className="hover:text-red-500" size={20} /></button>
                     </div>
                   ))}
-                  <button type="button" onClick={() => setRaceClass([...raceClass, { name: '' }])} className="text-gray-50 second text-xs px-3 py-2 transition-all duration-100 ease-linear antialiased rounded hover:scale-95">Tambah Kelas</button>
+                  <button type="button" onClick={() => setRaceClass([...raceClass, { name: '', price: '' }])} className="text-gray-50 second text-xs px-3 py-2 transition-all duration-100 ease-linear antialiased rounded hover:scale-95">Tambah Kelas</button>
                 </div>
                 <button type="submit" className="text-white hover:scale-95 transition-all duration-200 ease-linear  bg-gradient-to-tr from-green-400 to-lime-500 hover:bg-gradient-to-tl hover:from-green-400 hover:to-lime-500  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">
                   {loading ? <div className="flex gap-2 items-center justify-center">
