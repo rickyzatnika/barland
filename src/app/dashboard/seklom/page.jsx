@@ -8,7 +8,7 @@ import { IoMdClose } from "react-icons/io";
 import { RiDeleteBin2Line } from "react-icons/ri";
 
 
-const TABLE_HEAD = ["No", "Nama", "Nomor Start", "Team", "Kelas", "Action"];
+const TABLE_HEAD = ["No", "Nama", "Nomor Start", "Nama Team", "Kelas", "Action"];
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const SeklomPage = () => {
