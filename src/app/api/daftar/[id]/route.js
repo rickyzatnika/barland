@@ -18,7 +18,7 @@ export async function GET(req, { params: { id } }) {
 export async function PUT(req = NextRequest, { params: { id } }) {
   await connect();
   const body = await req.json();
-  const { numberStart } = body;
+  const { numberStart, raceClass } = body;
 
   try {
     // Cek apakah nomor start sudah digunakan oleh pembalap lain
@@ -36,9 +36,15 @@ export async function PUT(req = NextRequest, { params: { id } }) {
       );
     }
 
+    // Hitung totalPrice jika raceClass tidak kosong
+    const totalPrice =
+      raceClass.length > 0
+        ? raceClass.reduce((total, item) => total + item.price, 0)
+        : 0;
+
     const updateRider = await Riders.findByIdAndUpdate(
       id,
-      { $set: { ...body } },
+      { $set: { ...body, totalPrice } },
       { new: true }
     );
 

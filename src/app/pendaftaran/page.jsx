@@ -55,12 +55,19 @@ const Daftar = () => {
 
 
   useEffect(() => {
-    const totalPrice = formData.raceClass.reduce((total, selectedClass) => {
+    const totalPrice = formData.raceClass.length > 0 ? formData.raceClass.reduce((total, selectedClass) => {
       return total + selectedClass.price;
-    }, 0);
+    }, 0) : 0;
 
     setFormData(prev => ({ ...prev, totalPrice }));
   }, [formData.raceClass]);
+  // useEffect(() => {
+  //   const totalPrice = formData.raceClass.reduce((total, selectedClass) => {
+  //     return total + selectedClass.price;
+  //   }, 0);
+
+  //   setFormData(prev => ({ ...prev, totalPrice }));
+  // }, [formData.raceClass]);
 
 
   const handleChange = (e) => {
