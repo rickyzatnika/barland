@@ -212,7 +212,7 @@ const TableRiders = () => {
         </div>
       </div>
       <div className="relative overflow-x-auto shadow-md ">
-        <table className="w-full table-auto text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <table className="w-full table-auto text-left rtl:text-right text-gray-500 dark:text-gray-300">
           <thead className="text-sm uppercase second text-gray-100 dark:bg-gray-700 dark:text-gray-300">
             <tr className="">
               {TABLE_HEAD.map((head) => (
