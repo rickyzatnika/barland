@@ -145,7 +145,7 @@ const Daftar = () => {
     setLoading(true);
     const img = img;
 
-    if (img !== null || img !== "") {
+    if (img && img !== "") {
       await uploadImage();
     }
 
