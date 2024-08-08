@@ -6,10 +6,12 @@ import { usePathname } from "next/navigation"
 
 const Footer = () => {
 
-  const pathname = usePathname
+  const pathname = usePathname;
+
+  const isDashboard = pathname.startsWith('/dashboard');
 
   return (
-    <div className={`${pathname === "/login" ? "hidden" : " block w-full"}`}>
+    <div className={`${pathname === "/login" || isDashboard ? "hidden" : " block w-full"}`}>
       <footer className="second rounded-tr-2xl rounded-tl-2xl shadow dark:bg-slate-800 ">
         <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
           <div className="sm:flex sm:items-center sm:justify-between">
