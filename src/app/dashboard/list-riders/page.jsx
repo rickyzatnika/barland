@@ -35,7 +35,7 @@ const TableRiders = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [riders, setRiders] = useState([]);
   const [noData, setNoData] = useState(false);
-
+  const [datas, setDatas] = useState([]);
   // data fetching useSWR
   const { data, mutate } = useSWR(
     `${process.env.NEXT_PUBLIC_API_PRO}/api/daftar?q=${searchQuery}`,
@@ -49,6 +49,7 @@ const TableRiders = () => {
       // Mengurutkan data hanya jika data ada
       const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
       setRiders(sortedData);
+      setDatas(data);
       mutate(); // Update data
     }
 
@@ -130,7 +131,7 @@ const TableRiders = () => {
 
       // Update state locally
       if (res.status === 200) {
-        setRiders((prevData) =>
+        datas((prevData) =>
           prevData.map((rider) =>
             rider._id === id ? { ...rider, isPayment: status } : rider
           )
