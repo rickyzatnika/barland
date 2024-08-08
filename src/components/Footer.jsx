@@ -6,9 +6,9 @@ import { usePathname } from "next/navigation"
 
 const Footer = () => {
 
-  const pathname = usePathname;
-
+  const pathname = usePathname();
   const isDashboard = pathname.startsWith('/dashboard');
+
 
   return (
     <div className={`${pathname === "/login" || isDashboard ? "hidden" : " block w-full"}`}>
