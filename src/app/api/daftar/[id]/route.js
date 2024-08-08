@@ -18,7 +18,7 @@ export async function GET(req, { params: { id } }) {
 export async function PUT(req = NextRequest, { params: { id } }) {
   await connect();
   const body = await req.json();
-  const { numberStart, raceClass } = body;
+  const { numberStart, raceClass, isPayment } = body;
 
   try {
     // Cek apakah nomor start sudah digunakan oleh pembalap lain
@@ -44,7 +44,7 @@ export async function PUT(req = NextRequest, { params: { id } }) {
 
     const updateRider = await Riders.findByIdAndUpdate(
       id,
-      { $set: { ...body, totalPrice } },
+      { $set: { ...body, totalPrice, isPayment } },
       { new: true }
     );
 

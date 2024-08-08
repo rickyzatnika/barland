@@ -109,7 +109,7 @@ const TableRiders = () => {
 
   const handleModalPayment = (id, status, name) => {
     // Menyimpan ID yang akan dihapus
-    setModalId((prev) => (prev ? id : prev + 1));
+    setModalId((prev) => !prev);
     setRiderId(id);
     setRiderStatus(status);
     setRiderName(name);
@@ -333,7 +333,7 @@ const TableRiders = () => {
                   onClick={() =>
                     handleModalPayment(
                       rider?._id,
-                      !rider.isPayment,
+                      !rider?.isPayment,
                       rider?.name
                     )
                   }
@@ -342,7 +342,7 @@ const TableRiders = () => {
                     : "text-red-400 cursor-pointer"
                     }`}
                 >
-                  {rider.isPayment === false ? (
+                  {rider?.isPayment === false ? (
                     <>
                       <p>(belum valid) </p>
                       <span className="text-[0.70rem]">

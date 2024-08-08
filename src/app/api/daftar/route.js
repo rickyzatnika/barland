@@ -55,6 +55,18 @@ export const POST = async (req = NextRequest) => {
       );
     }
 
+    const existingRider = await Riders.findOne({
+      numberStart,
+      _id: { $ne: id },
+    });
+
+    if (existingRider) {
+      return new NextResponse(
+        JSON.stringify({ message: "Nomor start sudah digunakan" }),
+        { status: 409 }
+      );
+    }
+
     const newRiders = new Riders({
       name,
       address,
