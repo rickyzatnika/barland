@@ -3,16 +3,17 @@ import Link from "next/link";
 
 const HomePage = () => {
   return (
-    <div className="w-full h-full min-h-[calc(100vh-80px)] flex flex-col gap-6 items-center justify-center ">
+    <div className="w-full h-full flex flex-col gap-6 py-12 items-center justify-center ">
       <div className="w-full flex flex-col md:flex-row gap-8 md:gap-2 items-start justify-center">
-        <div className="w-full flex flex-col flex-1 gap-3 ">
+        <div className="w-full flex flex-col flex-1 gap-1 sm:gap-3 ">
           <div className="leading-relaxed text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-8xl">
             <h1 className="font-medium">
+              IKUTI{" "}
               <span className="font-extrabold">
                 <span className="font-extrabold bg-gradient-to-tr from-green-400 to-lime-500 bg-clip-text text-transparent">
-                  BALAP
-                </span>{" "}
-                NASIONAL{" "}
+                  BALAP{" "}
+                </span>
+                NASIONAL
               </span>
             </h1>
             <h3 className="font-semibold">PIALA PRESIDEN 2024</h3>

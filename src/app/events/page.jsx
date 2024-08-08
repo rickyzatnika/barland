@@ -8,10 +8,9 @@ import moment from "moment";
 
 const EventPage = () => {
 
-  const NEWS_API = "dc81d810995240b7b85d6f866138cdb3"
 
   const fetcher = (...agate) => fetch(...agate).then((res) => res.json());
-  const { data } = useSWR(`https://newsapi.org/v2/top-headlines?country=id&apiKey=${NEWS_API}`, fetcher);
+  const { data } = useSWR(`https://newsapi.org/v2/top-headlines?country=id&apiKey=dc81d810995240b7b85d6f866138cdb3`, fetcher);
   const [news, setNews] = useState([]);
   const { theme } = useContext(ThemeContext);
 
@@ -22,7 +21,7 @@ const EventPage = () => {
   }, [data])
 
   return (
-    <div className="w-full max-w-6xl mx-auto pt-8">
+    <div className="w-full max-w-6xl mx-auto py-8">
       <h1 className="text-3xl font-medium mb-2 sm:mb-8">Berita Terbaru</h1>
       <div className="flex flex-col gap-8 ">
         {news?.map((art, i) => (

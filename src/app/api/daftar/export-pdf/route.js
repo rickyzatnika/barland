@@ -114,49 +114,49 @@ export const GET = async (req = NextRequest) => {
       yPosition -= lineHeight;
     };
 
-    const addImageToPage = async (imageUrl) => {
-      let image;
+    // const addImageToPage = async (imageUrl) => {
+    //   let image;
 
-      try {
-        const imageResponse = await fetch(imageUrl);
-        const imageBuffer = await imageResponse.arrayBuffer();
-        image = await pdfDoc.embedJpg(imageBuffer); // Gunakan embedPng jika gambar PNG
-      } catch (error) {
-        // Jika terjadi kesalahan saat fetch gambar, gunakan teks sebagai gantinya
-        image = null;
-      }
+    //   try {
+    //     const imageResponse = await fetch(imageUrl);
+    //     const imageBuffer = await imageResponse.arrayBuffer();
+    //     image = await pdfDoc.embedJpg(imageBuffer); // Gunakan embedPng jika gambar PNG
+    //   } catch (error) {
+    //     // Jika terjadi kesalahan saat fetch gambar, gunakan teks sebagai gantinya
+    //     image = null;
+    //   }
 
-      if (!image) {
-        {
-          const text = "Bayar dilokasi";
-          currentPage.drawText(text, {
-            x: margin,
-            y: yPosition - 20,
-            size: 12,
-          });
+    //   if (!image) {
+    //     {
+    //       const text = "Bayar dilokasi";
+    //       currentPage.drawText(text, {
+    //         x: margin,
+    //         y: yPosition - 20,
+    //         size: 12,
+    //       });
 
-          yPosition -= 20 + margin;
-        }
-      }
+    //       yPosition -= 20 + margin;
+    //     }
+    //   }
 
-      if (image) {
-        const { width, height } = image.scale(0.006); // Ubah skala sesuai kebutuhan
+    //   if (image) {
+    //     const { width, height } = image.scale(0.006); // Ubah skala sesuai kebutuhan
 
-        if (yPosition - height < margin) {
-          currentPage = pdfDoc.addPage([pageWidth, pageHeight]);
-          yPosition = pageHeight - margin;
-        }
+    //     if (yPosition - height < margin) {
+    //       currentPage = pdfDoc.addPage([pageWidth, pageHeight]);
+    //       yPosition = pageHeight - margin;
+    //     }
 
-        currentPage.drawImage(image, {
-          x: margin,
-          y: yPosition - height,
-          width,
-          height,
-        });
+    //     currentPage.drawImage(image, {
+    //       x: margin,
+    //       y: yPosition - height,
+    //       width,
+    //       height,
+    //     });
 
-        yPosition -= height + margin;
-      }
-    };
+    //     yPosition -= height + margin;
+    //   }
+    // };
 
     addTextToPage("Riders List:", 0);
     yPosition -= lineHeight;
