@@ -100,16 +100,11 @@ export async function PUT(req = NextRequest, { params: { id } }) {
     const updateRider = await Riders.findByIdAndUpdate(
       id,
       { $set: { ...body, totalPrice } },
+      { $set: { ...body, isPayment } },
       { new: true }
     );
 
-    const updatePayment = await Riders.findByIdAndUpdate(
-      id,
-      { $set: { isPayment } },
-      { new: true }
-    );
-
-    return new NextResponse(JSON.stringify(updateRider, updatePayment), {
+    return new NextResponse(JSON.stringify(updateRider), {
       status: 200,
     });
   } catch (error) {
