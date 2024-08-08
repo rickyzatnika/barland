@@ -1,10 +1,17 @@
 import Riders from "@/models/Riders";
 import connect from "@/utils/connect";
+import { getSession } from "next-auth/react";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req = NextRequest) => {
   await connect();
   try {
+    const session = await getSession({ req });
+
+    if (!session) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
     const url = new URL(req.url);
     const query = url.searchParams.get("q");
     let riders;
