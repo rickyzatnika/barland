@@ -36,9 +36,9 @@ const TableRiders = () => {
   const [riders, setRiders] = useState([]);
   const [noData, setNoData] = useState(false);
   const [modalId, setModalId] = useState(false);
-  const [riderId, setRiderId] = useState(null);
-  const [riderStatus, setRiderStatus] = useState(null);
-  const [riderName, setRiderName] = useState(null);
+  const [riderId, setRiderId] = useState("");
+  const [riderStatus, setRiderStatus] = useState("");
+  const [riderName, setRiderName] = useState("");
   // data fetching useSWR
   const { data, mutate } = useSWR(
     `${process.env.NEXT_PUBLIC_API_PRO}/api/daftar?q=${searchQuery}`,
