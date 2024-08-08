@@ -73,7 +73,7 @@ const Login = () => {
 
   useEffect(() => {
     if (session) {
-      if (session.user.role === 'admin') {
+      if (session.user.role === 'admin' && session.user.role === 'master') {
         router.push('/dashboard');
       } else {
         router.push('/');
