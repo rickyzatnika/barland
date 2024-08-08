@@ -74,6 +74,7 @@ export async function PUT(req = NextRequest, { params: { id } }) {
   await connect();
   const body = await req.json();
   const { numberStart, raceClass } = body;
+
   try {
     // Cek apakah nomor start sudah digunakan oleh pembalap lain
     const existingRider = await Riders.findOne({
@@ -101,15 +102,6 @@ export async function PUT(req = NextRequest, { params: { id } }) {
       { $set: { ...body, totalPrice } },
       { new: true }
     );
-
-    if (body.hasOwnProperty("isPayment")) {
-      const updatePayment = await Riders.findByIdAndUpdate(
-        id,
-        { $set: { isPayment: body.isPayment } },
-        { new: true }
-      );
-      return new NextResponse(JSON.stringify(updatePayment), { status: 200 });
-    }
 
     return new NextResponse(JSON.stringify(updateRider), {
       status: 200,

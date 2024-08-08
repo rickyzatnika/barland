@@ -113,7 +113,7 @@ const TableRiders = () => {
   const handleUpdatePaymentStatus = async (id, status, name) => {
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar/${id}`,
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar/status/${id}`,
         {
           method: "PUT",
           headers: {
