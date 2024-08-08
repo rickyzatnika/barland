@@ -18,9 +18,21 @@ export async function GET(req, { params: { id } }) {
 export async function PUT(req = NextRequest, { params: { id } }) {
   await connect();
   const body = await req.json();
-  const { numberStart, raceClass } = body;
 
   try {
+    // Misalnya, jika hanya ingin mengupdate status pembayaran
+    if (body.hasOwnProperty("isPayment")) {
+      const updateRider = await Riders.findByIdAndUpdate(
+        id,
+        { $set: { isPayment: body.isPayment } },
+        { new: true }
+      );
+      return new NextResponse(JSON.stringify(updateRider), { status: 200 });
+    }
+
+    // Jika ingin mengupdate nomor start dan raceClass
+    const { numberStart, raceClass } = body;
+
     // Cek apakah nomor start sudah digunakan oleh pembalap lain
     const existingRider = await Riders.findOne({
       numberStart,
@@ -35,9 +47,10 @@ export async function PUT(req = NextRequest, { params: { id } }) {
         { status: 400 }
       );
     }
+
     // Hitung totalPrice jika raceClass tidak kosong
     const totalPrice =
-      raceClass.length > 0
+      raceClass && raceClass.length > 0
         ? raceClass.reduce((total, item) => total + item.price, 0)
         : 0;
 
@@ -49,12 +62,54 @@ export async function PUT(req = NextRequest, { params: { id } }) {
 
     return new NextResponse(JSON.stringify(updateRider), { status: 200 });
   } catch (error) {
+    console.error("Error during PUT request:", error);
     return new NextResponse(
-      JSON.stringify({ message: "Internal Server Error!" }),
+      JSON.stringify({ message: "Mohon maaf ada kesalahan pada server!" }),
       { status: 500 }
     );
   }
 }
+
+// export async function PUT(req = NextRequest, { params: { id } }) {
+//   await connect();
+//   const body = await req.json();
+//   const { numberStart, raceClass } = body;
+
+//   try {
+//     // Cek apakah nomor start sudah digunakan oleh pembalap lain
+//     const existingRider = await Riders.findOne({
+//       numberStart,
+//       _id: { $ne: id },
+//     });
+
+//     if (existingRider) {
+//       return new NextResponse(
+//         JSON.stringify({
+//           message: "Nomor start sudah digunakan oleh pembalap lain",
+//         }),
+//         { status: 400 }
+//       );
+//     }
+//     // Hitung totalPrice jika raceClass tidak kosong
+//     const totalPrice =
+//       raceClass.length > 0
+//         ? raceClass.reduce((total, item) => total + item.price, 0)
+//         : 0;
+
+//     const updateRider = await Riders.findByIdAndUpdate(
+//       id,
+//       { $set: { ...body, totalPrice } },
+//       { new: true }
+//     );
+
+//     return new NextResponse(JSON.stringify(updateRider), { status: 200 });
+//   } catch (error) {
+//     return new NextResponse(
+//       JSON.stringify({ message: "Mohon maaf ada kesalahan server!" }),
+//       { status: 500 }
+//     );
+//   }
+// }
 
 export async function DELETE(req = NextRequest, { params: { id } }) {
   await connect();

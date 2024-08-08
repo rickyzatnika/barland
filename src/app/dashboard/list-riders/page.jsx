@@ -42,7 +42,6 @@ const TableRiders = () => {
     fetcher
   );
 
-  const [datas, setDatas] = useState(data);
 
   useEffect(() => {
     if (data) {
@@ -60,6 +59,7 @@ const TableRiders = () => {
     }
   }, [data, mutate, searchQuery]); // Tambahkan data ke dependency array
 
+  const [datas, setDatas] = useState(data);
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
@@ -107,13 +107,7 @@ const TableRiders = () => {
     setShowModal(true);
   };
 
-  // const handleModalPayment = (id, status, name) => {
-  //   // Menyimpan ID yang akan dihapus
-  //   setModalId((prev) => !prev);
-  //   setRiderId(id);
-  //   setRiderStatus(status);
-  //   setRiderName(name);
-  // };
+
 
   const handleUpdatePaymentStatus = async (id, status, name) => {
 
@@ -131,7 +125,7 @@ const TableRiders = () => {
       // Update state locally
       if (res.status === 200) {
         setDatas((prevData) =>
-          prevData?.map((rider) =>
+          prevData.map((rider) =>
             rider._id === id ? { ...rider, isPayment: status } : rider
           )
         );

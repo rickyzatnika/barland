@@ -35,6 +35,7 @@ const EditRiders = ({ params }) => {
       setTeam(rider?.team);
       setNumberStart(rider?.numberStart);
       setTotalPrice(rider?.totalPrice);
+      setIsPayment(rider?.isPayment);
       setPreview(rider?.img);
       setRaceClass(rider?.raceClass);
     }
@@ -42,6 +43,8 @@ const EditRiders = ({ params }) => {
   }, [params.id]);
 
   // useEffect untuk menghitung totalPrice berdasarkan raceClass
+
+
   useEffect(() => {
     const newTotalPrice = raceClass.reduce((sum, cls) => sum + parseFloat(cls.price || 0), 0);
     setTotalPrice(newTotalPrice);
@@ -53,7 +56,7 @@ const EditRiders = ({ params }) => {
     setLoading(true);
     try {
       let img = preview;
-      const body = { name, address, kis, nik, phone, team, numberStart, totalPrice, raceClass };
+      const body = { name, address, kis, nik, phone, team, numberStart, totalPrice, raceClass, isPayment };
       if (img !== null) {
         body.img = img;
       }
@@ -77,17 +80,19 @@ const EditRiders = ({ params }) => {
         return () => clearTimeout(setTimeoutId);
       } else {
         toast.error(data.message);
+        setLoading(false);
       }
 
     } catch (error) {
       toast.error("Ups something went wrong", error);
+      setLoading(false);
     }
   };
 
   // Handle raceClass change
   const handleRaceClassChange = (index, field, value) => {
     const newRaceClass = [...raceClass];
-    newRaceClass[index][field] = value;
+    newRaceClass[index][field] = field === 'price' ? parseFloat(value) || 0 : value;
     setRaceClass(newRaceClass);
   };
 
@@ -131,7 +136,29 @@ const EditRiders = ({ params }) => {
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Biaya Pendaftaran</label>
               <input type="text" value={totalPrice} onChange={(e) => setTotalPrice(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white " />
             </div>
-
+            <div className="mb-5">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status Pembayaran</label>
+              <label className="flex gap-1">
+                Valid
+                <input
+                  type="radio"
+                  value="true"
+                  name="isPayment"
+                  onChange={(e) => setIsPayment(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                />
+              </label>
+              <label className="flex gap-1">
+                Tidak Valid
+                <input
+                  type="radio"
+                  value="false"
+                  name="isPayment"
+                  onChange={(e) => setIsPayment(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                />
+              </label>
+            </div>
             <div className="mb-5">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kelas Balap</label>
               {raceClass.map((cls, index) => (
