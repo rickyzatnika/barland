@@ -122,7 +122,7 @@ export const GET = async (req) => {
         raceClass: raceClassString, // Tambahkan raceClass ke baris
       });
 
-      if (rider.img) {
+      if (rider.img && rider.img !== "") {
         try {
           const imageResponse = await fetch(rider.img);
           const imageBuffer = await imageResponse.arrayBuffer();
