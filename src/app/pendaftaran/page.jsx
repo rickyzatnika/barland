@@ -298,12 +298,12 @@ const Daftar = () => {
           </div>
         )}
         {step === "3" && (
-          <div className="p-2 overflow-y-auto w-full h-full">
+          <div className="pt-2 pb-12 px-2 overflow-y-auto w-full h-full">
             <h2 className="w-full mb-2 text-md md:text-xl bg-gradient-to-tr from-green-400 to-lime-500 text-center py-4 uppercase font-bold text-white">Pilih Kelas</h2>
             <div className='pb-6 px-4'>
               <p className='italic text-md'>Silahkan pilih satu atau beberapa kelas yang ingin diikuti</p>
             </div>
-            <div className="pb-6 grid gap-0 sm:gap-3 mb-0 sm:mb-2 md:grid-cols-2 ">
+            <div className="pb-16 grid gap-0 sm:gap-3 mb-0 sm:mb-2 md:grid-cols-2 ">
               {raceClasses.map((raceClass) => (
                 <div key={raceClass.title} className="w-full bg-orange-100 mb-4">
                   <h3 className="text-md bg-orange-400 py-2 px-3 uppercase font-semibold mb-2">{raceClass.title}</h3>
