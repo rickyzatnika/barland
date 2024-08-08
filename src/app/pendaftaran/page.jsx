@@ -143,11 +143,7 @@ const Daftar = () => {
   const handleSave = async () => {
 
     setLoading(true);
-    const img = img;
-
-    if (img && img !== "") {
-      await uploadImage();
-    }
+    const img = await uploadImage();
 
     setFormData((prev) => ({
       ...prev,
@@ -199,6 +195,11 @@ const Daftar = () => {
     formData.append("upload_preset", UPLOAD_PRESET);
 
     try {
+
+      if (!photo) {
+        return;
+      }
+
       const res = await fetch(
         `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
         {
