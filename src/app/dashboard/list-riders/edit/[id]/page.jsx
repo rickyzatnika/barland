@@ -142,25 +142,25 @@ const EditRiders = ({ params }) => {
             </div>
             <div className="mb-5">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status Pembayaran</label>
-              <label className="flex gap-1">
-                Valid
+              <label className="flex gap-3">
                 <input
                   type="radio"
                   value="true"
                   name="isPayment"
                   onChange={(e) => setIsPayment(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  className="bg-gray-50 w-4 rounded-full border border-gray-300 text-gray-900 text-sm focus:ring-lime-500 focus:border-lime-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 />
+                Valid
               </label>
-              <label className="flex gap-1">
-                Tidak Valid
+              <label className="flex gap-3">
                 <input
                   type="radio"
                   value="false"
                   name="isPayment"
                   onChange={(e) => setIsPayment(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  className="bg-gray-50 w-4 rounded-full border border-gray-300 text-gray-900 text-sm focus:ring-lime-500 focus:border-lime-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 />
+                Tidak Valid
               </label>
             </div>
             <div className="mb-5">
