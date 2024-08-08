@@ -45,6 +45,7 @@ const TableRiders = () => {
     fetcher
   );
 
+  const [datas, setDatas] = useState(data);
 
   useEffect(() => {
     if (data) {
@@ -61,7 +62,7 @@ const TableRiders = () => {
     }
   }, [data, mutate, searchQuery]); // Tambahkan data ke dependency array
 
-  const [datas, setDatas] = useState(data);
+
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
@@ -109,24 +110,24 @@ const TableRiders = () => {
     setShowModal(true);
   };
 
-  const handleModalPayment = (id, status, name) => {
-    // Menyimpan ID yang akan dihapus
-    setModalId((prev) => !prev);
-    setRiderId(id);
-    setRiderStatus(status);
-    setRiderName(name);
-  };
+  // const handleModalPayment = (id, status, name) => {
+  //   // Menyimpan ID yang akan dihapus
+  //   setModalId((prev) => !prev);
+  //   setRiderId(id);
+  //   setRiderStatus(status);
+  //   setRiderName(name);
+  // };
 
-  const handleUpdatePaymentStatus = async (riderId, riderStatus, riderName) => {
+  const handleUpdatePaymentStatus = async (id, status, name) => {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_PRO}/api/daftar/${riderId}`,
+        `${process.env.NEXT_PUBLIC_API_PRO}/api/daftar/${id}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ isPayment: riderStatus }),
+          body: JSON.stringify({ isPayment: status }),
         }
       );
 
@@ -134,14 +135,14 @@ const TableRiders = () => {
         // Update state locally
         setDatas((prevData) =>
           prevData?.map((rider) =>
-            rider?._id === riderId ? { ...rider, isPayment: riderStatus } : rider
+            rider?._id === id ? { ...rider, isPayment: status } : rider
           )
         );
-        setModalId(false);
+
         mutate(); // Memuat ulang data
-        toast.success(`Status Pembayaran ${riderName} diperbarui`);
+        toast.success(`Status Pembayaran ${name} diperbarui`);
       } else {
-        toast.error(`Gagal memperbarui status pembayaran ${riderName}`);
+        toast.error(`Gagal memperbarui status pembayaran ${name}`);
       }
     } catch (error) {
       toast.error("Terjadi kesalahan saat memperbarui status pembayaran");
@@ -332,13 +333,7 @@ const TableRiders = () => {
                   {formatCurrency(rider?.totalPrice)}
                 </td>
                 <td
-                  onClick={() =>
-                    handleModalPayment(
-                      rider?._id,
-                      !rider?.isPayment,
-                      rider?.name
-                    )
-                  }
+                  onClick={() => handleUpdatePaymentStatus(rider?._id, !rider?.isPayment, rider?.name)}
                   className={`w-full relative px-1 py-4 flex flex-col items-center justify-center  capitalize antialiased leading-relaxed  ${rider.isPayment
                     ? "bg-green-500 text-gray-50 cursor-not-allowed"
                     : "text-red-400 cursor-pointer"
@@ -393,7 +388,7 @@ const TableRiders = () => {
             </div>
           </div>
         )}
-        {modalId && riderId && riderStatus && riderName && (
+        {/* {modalId && riderId && riderStatus && riderName && (
           <div className="fixed top-0 left-0 w-full h-screen shadow-lg z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center">
             <div className="bg-gray-100 dark:bg-slate-800 py-8 px-6 rounded shadow-lg shadow-gray-600 dark:shadow-slate-950">
               <p className="text-lg py-2 antialiased">
@@ -417,7 +412,7 @@ const TableRiders = () => {
               </div>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </>
   );
