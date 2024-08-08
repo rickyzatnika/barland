@@ -62,7 +62,6 @@ const TableRiders = () => {
     }
   }, [data, mutate, searchQuery]); // Tambahkan data ke dependency array
 
-  const [datas, setDatas] = useState(data);
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
@@ -132,7 +131,7 @@ const TableRiders = () => {
 
       if (res.status === 200) {
         // Update state locally
-        setDatas((prevData) =>
+        setRiders((prevData) =>
           prevData?.map((rider) =>
             rider._id === id ? { ...rider, isPayment: status } : rider
           )
@@ -279,7 +278,7 @@ const TableRiders = () => {
             </tr>
           </thead>
           <tbody>
-            {riders.map((rider, i) => (
+            {riders?.map((rider, i) => (
               <tr
                 key={rider?._id}
                 className="bg-white text-sm font-medium border-b dark:bg-gray-800 dark:border-gray-700"
