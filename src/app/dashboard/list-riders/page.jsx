@@ -35,21 +35,21 @@ const TableRiders = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [riders, setRiders] = useState([]);
   const [noData, setNoData] = useState(false);
-  const [datas, setDatas] = useState([]);
+
   // data fetching useSWR
   const { data, mutate } = useSWR(
     `${process.env.NEXT_PUBLIC_API_PRO}/api/daftar?q=${searchQuery}`,
     fetcher
   );
 
-
+  const [datas, setDatas] = useState(data);
 
   useEffect(() => {
     if (data) {
       // Mengurutkan data hanya jika data ada
       const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
       setRiders(sortedData);
-      setDatas(data);
+
       mutate(); // Update data
     }
 
@@ -115,8 +115,7 @@ const TableRiders = () => {
   //   setRiderName(name);
   // };
 
-  const handleUpdatePaymentStatus = async (e, id, status, name) => {
-    e.preventDefault();
+  const handleUpdatePaymentStatus = async (id, status, name) => {
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar/${id}`,
@@ -131,8 +130,8 @@ const TableRiders = () => {
 
       // Update state locally
       if (res.status === 200) {
-        datas((prevData) =>
-          prevData.map((rider) =>
+        setDatas((prevData) =>
+          prevData?.map((rider) =>
             rider._id === id ? { ...rider, isPayment: status } : rider
           )
         );
@@ -331,7 +330,7 @@ const TableRiders = () => {
                   {formatCurrency(rider?.totalPrice)}
                 </td>
                 <td
-                  onClick={(e) => handleUpdatePaymentStatus(e, rider?._id, !rider?.isPayment, rider?.name)}
+                  onClick={() => handleUpdatePaymentStatus(rider?._id, !rider?.isPayment, rider?.name)}
                   className={`w-full relative px-1 py-4 flex flex-col items-center justify-center  capitalize antialiased leading-relaxed  ${rider?.isPayment
                     ? "bg-green-500 text-gray-50 cursor-not-allowed"
                     : "text-red-400 cursor-pointer"
