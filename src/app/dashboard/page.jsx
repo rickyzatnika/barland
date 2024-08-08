@@ -55,10 +55,10 @@ const Dashboard = () => {
       <div className='w-full  flex gap-3'>
         <div className='flex flex-col basis-9/12 '>
           <div className='w-full bg-gray-100 shadow-md dark:bg-slate-800 my-3 rounded-lg'>
-            <p className='text-xs text-center py-2 capitalize'>{currentTime} WIB</p>
+            <p className='text-xs antialiased text-center py-2 capitalize'>{currentTime} WIB</p>
           </div>
           <HeaderInformation />
-          <div className='flex flex-col shadow-lg gap-4 w-full my-6 bg-gray-100 dark:bg-slate-800 py-6 rounded-lg px-6'>
+          <div className='flex antialiased flex-col shadow-lg gap-4 w-full my-6 bg-gray-100 dark:bg-slate-800 py-6 rounded-lg px-6'>
             <h2 className='text-sm font-medium'>Data Transaksi Keseluruhan Pembayaran Tunai dan Transfer </h2>
             <BarChart />
           </div>
