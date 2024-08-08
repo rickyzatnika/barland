@@ -68,7 +68,10 @@ export const POST = async (req = NextRequest) => {
       totalPrice,
     });
     await newRiders.save();
-    return new NextResponse("Registered Successfully", { status: 201 });
+    return new NextResponse(
+      JSON.stringify({ message: "Registered Successfully" }),
+      { status: 201 }
+    );
   } catch (error) {
     console.log(error.message);
     return new NextResponse(error.message, { status: 500 });
