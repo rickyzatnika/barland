@@ -42,6 +42,7 @@ const TableRiders = () => {
     fetcher
   );
 
+  const [datas, setDatas] = useState(data);
 
   useEffect(() => {
     if (data) {
@@ -59,7 +60,7 @@ const TableRiders = () => {
     }
   }, [data, mutate, searchQuery]); // Tambahkan data ke dependency array
 
-  const [datas, setDatas] = useState(data);
+
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
@@ -125,8 +126,8 @@ const TableRiders = () => {
       // Update state locally
       if (res.status === 200) {
         setDatas((prevData) =>
-          prevData.map((rider) =>
-            rider._id === id ? { ...rider, isPayment: status } : rider
+          prevData?.map((rider) =>
+            rider?._id === id ? { ...rider, isPayment: status } : rider
           )
         );
         toast.success(`Status Pembayaran ${name} diperbarui`);
