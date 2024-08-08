@@ -44,7 +44,7 @@ const TableRiders = () => {
     `${process.env.NEXT_PUBLIC_API_PRO}/api/daftar?q=${searchQuery}`,
     fetcher
   );
-  const [datas, setDatas] = useState(riders);
+
 
   useEffect(() => {
     if (data) {
@@ -60,6 +60,8 @@ const TableRiders = () => {
       setNoData(false);
     }
   }, [data, mutate, searchQuery]); // Tambahkan data ke dependency array
+
+  const [datas, setDatas] = useState(data);
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
