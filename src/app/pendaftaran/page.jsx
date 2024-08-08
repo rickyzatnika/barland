@@ -143,7 +143,11 @@ const Daftar = () => {
   const handleSave = async () => {
 
     setLoading(true);
-    const img = await uploadImage();
+    const img = img;
+
+    if (img !== null || img !== "") {
+      await uploadImage();
+    }
 
     setFormData((prev) => ({
       ...prev,
