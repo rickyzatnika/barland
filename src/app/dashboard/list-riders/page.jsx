@@ -45,7 +45,7 @@ const TableRiders = () => {
     fetcher
   );
 
-  const [datas, setDatas] = useState(data);
+
 
   useEffect(() => {
     if (data) {
@@ -62,7 +62,7 @@ const TableRiders = () => {
     }
   }, [data, mutate, searchQuery]); // Tambahkan data ke dependency array
 
-
+  const [datas, setDatas] = useState(data);
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
@@ -120,8 +120,7 @@ const TableRiders = () => {
 
   const handleUpdatePaymentStatus = async (id, status, name) => {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_PRO}/api/daftar/${id}`,
+      const res = await fetch(`/api/daftar/${id}`,
         {
           method: "PUT",
           headers: {
@@ -135,7 +134,7 @@ const TableRiders = () => {
         // Update state locally
         setDatas((prevData) =>
           prevData?.map((rider) =>
-            rider?._id === id ? { ...rider, isPayment: status } : rider
+            rider._id === id ? { ...rider, isPayment: status } : rider
           )
         );
 
