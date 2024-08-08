@@ -123,23 +123,23 @@ export const GET = async (req) => {
         raceClass: raceClassString,
       });
 
-      if (rider.img) {
-        try {
-          const imageResponse = await fetch(rider.img);
-          const imageBuffer = await imageResponse.arrayBuffer();
-          const imageId = workbook.addImage({
-            buffer: Buffer.from(imageBuffer),
-            extension: "jpeg",
-          });
+      // if (rider.img) {
+      //   try {
+      //     const imageResponse = await fetch(rider.img);
+      //     const imageBuffer = await imageResponse.arrayBuffer();
+      //     const imageId = workbook.addImage({
+      //       buffer: Buffer.from(imageBuffer),
+      //       extension: "jpeg",
+      //     });
 
-          worksheet.addImage(imageId, {
-            tl: { col: 8, row: row.number - 1 },
-            ext: { width: 30, height: 20 },
-          });
-        } catch (error) {
-          worksheet.getCell(row.number, 9).value = "Bayar di lokasi";
-        }
-      }
+      //     worksheet.addImage(imageId, {
+      //       tl: { col: 8, row: row.number - 1 },
+      //       ext: { width: 30, height: 20 },
+      //     });
+      //   } catch (error) {
+      //     worksheet.getCell(row.number, 9).value = "Bayar di lokasi";
+      //   }
+      // }
     }
 
     const excelBuffer = await workbook.xlsx.writeBuffer();
