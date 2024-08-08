@@ -84,7 +84,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="w-full h-full min-h-[calc(100vh-80px)] relative px-2 py-20 sm:py-8 flex flex-col gap-2 items-center justify-center">
+      <div className="w-full h-screen min-h-[calc(100vh-80px)] relative px-2 py-20 sm:py-8 flex flex-col gap-2 items-center justify-center">
         <div className="w-full h-full blur-[2px] fixed left-0 top-0 ">
           <Image src="/hexa.jpg" alt="race-flag" sizes="100%" priority={true} fill className="object-cover" />
         </div>
