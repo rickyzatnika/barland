@@ -133,11 +133,14 @@ const SeklomPage = () => {
     }
   };
 
+
+  // Handle raceClass change
   const handleRaceClassChange = (index, field, value) => {
     const newRaceClass = [...raceClass];
-    newRaceClass[index][field] = value;
+    newRaceClass[index][field] = field === 'price' ? parseFloat(value) || 0 : value;
     setRaceClass(newRaceClass);
   };
+
 
 
 
