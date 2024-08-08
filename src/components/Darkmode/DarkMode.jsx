@@ -10,8 +10,6 @@ const DarkModeToggle = () => {
   const { toggle, theme } = useContext(ThemeContext);
 
 
-  console.log(theme);
-
   return (
     <button onClick={toggle} className={`py-1 px-1.5 rounded-lg shadow-md ${theme === "dark" ? "bg-gray-100 text-gray-800" : "bg-[#081225] text-gray-200"}`}>
       {theme === "dark" ? <PiSunLight size={20} /> : <WiMoonAltWaxingCrescent6 size={20} />}
