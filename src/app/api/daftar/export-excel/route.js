@@ -119,7 +119,7 @@ export const GET = async (req) => {
         nik: rider.nik,
         numberStart: rider.numberStart,
         totalPrice: rider.totalPrice,
-        paymentProof: rider.img ? "Tersedia" : "Bayar di lokasi",
+        paymentProof: rider.img ? rider.img : "Bayar di lokasi",
         raceClass: raceClassString,
       });
 
