@@ -66,7 +66,6 @@ export const POST = async (req = NextRequest) => {
       img,
       raceClass,
       totalPrice,
-      isPayment,
     });
     await newRiders.save();
     return new NextResponse("Registered Successfully", { status: 201 });
