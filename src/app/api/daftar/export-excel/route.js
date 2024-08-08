@@ -82,8 +82,8 @@ import fetch from "node-fetch";
 export const GET = async (req) => {
   await connect();
   try {
-    const riders = await Riders.find({}).lean(); // Ambil data riders dan konversi ke objek JavaScript biasa
-    riders.sort((a, b) => a.name.localeCompare(b.name)); // Urutkan berdasarkan nama
+    const riders = await Riders.find({}).lean();
+    riders.sort((a, b) => a.name.localeCompare(b.name));
 
     if (!riders.length) {
       return new NextResponse("No riders found", { status: 404 });
@@ -101,8 +101,8 @@ export const GET = async (req) => {
       { header: "No.Identitas/NIK", key: "nik", width: 20 },
       { header: "Nomor Start", key: "numberStart", width: 20 },
       { header: "Biaya Pendaftaran", key: "totalPrice", width: 20 },
-      { header: "Bukti Pembayaran", key: "img", width: 30 },
-      { header: "Kelas Balap", key: "raceClass", width: 30 }, // Kolom untuk raceClass
+      { header: "Bukti Pembayaran", key: "paymentProof", width: 30 },
+      { header: "Kelas Balap", key: "raceClass", width: 30 },
     ];
 
     for (const rider of riders) {
@@ -119,27 +119,26 @@ export const GET = async (req) => {
         nik: rider.nik,
         numberStart: rider.numberStart,
         totalPrice: rider.totalPrice,
-        raceClass: raceClassString, // Tambahkan raceClass ke baris
+        paymentProof: rider.img ? "Tersedia" : "Bayar di lokasi",
+        raceClass: raceClassString,
       });
 
-      if (rider.img && rider.img !== "") {
+      if (rider.img) {
         try {
           const imageResponse = await fetch(rider.img);
           const imageBuffer = await imageResponse.arrayBuffer();
           const imageId = workbook.addImage({
             buffer: Buffer.from(imageBuffer),
-            extension: "jpeg", // Gunakan 'png' jika gambar PNG
+            extension: "jpeg",
           });
 
           worksheet.addImage(imageId, {
-            tl: { col: 8, row: row.number - 1 }, // Posisi gambar
-            ext: { width: 30, height: 20 }, // Sesuaikan ukuran gambar
+            tl: { col: 8, row: row.number - 1 },
+            ext: { width: 30, height: 20 },
           });
         } catch (error) {
-          worksheet.getCell(row.number, 8).value = "Bayar di lokasi";
+          worksheet.getCell(row.number, 9).value = "Bayar di lokasi";
         }
-      } else {
-        worksheet.getCell(row.number, 8).value = "Bayar di lokasi";
       }
     }
 
