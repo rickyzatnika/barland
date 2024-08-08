@@ -44,7 +44,7 @@ const TableRiders = () => {
     `${process.env.NEXT_PUBLIC_API_PRO}/api/daftar?q=${searchQuery}`,
     fetcher
   );
-  const [datas, setDatas] = useState(data);
+  const [datas, setDatas] = useState(riders);
 
   useEffect(() => {
     if (data) {
@@ -132,7 +132,7 @@ const TableRiders = () => {
         // Update state locally
         setDatas((prevData) =>
           prevData?.map((rider) =>
-            rider._id === riderId ? { ...rider, isPayment: riderStatus } : rider
+            rider?._id === riderId ? { ...rider, isPayment: riderStatus } : rider
           )
         );
         setModalId(false);

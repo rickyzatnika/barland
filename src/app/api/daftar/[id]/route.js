@@ -35,7 +35,6 @@ export async function PUT(req = NextRequest, { params: { id } }) {
         { status: 400 }
       );
     }
-
     // Hitung totalPrice jika raceClass tidak kosong
     const totalPrice =
       raceClass.length > 0
