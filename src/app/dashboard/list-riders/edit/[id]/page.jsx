@@ -43,8 +43,6 @@ const EditRiders = ({ params }) => {
   }, [params.id]);
 
   // useEffect untuk menghitung totalPrice berdasarkan raceClass
-
-
   useEffect(() => {
     const newTotalPrice = raceClass.reduce((sum, cls) => sum + parseFloat(cls.price || 0), 0);
     setTotalPrice(newTotalPrice);
@@ -95,6 +93,12 @@ const EditRiders = ({ params }) => {
     newRaceClass[index][field] = field === 'price' ? parseFloat(value) || 0 : value;
     setRaceClass(newRaceClass);
   };
+
+  // const handleRaceClassChange = (index, field, value) => {
+  //   const newRaceClass = [...raceClass];
+  //   newRaceClass[index][field] = field === 'price' ? parseFloat(value) || 0 : value;
+  //   setRaceClass(newRaceClass);
+  // };
 
   return (
     <>
