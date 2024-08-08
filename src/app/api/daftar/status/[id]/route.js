@@ -4,10 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(req = NextRequest, { params: { id } }) {
   await connect();
-  const isPayment = await req.json();
+  const body = await req.json();
+
+  const { isPayment } = body;
 
   try {
-    // Cek apakah nomor start sudah digunakan oleh pembalap lain
     const updateRider = await Riders.findByIdAndUpdate(
       id,
       { $set: { isPayment } },
