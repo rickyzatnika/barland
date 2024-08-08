@@ -35,10 +35,7 @@ const TableRiders = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [riders, setRiders] = useState([]);
   const [noData, setNoData] = useState(false);
-  const [modalId, setModalId] = useState(false);
-  const [riderId, setRiderId] = useState("");
-  const [riderStatus, setRiderStatus] = useState("");
-  const [riderName, setRiderName] = useState("");
+
   // data fetching useSWR
   const { data, mutate } = useSWR(
     `${process.env.NEXT_PUBLIC_API_PRO}/api/daftar?q=${searchQuery}`,
@@ -117,9 +114,11 @@ const TableRiders = () => {
   //   setRiderName(name);
   // };
 
-  const handleUpdatePaymentStatus = async (id, status, name) => {
+  const handleUpdatePaymentStatus = async (e, id, status, name) => {
+    e.preventDefault();
+
     try {
-      const res = await fetch(`/api/daftar/${id}`,
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar/${id}`,
         {
           method: "PUT",
           headers: {
@@ -129,16 +128,16 @@ const TableRiders = () => {
         }
       );
 
+      // Update state locally
       if (res.status === 200) {
-        // Update state locally
         setRiders((prevData) =>
-          prevData?.map((rider) =>
+          prevData.map((rider) =>
             rider._id === id ? { ...rider, isPayment: status } : rider
           )
         );
-
-        mutate(); // Memuat ulang data
         toast.success(`Status Pembayaran ${name} diperbarui`);
+        mutate(); // Memuat ulang data
+
       } else {
         toast.error(`Gagal memperbarui status pembayaran ${name}`);
       }
@@ -331,8 +330,8 @@ const TableRiders = () => {
                   {formatCurrency(rider?.totalPrice)}
                 </td>
                 <td
-                  onClick={() => handleUpdatePaymentStatus(rider?._id, !rider?.isPayment, rider?.name)}
-                  className={`w-full relative px-1 py-4 flex flex-col items-center justify-center  capitalize antialiased leading-relaxed  ${rider.isPayment
+                  onClick={(e) => handleUpdatePaymentStatus(e, rider?._id, !rider?.isPayment, rider?.name)}
+                  className={`w-full relative px-1 py-4 flex flex-col items-center justify-center  capitalize antialiased leading-relaxed  ${rider?.isPayment
                     ? "bg-green-500 text-gray-50 cursor-not-allowed"
                     : "text-red-400 cursor-pointer"
                     }`}
@@ -386,31 +385,7 @@ const TableRiders = () => {
             </div>
           </div>
         )}
-        {/* {modalId && riderId && riderStatus && riderName && (
-          <div className="fixed top-0 left-0 w-full h-screen shadow-lg z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center">
-            <div className="bg-gray-100 dark:bg-slate-800 py-8 px-6 rounded shadow-lg shadow-gray-600 dark:shadow-slate-950">
-              <p className="text-lg py-2 antialiased">
-                Konfirmasi Status Pembayaran {riderName} ?
-              </p>
-              <div className="flex gap-3 pt-6">
-                <button
-                  className="py-1.5 px-4 text-white/90 bg-gradient-to-tr rounded from-green-400 to-lime-500 hover:bg-gradient-to-tl hover:from-green-400 hover:to-lime-500"
-                  onClick={() =>
-                    handleUpdatePaymentStatus(riderId, riderStatus, riderName)
-                  }
-                >
-                  Oke
-                </button>
-                <button
-                  className="py-1.5 px-4 text-white/90 bg-red-500 hover:bg-red-600 rounded"
-                  onClick={() => setModalId(false)}
-                >
-                  Batal
-                </button>
-              </div>
-            </div>
-          </div>
-        )} */}
+
       </div>
     </>
   );
