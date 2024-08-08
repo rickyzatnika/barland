@@ -73,9 +73,19 @@ export async function GET(req, { params: { id } }) {
 export async function PUT(req = NextRequest, { params: { id } }) {
   await connect();
   const body = await req.json();
-  const { numberStart, raceClass } = body;
 
   try {
+    if (body.hasOwnProperty("isPayment")) {
+      const updatePayment = await Riders.findByIdAndUpdate(
+        id,
+        { $set: { isPayment: body.isPayment } },
+        { new: true }
+      );
+      return new NextResponse(JSON.stringify(updatePayment), { status: 200 });
+    }
+
+    const { numberStart, raceClass } = body;
+
     // Cek apakah nomor start sudah digunakan oleh pembalap lain
     const existingRider = await Riders.findOne({
       numberStart,
@@ -89,15 +99,6 @@ export async function PUT(req = NextRequest, { params: { id } }) {
         }),
         { status: 400 }
       );
-    }
-
-    if (body.hasOwnProperty("isPayment")) {
-      const updatePayment = await Riders.findByIdAndUpdate(
-        id,
-        { $set: { isPayment: body.isPayment } },
-        { new: true }
-      );
-      return new NextResponse(JSON.stringify(updatePayment), { status: 200 });
     }
 
     // Hitung totalPrice jika raceClass tidak kosong
