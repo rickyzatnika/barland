@@ -6,6 +6,7 @@ import { SiMicrosoftexcel } from "react-icons/si";
 import { toast } from "react-toastify";
 import { IoMdClose } from "react-icons/io";
 import { RiDeleteBin2Line } from "react-icons/ri";
+import { GrEdit } from "react-icons/gr";
 
 
 const TABLE_HEAD = ["No", "Nama", "Nomor Start", "Nama Team", "Kelas", "Action"];
@@ -216,16 +217,17 @@ const SeklomPage = () => {
               >
                 <td className="px-6 py-4 capitalize antialiased leading-relaxed">{i + 1}.</td>
                 <td className="px-6 py-4 capitalize antialiased leading-relaxed"><p className="w-32">{rider?.name}</p></td>
-                <td className="px-6 py-4 capitalize antialiased leading-relaxed"><p className="w-32">{rider?.team}</p></td>
                 <td className="px-6 py-4 capitalize antialiased leading-relaxed">{rider?.numberStart}</td>
+                <td className="px-6 py-4 capitalize antialiased leading-relaxed"><p className="w-32">{rider?.team}</p></td>
                 <td className="px-6 py-4 capitalize antialiased leading-relaxed ">
                   <p className="w-64">{rider?.raceClass
                     .map((cls) => `${cls?.name}`)
                     .join(" - ")}</p>
                 </td>
-                <td className="px-6 py-4 ">
-                  <button onClick={() => handleShowModal(rider?._id)} >
-                    Edit
+                <td className="px-8 py-4 ">
+                  <button className="relative group" onClick={() => handleShowModal(rider?._id)} >
+                    <span className="hidden group-hover:block absolute -top-3 -left-8 text-xs second text-white py-0.5 px-2 rounded-full">edit</span>
+                    <GrEdit className="group-hover:rotate-45 group-hover:text-green-400 transition-all duration-100" size={20} />
                   </button>
                 </td>
               </tr>

@@ -4,7 +4,8 @@ import { formatCurrency } from "@/utils/formatCurrency";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SiMicrosoftexcel } from "react-icons/si";
-import { GrDocumentPdf } from "react-icons/gr";
+import { GrDocumentPdf, GrEdit } from "react-icons/gr";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import useSWR from "swr";
@@ -35,6 +36,11 @@ const TableRiders = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [riders, setRiders] = useState([]);
   const [noData, setNoData] = useState(false);
+  const [showModalPayment, setShowModalPayment] = useState(false);
+  const [riderName, setRiderName] = useState("");
+  const [riderStatus, setRiderStatus] = useState("");
+  const [riderId, setRiderId] = useState("");
+  const [totalPrice, setTotalPrice] = useState(0);
 
   // data fetching useSWR
   const { data, mutate } = useSWR(
@@ -66,9 +72,11 @@ const TableRiders = () => {
     setSearchQuery(event.target.value);
   };
 
-  const handleImageClick = (imgSrc) => {
+  const handleImageClick = (imgSrc, name, totalPrice) => {
     setSelectedImage(imgSrc);
     setShowImage(true);
+    setRiderName(name);
+    setTotalPrice(totalPrice)
   };
 
   const exportPDF = async () => {
@@ -109,17 +117,24 @@ const TableRiders = () => {
   };
 
 
+  const handleModalPayment = (id, status, name) => {
+    setShowModalPayment((prev) => !prev);
+    setRiderId(id);
+    setRiderStatus(status);
+    setRiderName(name);
+  }
 
-  const handleUpdatePaymentStatus = async (id, status, name) => {
+
+  const handleUpdatePaymentStatus = async (riderId, riderStatus, riderName) => {
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar/status/${id}`,
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar/status/${riderId}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ isPayment: status }),
+          body: JSON.stringify({ isPayment: riderStatus }),
         }
       );
 
@@ -127,14 +142,14 @@ const TableRiders = () => {
       if (res.status === 200) {
         setDatas((prevData) =>
           prevData?.map((rider) =>
-            rider?._id === id ? { ...rider, isPayment: status } : rider
+            rider?._id === riderId ? { ...rider, isPayment: status } : rider
           )
         );
-        toast.success(`Status Pembayaran ${name} diperbarui`);
+        toast.success(`Status Pembayaran ${riderName} diperbarui`);
         mutate(); // Memuat ulang data
-
+        setShowModalPayment(false);
       } else {
-        toast.error(`Gagal memperbarui status pembayaran ${name}`);
+        toast.error(`Gagal memperbarui status pembayaran ${riderName}`);
       }
     } catch (error) {
       toast.error("Terjadi kesalahan saat memperbarui status pembayaran");
@@ -175,7 +190,11 @@ const TableRiders = () => {
   return (
     <>
       {showImage && selectedImage && (
-        <div className="fixed backdrop-blur-sm bg-black/50 z-50 top-0 bottom-0 left-0 right-0 w-full h-full ">
+        <div className="fixed backdrop-blur bg-black/70 z-50 top-0 bottom-0 left-0 right-0 w-full h-full ">
+          <div className=" text-gray-100 flex flex-col gap-3 p-8">
+            <h3 className="text-sm">Bukti Transfer : {riderName}</h3>
+            <h3 className="text-sm">Total Pembayaran : {formatCurrency(totalPrice)}</h3>
+          </div>
           <button
             type="button"
             className=" w-full py-3 h-full"
@@ -314,7 +333,7 @@ const TableRiders = () => {
                   ) : (
                     <button
                       className="w-fit my-4 text-sm second mx-auto antialiased text-gray-300 py-1 px-1.5 rounded"
-                      onClick={() => handleImageClick(rider?.img)}
+                      onClick={() => handleImageClick(rider?.img, rider?.name, rider?.totalPrice)}
                       type="button"
                     >
                       Lihat Gambar
@@ -325,7 +344,7 @@ const TableRiders = () => {
                   {formatCurrency(rider?.totalPrice)}
                 </td>
                 <td
-                  onClick={() => handleUpdatePaymentStatus(rider?._id, !rider?.isPayment, rider?.name)}
+                  onClick={() => handleModalPayment(rider?._id, !rider?.isPayment, rider?.name)}
                   className={`w-full relative px-1 py-4 flex flex-col items-center justify-center  capitalize antialiased leading-relaxed  ${rider?.isPayment
                     ? "bg-green-500 text-gray-50 cursor-not-allowed"
                     : "text-red-400 cursor-pointer"
@@ -343,12 +362,14 @@ const TableRiders = () => {
                   )}
                 </td>
                 <td className="px-6 py-4 ">
-                  <div className="flex gap-2 items-center justify-center">
-                    <Link href={`/dashboard/list-riders/edit/${rider?._id}`}>
-                      Edit
+                  <div className="flex gap-4 items-center justify-center">
+                    <Link className="relative group" href={`/dashboard/list-riders/edit/${rider?._id}`}>
+                      <span className="hidden group-hover:block z-10 absolute -top-3 -left-8 text-xs second text-white py-0.5 px-2 rounded-full">edit</span>
+                      <GrEdit className="group-hover:rotate-45 group-hover:text-green-400 transition-all duration-100" size={20} />
                     </Link>
-                    <button onClick={() => handleShowModal(rider?._id)}>
-                      Hapus
+                    <button className="relative group" onClick={() => handleShowModal(rider?._id)}>
+                      <span className="hidden group-hover:block z-10 absolute -top-3 -left-8 text-xs second text-white py-0.5 px-2 rounded-full">hapus</span>
+                      <RiDeleteBin6Fill className="group-hover:rotate-45 group-hover:text-red-400 transition-all duration-100" size={20} />
                     </button>
                   </div>
                 </td>
@@ -374,6 +395,28 @@ const TableRiders = () => {
                   className="py-1.5 px-4 text-white/90 bg-red-500 hover:bg-red-600 rounded"
                   onClick={() => setShowModal(false)}
                 >
+                  Batal
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+        {showModalPayment && (
+          <div className="fixed top-0 left-0 w-full h-screen shadow-lg z-50 bg-black/50 backdrop-blur flex items-center justify-center">
+            <div className="bg-gray-100 dark:bg-slate-800 py-8 px-6 rounded shadow-lg shadow-gray-600 dark:shadow-slate-950">
+              <p className="text-lg py-2 antialiased">
+                Konfirmasi Status Pembayaran {riders.find((r) => r._id === riderId)?.name} ?
+              </p>
+              <div className="flex gap-3 pt-6">
+                <button
+                  className="py-1.5 px-4 text-white/90 bg-gradient-to-tr rounded from-green-400 to-lime-500 hover:bg-gradient-to-tl hover:from-green-400 hover:to-lime-500"
+                  onClick={() => handleUpdatePaymentStatus(riderId, riderStatus, riderName)}
+                >
+                  Ya, Update
+                </button>
+                <button
+                  className="py-1.5 px-4 text-white/90 bg-red-500 hover:bg-red-600 rounded"
+                  onClick={() => setShowModalPayment(false)}>
                   Batal
                 </button>
               </div>

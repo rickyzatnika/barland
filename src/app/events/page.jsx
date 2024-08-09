@@ -4,39 +4,69 @@ import { ThemeContext } from "@/context/ThemeContext";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import useSWR from "swr";
-import moment from "moment";
+import Image from "next/image";
+
+
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const EventPage = () => {
 
+  const [loading, setLoading] = useState(false);
+  const { data, mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/event`, fetcher);
 
-  const fetcher = (...agate) => fetch(...agate).then((res) => res.json());
-  const { data } = useSWR(`https://newsapi.org/v2/top-headlines?country=id&apiKey=dc81d810995240b7b85d6f866138cdb3`, fetcher);
-  const [news, setNews] = useState([]);
   const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
-    if (data) {
-      return setNews(data?.articles);
+
+    if (!data) {
+      setLoading(true);
+      const timeoutId = setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+
+      return () => clearTimeout(timeoutId);
+    } else {
+      setLoading(false);
     }
-  }, [data])
+
+    mutate();
+
+  }, [data, mutate])
+
+
 
   return (
-    <div className="w-full max-w-6xl mx-auto py-8">
-      <h1 className="text-3xl font-medium mb-2 sm:mb-8">Berita Terbaru</h1>
-      <div className="flex flex-col gap-8 ">
-        {news?.map((art, i) => (
-          <div key={i} className={`p-4 sm:p-6 flex flex-col gap-4 rounded-md shadow-lg ${theme === "light" ? "bg-gray-100 text-gray-600 shadow-slate-300" : "bg-slate-800 text-gray-300 shadow-gray-950"}`}>
-            <div className="flex flex-col sm:flex-row gap-2 py-2 ">
-              <p className="text-xs shadow-md shadow-gray-300 w-fit dark:shadow-slate-900 capitalize py-1 px-3 bg-gray-200 rounded-full dark:bg-slate-700 dark:text-slate-100">Sumber : {art?.author}</p>
-              <p className="text-xs shadow-md shadow-gray-300 w-fit dark:shadow-slate-900 py-1 px-3 bg-gray-200 rounded-full dark:bg-slate-700 dark:text-slate-100">Publish : {moment(art?.publishedAt).format('lll')}</p>
+    <div className="w-full h-full py-8">
+      <div className="flex items-center justify-between mb-6 ">
+        <h1 className="text-3xl font-medium mb-6">{loading ? "loading data..." : <span className="border-b pb-1 border-lime-500">Berita Terbaru</span>}</h1>
+        <input type="search" className="py-2 px-4 rounded-xl border-gray-400 text-gray-500 focus:border-lime-400 focus:outline-none focus:ring-0" placeholder="search" />
+      </div>
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-1">
+        {data?.map((e, i) => (
+          <Link href={`/events/${e?.slug}`} key={i} className={`w-full group overflow-hidden h-full   flex items-center flex-col gap-2 rounded-md shadow-lg ${theme === "light" ? "bg-gray-100 text-gray-600 shadow-slate-300" : "bg-slate-800 text-gray-300 shadow-gray-950"}`}>
+            <div className="overflow-hidden w-full">
+              <Image src={e?.imageUrl} alt={e?.title} width={384} height={384} className="w-full group-hover:scale-150 transition-all ease-in-out duration-[4000ms] object-contain" priority={true} />
             </div>
-            <h3 className="text-lg font-medium mb-3">{art?.title}</h3>
-            <Link className="text-xs rounded py-2 px-4 w-fit second text-white dark:bg-gray-50 dark:text-gray-600 hover:bg-slate-700 hover:text-slate-200 dark:hover:bg-slate-900 dark:hover:text-gray-50 transition-all duration-150" target="_blank" href={art?.url}>Lihat berita</Link>
-            {/* <Image src={art?.urlToImage} alt="news" width={70} height={70} style={{ width: "auto", height: "auto" }} /> */}
-          </div>
+            <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-0 sm:items-center justify-between w-full px-1">
+              <div className="flex items-center gap-1 ">
+                <span className="text-xs text-gray-500 dark:text-gray-200" >Di posting :</span>
+                <span className="text-xs px-1 py-0.5 rounded-full text-gray-500 bg-slate-200 shadow dark:bg-slate-700 dark:text-gray-200 w-fit">{e?.publishedAt}</span>
+              </div>
+              <div>{e?.category.map((c, i) => (<p className="text-xs text-gray-500 dark:text-gray-200" key={i}>Kategori : <span className="text-xs px-2 py-0.5 rounded-full text-gray-500 bg-slate-200 shadow dark:bg-slate-700 dark:text-gray-200 w-fit">{c.name}</span></p>))}</div>
+            </div>
+
+            <div className="w-full px-2 py-4 flex flex-col gap-4 antialiased">
+              <h1 className="text-lg sm:text-xl font-medium">{e?.title}</h1>
+              {/* <p className="text-sm pl-1 text-gray-500 font-medium dark:text-gray-300">{e?.desc}</p> */}
+              <p className="py-1.5 px-5 group second shadow-md hover:bg-slate-950 hover:text-gray-50 text-gray-200  text-md w-fit rounded-lg" >
+                Detail
+              </p>
+            </div>
+          </Link>
         ))}
       </div>
-    </div>
+
+    </div >
   )
 }
 

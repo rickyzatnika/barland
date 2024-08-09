@@ -34,7 +34,7 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div className="hidden text-center sm:flex flex-1 mr-auto items-center gap-6 tracking-widest text-sm uppercase">
+      <div className="hidden text-center md:flex flex-1 mr-auto items-center gap-6 tracking-widest text-sm uppercase">
         <Link
           className={`font-medium ${pathname === "/"
             ? "text-lime-500 border-b border-lime-500 pb-1"

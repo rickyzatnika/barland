@@ -21,7 +21,7 @@ const MobileNav = ({ setShowMenu, showMenu }) => {
   const { data: session, status } = useSession();
 
   return (
-    <div className='block sm:hidden '>
+    <div className='block md:hidden '>
       <div onClick={() => setShowMenu(prev => !prev)} className="flex flex-col items-center gap-[4.5px] cursor-pointer ">
         <div className={` w-6 h-1 bg-white transition-all duration-150 ease-linear rounded-md  ${showMenu ? "rotate-45" : ""} origin-left`} />
         <div className={` w-4 h-1 bg-white ml-auto transition-all duration-150 ease-linear rounded-md ${showMenu ? "opacity-0" : "opacity-100"} `} />

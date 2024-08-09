@@ -140,30 +140,32 @@ const EditRiders = ({ params }) => {
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Biaya Pendaftaran</label>
               <input type="text" value={totalPrice} onChange={(e) => setTotalPrice(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white " />
             </div>
-            <div className="mb-5 flex flex-col gap-3">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status Pembayaran</label>
-              <label htmlFor="default-radio-1" className="flex gap-3">
-                <input
-                  type="radio"
-                  id="default-radio-1"
-                  value="true"
-                  name="isPayment"
-                  onChange={(e) => setIsPayment(e.target.value)}
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                Valid
-              </label>
-              <label htmlFor="default-radio-2" className="flex gap-3">
-                <input
-                  type="radio"
-                  id="default-radio-2"
-                  value="false"
-                  name="isPayment"
-                  onChange={(e) => setIsPayment(e.target.value)}
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                Tidak Valid
-              </label>
+            <div className="mb-5 flex flex-col gap-1 ">
+              <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Status Pembayaran</label>
+              <div className="border rounded-lg flex flex-col gap-3 border-gray-300 dark:border-gray-800 py-4 px-2">
+                <label htmlFor="default-radio-1" className="flex gap-3">
+                  <input
+                    type="radio"
+                    id="default-radio-1"
+                    value="true"
+                    name="isPayment"
+                    onChange={(e) => setIsPayment(e.target.value)}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  Valid
+                </label>
+                <label htmlFor="default-radio-2" className="flex gap-3">
+                  <input
+                    type="radio"
+                    id="default-radio-2"
+                    value="false"
+                    name="isPayment"
+                    onChange={(e) => setIsPayment(e.target.value)}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  Tidak Valid
+                </label>
+              </div>
             </div>
             <div className="mb-5">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kelas Balap</label>
