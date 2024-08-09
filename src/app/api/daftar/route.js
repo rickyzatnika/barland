@@ -68,8 +68,13 @@ export const POST = async (req = NextRequest) => {
       raceClass,
       totalPrice,
     });
-    await newRiders.save();
-    return new NextResponse({ status: 201 });
+    const savedRider = await newRiders.save();
+
+    // Return the ID of the new rider
+    return new NextResponse(
+      JSON.stringify({ success: true, riderId: savedRider._id }),
+      { status: 201 }
+    );
   } catch (error) {
     console.log(error.message);
     return new NextResponse(

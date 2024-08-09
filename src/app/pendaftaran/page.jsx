@@ -1,7 +1,6 @@
 "use client"
 
 import Modal from '@/components/Modal';
-import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -11,13 +10,15 @@ const Daftar = () => {
   const [step, setStep] = useState("1");
   const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState("");
-  const router = useRouter();
+
   const [takenNumbers, setTakenNumbers] = useState([]);
   const [raceClasses, setRaceClasses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [qrCode, setQRCode] = useState("");
   const [recaptchaToken, setRecaptchaToken] = useState("");
   const CLOUD_NAME = "inkara-id";
   const UPLOAD_PRESET = "myBlog_project_nextjs";
+  const SITE_KEY = "6Lf7CR4qAAAAAJ7hgQnouK4fA0c58Z1fxEm_6d5a";
 
   const [formData, setFormData] = useState({
     name: '',
@@ -61,13 +62,6 @@ const Daftar = () => {
 
     setFormData(prev => ({ ...prev, totalPrice }));
   }, [formData.raceClass]);
-  // useEffect(() => {
-  //   const totalPrice = formData.raceClass.reduce((total, selectedClass) => {
-  //     return total + selectedClass.price;
-  //   }, 0);
-
-  //   setFormData(prev => ({ ...prev, totalPrice }));
-  // }, [formData.raceClass]);
 
 
   const handleChange = (e) => {
@@ -82,9 +76,7 @@ const Daftar = () => {
     setPhoto(e.target.files[0]);
   };
 
-
-
-
+  //HANDLE CLASS CHANGES
   const handleClassChange = (event) => {
     const { value, checked } = event.target;
     const [className, classPrice] = value.split(',');
@@ -159,7 +151,27 @@ const Daftar = () => {
 
     });
 
-    if (res.ok) {
+    const result = await res.json();
+
+    if (result.success) {
+      const riderId = result.riderId;
+
+      // Fetch QR code using the rider ID
+      const qrCodeResponse = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/qrcode?id=${riderId}`);
+      const qrCodeData = await qrCodeResponse.json();
+
+      if (qrCodeData.success) {
+        // Display QR code
+        setQRCode(qrCodeData.qrCode);
+
+      } else {
+        // Handle QR code generation error
+        console.error("Failed to generate QR code");
+        setLoading(false);
+      }
+    }
+
+    if (result.success) {
       const timeoutId = setTimeout(() => {
         setFormData({
           name: '',
@@ -173,19 +185,16 @@ const Daftar = () => {
           raceClass: [],
           totalPrice: 0, // Reset total price
         });
-        router.push('/');
-        setIsModalOpen(false);
         setLoading(false);
+        setStep("6");
         toast.success('Data terkirim');
       }, 3000);
-
-      const errorData = await res.json();
-      toast.error(errorData.message);
 
       return () => clearTimeout(timeoutId);
     } else {
       console.error("Failed to save data");
       toast.error("Internal Server Error");
+      setLoading(false);
     }
   };
 
@@ -264,7 +273,7 @@ const Daftar = () => {
             </div>
             <div className='my-3 flex flex-col gap-4'>
               <ReCAPTCHA
-                sitekey="6Lf7CR4qAAAAAJ7hgQnouK4fA0c58Z1fxEm_6d5a"
+                sitekey={SITE_KEY}
                 onChange={handleRecaptchaChange}
               />
               <button className="w-max h-max bg-gradient-to-tr from-green-400 to-lime-500 text-sm text-white py-2 px-4 rounded" type="submit">Lanjut</button>
@@ -420,7 +429,27 @@ const Daftar = () => {
             </div>
           </div>
         )}
+        {step === "6" && (
+          <div className='flex flex-col items-center justify-between text-center w-full h-full'>
+            <div className='w-full border-b pb-2 border-lime-400 mx-auto'>
+              <Image src="/logo.png" width={40} height={60} style={{ width: 'auto', height: 'auto' }} alt='logo-barland' priority={true} className='object-cover' />
+
+            </div>
+            <div className='mx-auto w-full max-w-max'>
+              <Image src={qrCode} alt="QR Code" className='object-cover mx-auto' width={100} height={100} style={{ width: "auto", height: "auto" }} />
+              <p className='text-xs pt-2'>Screenshot dan simpan QRCode untuk ditunjukkan kepada panitia peyelenggara bagian pendaftaran.</p>
+            </div>
+            <div className='text-left flex flex-col gap-2 border border-gray-700 p-4'>
+              <p className='text-sm'>Informasi Kontak Panitia Penyelenggara :</p>
+              <ul className='text-xs'>
+                <li>Nama : Dery Saprudin</li>
+                <li>No. Handphone : 082122667363</li>
+              </ul>
+            </div>
+          </div>
+        )}
       </Modal>
+
     </div>
   );
 };
