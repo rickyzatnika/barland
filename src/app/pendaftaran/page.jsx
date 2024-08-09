@@ -430,7 +430,7 @@ const Daftar = () => {
           </div>
         )}
         {step === "6" && (
-          <div className='flex flex-col items-center justify-between text-center w-full min-h-screen pb-9'>
+          <div className='flex flex-col items-center justify-between text-center w-full h-screen pb-9'>
             <div className='w-full border-b pb-2 border-lime-400 mx-auto'>
               <Image src="/logo.png" width={40} height={60} style={{ width: 'auto', height: 'auto' }} alt='logo-barland' priority={true} className='object-cover' />
 
