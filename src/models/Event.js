@@ -7,11 +7,7 @@ const EventSchema = new mongoose.Schema(
     content: { type: String },
     imageUrl: { type: String },
     slug: { type: String },
-    category: [
-      {
-        name: { type: String },
-      },
-    ],
+    category: { type: String },
     url: { type: String },
     publishedAt: { type: String, required: true },
   },

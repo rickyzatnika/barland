@@ -25,7 +25,10 @@ const DetailsEvent = async ({ params }) => {
             <span className="text-sm" >Di posting :</span>
             <span className="text-xs px-2 py-0.5 rounded-full text-white second shadow dark:bg-gray-200 dark:text-gray-700 w-fit">{event?.publishedAt}</span>
           </div>
-          <div>{event?.category.map((c, i) => (<p className="text-sm" key={i}>Kategori : <span className="text-xs px-2 py-0.5 rounded-full text-white second shadow dark:bg-gray-200 dark:text-gray-700 w-fit">{c.name}</span></p>))}</div>
+          <div className="flex items-center gap-1">
+            <span className="text-xs text-gray-500 dark:text-gray-200" >Kategori :</span>
+            <span className="text-xs px-1 py-0.5 rounded-full text-gray-500 bg-slate-200 shadow dark:bg-slate-700 dark:text-gray-200 w-fit">{event?.category}</span>
+          </div>
         </div>
       </div>
       <p>{event?.desc}</p>

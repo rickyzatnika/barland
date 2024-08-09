@@ -18,8 +18,8 @@ const Navbar = () => {
 
   return (
     <div
-      className={`w-full h-20 second  flex items-center justify-between fixed top-0 right-0 left-0 z-50 shadow-md  px-4 sm:px-12 md:px-20 lg:px-28 2xl:px-32 ${isDashboard ? "hidden" : "fixed"
-        } ${theme === "light" ? "shadow-gray-600" : "shadow-gray-900"} `}
+      className={`w-full h-20 second  flex items-center justify-between fixed top-0 right-0 left-0 z-50 shadow  px-4 sm:px-12 md:px-20 lg:px-28 2xl:px-32 ${isDashboard ? "hidden" : "fixed"
+        } ${theme === "light" ? "shadow-gray-600" : "shadow-gray-950"} `}
     >
       <div onClick={() => setShowMenu(false)} className="flex flex-1">
         <Link prefetch={false} href={"/"}>
