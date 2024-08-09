@@ -1,10 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
+import axios from 'axios';
 
 
 const getEvent = async (slug) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/event/${slug}`);
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_PRO}/api/event/${slug}`);
   const data = await res.json();
   return data;
 };
@@ -29,7 +30,7 @@ const DetailsEvent = async ({ params }) => {
       </div>
       <p>{event?.desc}</p>
       <p className='leading-relaxed'>{event?.content}</p>
-      {event?.url === "" ? <p className='hidden'></p> : <Link className='underline w-fit text-blue-500 hover:text-blue-600' href={event?.url}>Formulir Pendaftaran</Link>}
+      {event?.url === "" ? <p className='hidden'></p> : <Link href={event?.url} className='underline w-fit text-blue-500 hover:text-blue-600'>Formulir Pendaftaran</Link>}
     </div>
   )
 }
