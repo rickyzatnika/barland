@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const getEvent = async (slug) => {
   const res = await axios.get(`${process.env.NEXT_PUBLIC_API_PRO}/api/event/${slug}`);
-  const data = await res.json();
+  const data = await res.data;
   return data;
 };
 
