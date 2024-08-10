@@ -41,36 +41,32 @@ export default function DashboardLayout({ children }) {
   });
 
   useEffect(() => {
-    const checkForNewRiders = () => {
-      if (data && data.riders) {
-        const newRiders = data?.riders?.filter(
-          (rider) => rider.isPayment === false
+    if (data && data.riders) {
+      const newRiders = data?.riders?.filter(
+        (rider) => rider.isPayment === false
+      );
+
+      // Filter riders that haven't been notified yet
+      const newRidersToNotify = newRiders.filter(
+        (rider) => !notifiedRiders.includes(rider._id)
+      );
+
+      if (newRidersToNotify.length > 0) {
+        toast.info(`Yeaay ${newRidersToNotify.length} rider baru registrasi`);
+
+        // Update the state and localStorage to include the notified riders
+        const updatedNotifiedRiders = [
+          ...notifiedRiders,
+          ...newRidersToNotify.map((rider) => rider._id),
+        ];
+        setNotifiedRiders(updatedNotifiedRiders);
+        localStorage.setItem(
+          "notifiedRiders",
+          JSON.stringify(updatedNotifiedRiders)
         );
-        mutate(); // Ensure data is updated
-
-        const newRidersToNotify = newRiders.filter(
-          (rider) => !notifiedRiders.includes(rider._id)
-        );
-
-        if (newRidersToNotify.length > 0) {
-          toast.info(`Yeay ${newRidersToNotify.length} rider baru mendaftar!`);
-
-          const updatedNotifiedRiders = [
-            ...notifiedRiders,
-            ...newRidersToNotify.map((rider) => rider._id),
-          ];
-          setNotifiedRiders(updatedNotifiedRiders);
-
-          localStorage.setItem(
-            "notifiedRiders",
-            JSON.stringify(updatedNotifiedRiders)
-          );
-        }
       }
-    };
-
-    checkForNewRiders();
-  }, [data, mutate, notifiedRiders]);
+    }
+  }, [data]);
 
   return (
     <>
