@@ -62,7 +62,7 @@ const MobileNav = ({ setShowMenu, showMenu }) => {
           {!session ? (
             <div onClick={() => setShowMenu(false)} className={` flex gap-2 w-full border-b pb-2 ${pathname === "/login" ? "text-lime-500 border-lime-500" : "border-gray-400 dark:border-gray-600 text-gray-600/80"}`}>
               <FaRegAddressBook size={24} />
-              <Link className="text-md  uppercase" href={"/login"}>Login</Link>
+              <Link className="text-md  uppercase" href={"/login"}>Masuk</Link>
             </div>
           ) : (
             <div onClick={() => setShowMenu(false)} className="text-gray-600 flex gap-2 w-full border-b pb-2 border-gray-400 dark:border-gray-600">

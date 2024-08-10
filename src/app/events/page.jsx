@@ -47,7 +47,7 @@ const EventPage = () => {
     <div className="w-full h-full pb-12 py-2 sm:py-4 md:py-8">
       <div className="flex items-start justify-between mb-6 ">
         <h1 className="text-xl md:text-3xl font-medium mb-6">{loading ? "loading data..." : <span className="border-b pb-1 border-lime-500">Berita Terbaru</span>}</h1>
-        <input onChange={handleSearch} type="search" className="w-36 md:w-3/12 lg:w-4/12 py-1 md:py-2 px-4 placeholder:text-sm rounded-xl border-gray-400 text-gray-500 focus:border-lime-400 focus:outline-none focus:ring-0" placeholder="cari kategori" />
+        <input onChange={handleSearch} type="search" className="w-28 sm:w-36 md:w-3/12 lg:w-4/12 py-1 md:py-2 px-4 placeholder:text-sm rounded-xl border-gray-400 text-gray-500 focus:border-lime-400 focus:outline-none focus:ring-0" placeholder="cari kategori" />
       </div>
       {/* Pesan peringatan jika tidak ada hasil pencarian */}
       {notFound && (
@@ -61,21 +61,21 @@ const EventPage = () => {
             <div className="overflow-hidden w-full">
               <Image src={e?.imageUrl} alt={e?.title} width={384} height={384} className="w-full group-hover:scale-150 transition-all ease-in-out duration-[4000ms] object-contain" priority={true} />
             </div>
-            <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-0 sm:items-center justify-between w-full px-1">
+            <div className="flex flex-col md:flex-row items-start gap-2 md:gap-0 md:items-center justify-between w-full px-1">
               <div className="flex items-center gap-1 ">
                 <span className="text-xs text-gray-500 dark:text-gray-200" >Di posting :</span>
-                <span className="text-xs px-1 py-0.5 rounded-full text-gray-500 bg-slate-200 shadow dark:bg-slate-700 dark:text-gray-200 w-fit">{e?.publishedAt}</span>
+                <span className="text-xs px-2 py-0.5 rounded-full text-gray-500 bg-slate-200 shadow dark:bg-slate-700 dark:text-gray-200 w-fit">{e?.publishedAt}</span>
               </div>
               <div className="flex items-center gap-1">
                 <span className="text-xs text-gray-500 dark:text-gray-200" >Kategory :</span>
-                <span className="text-xs px-1 py-0.5 rounded-full text-gray-500 bg-slate-200 shadow dark:bg-slate-700 dark:text-gray-200 w-fit">{e?.category}</span>
+                <span className="text-xs px-2 py-0.5 rounded-full text-gray-500 bg-slate-200 shadow dark:bg-slate-700 dark:text-gray-200 w-fit">{e?.category}</span>
               </div>
             </div>
 
             <div className="w-full px-2 py-4 flex flex-col gap-4 antialiased">
-              <h1 className="text-lg sm:text-xl font-medium">{e?.title}</h1>
+              <h1 className="text-lg md:text-xl font-medium">{e?.title}</h1>
               {/* <p className="text-sm pl-1 text-gray-500 font-medium dark:text-gray-300">{e?.desc}</p> */}
-              <p className="py-1.5 px-5 group second shadow-md hover:bg-slate-950 hover:text-gray-50 text-gray-200  text-md w-fit rounded-lg" >
+              <p className="py-1.5 px-5 group second shadow-md hover:bg-slate-950 hover:text-gray-50 text-gray-200 text-sm md:text-md w-fit rounded-lg" >
                 Detail
               </p>
             </div>

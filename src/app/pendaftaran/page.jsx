@@ -6,6 +6,9 @@ import { toast } from 'react-toastify';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Image from 'next/image';
 
+
+const SITE_KEY = "6Lf7CR4qAAAAAJ7hgQnouK4fA0c58Z1fxEm_6d5a";
+
 const Daftar = () => {
   const [step, setStep] = useState("1");
   const [loading, setLoading] = useState(false);
@@ -18,7 +21,7 @@ const Daftar = () => {
   const [recaptchaToken, setRecaptchaToken] = useState("");
   const CLOUD_NAME = "inkara-id";
   const UPLOAD_PRESET = "myBlog_project_nextjs";
-  const SITE_KEY = "6Lf7CR4qAAAAAJ7hgQnouK4fA0c58Z1fxEm_6d5a";
+
 
   const [formData, setFormData] = useState({
     name: '',
@@ -312,7 +315,7 @@ const Daftar = () => {
           </div>
         )}
         {step === "3" && (
-          <div className="pt-2 pb-12 px-2 overflow-y-auto w-full h-full">
+          <div className="pt-2 pb-12 px-2 overflow-y-auto w-full h-screen">
             <h2 className="w-full mb-2 text-md md:text-xl bg-gradient-to-tr from-green-400 to-lime-500 text-center py-4 uppercase font-bold text-white">Pilih Kelas</h2>
             <div className='pb-6 px-4'>
               <p className='italic text-md'>Silahkan pilih satu atau beberapa kelas yang ingin diikuti</p>
@@ -324,7 +327,6 @@ const Daftar = () => {
                   {raceClass.classes.map((cls) => (
                     <label key={cls.name} className="block mb-3 text-sm px-3 ">
                       <input
-
                         type="checkbox"
                         id="green-checkbox"
                         value={`${cls.name},${cls.price}`}
@@ -430,7 +432,7 @@ const Daftar = () => {
           </div>
         )}
         {step === "6" && (
-          <div className='flex flex-col items-center justify-between text-center w-full h-screen pb-9'>
+          <div className='flex flex-col items-center justify-between text-center w-full h-screen pt-6 pb-9'>
             <div className='w-full border-b pb-2 border-lime-400 mx-auto'>
               <Image src="/logo.png" width={40} height={60} style={{ width: 'auto', height: 'auto' }} alt='logo-barland' priority={true} className='object-cover' />
 

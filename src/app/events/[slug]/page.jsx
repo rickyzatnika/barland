@@ -20,19 +20,19 @@ const DetailsEvent = async ({ params }) => {
       <h1 className='text-xl sm:text-3xl lg:text-5xl font-bold leading-relaxed tracking-wide'>{event?.title}</h1>
       <div className='relative w-full h-full my-2 sm:my-6'>
         <Image src={event?.imageUrl} width={600} height={600} style={{ width: "100%", height: "100%" }} priority={true} className='object-contain' alt={event?.title} />
-        <div className="flex items-center justify-between w-full px-2 pt-2">
+        <div className="flex flex-col md:flex-row items-start gap-2 md:gap-0 md:items-center justify-between w-full px-0 md:px-2 pt-2">
           <div className="flex items-center gap-1 ">
-            <span className="text-sm" >Di posting :</span>
-            <span className="text-xs px-2 py-0.5 rounded-full text-white second shadow dark:bg-gray-200 dark:text-gray-700 w-fit">{event?.publishedAt}</span>
+            <span className="text-xs text-gray-500 dark:text-gray-200" >Di posting :</span>
+            <span className="text-xs px-2 py-0.5 rounded-full text-gray-500 bg-slate-200 shadow dark:bg-slate-700 dark:text-gray-200 w-fit">{event?.publishedAt}</span>
           </div>
           <div className="flex items-center gap-1">
             <span className="text-xs text-gray-500 dark:text-gray-200" >Kategori :</span>
-            <span className="text-xs px-1 py-0.5 rounded-full text-gray-500 bg-slate-200 shadow dark:bg-slate-700 dark:text-gray-200 w-fit">{event?.category}</span>
+            <span className="text-xs px-2 py-0.5 rounded-full text-gray-500 bg-slate-200 shadow dark:bg-slate-700 dark:text-gray-200 w-fit">{event?.category}</span>
           </div>
         </div>
       </div>
-      <p>{event?.desc}</p>
-      <p className='leading-relaxed'>{event?.content}</p>
+      <p className='text-md font-medium'>{event?.desc}</p>
+      <p className='leading-relaxed text-sm text-gray-600 dark:text-gray-400'>{event?.content}</p>
       {event?.url === "" ? <p className='hidden'></p> : <Link href={event?.url} className='underline w-fit text-blue-500 hover:text-blue-600'>Formulir Pendaftaran</Link>}
     </div>
   )
