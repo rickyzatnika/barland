@@ -70,9 +70,6 @@ export default function DashboardLayout({ children }) {
     };
 
     checkForNewRiders();
-    const intervalId = setInterval(checkForNewRiders, 60000); // Check every minute
-
-    return () => clearInterval(intervalId);
   }, [data, mutate, notifiedRiders]);
 
   return (
