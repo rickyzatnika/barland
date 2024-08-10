@@ -40,6 +40,11 @@ export default function DashboardLayout({ children }) {
   });
 
   useEffect(() => {
+    if (!router.events) {
+      console.error("Router events are not available");
+      return;
+    }
+
     const handleRouteChange = () => {
       if (data && data.riders) {
         // Filter riders that haven't been notified yet
@@ -67,10 +72,10 @@ export default function DashboardLayout({ children }) {
       }
     };
 
-    router.events.on("routeChangeComplete", handleRouteChange);
+    router.events?.on("routeChangeComplete", handleRouteChange);
 
     return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
+      router.events?.off("routeChangeComplete", handleRouteChange);
     };
   }, [data, mutate, notifiedRiders, router.events]);
 
