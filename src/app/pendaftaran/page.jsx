@@ -232,8 +232,6 @@ const Daftar = () => {
     setStep("1");
   }
 
-
-
   return (
     <div className='w-full h-full py-8'>
       {step === "1" && (

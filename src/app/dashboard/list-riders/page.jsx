@@ -63,7 +63,7 @@ const TableRiders = () => {
 
   useEffect(() => {
     if (data) {
-      const sortedData = data?.riders?.sort((a, b) => a.name.localeCompare(b.name));
+      const sortedData = data?.sort((a, b) => a.name.localeCompare(b.name));
 
       // setTotalPages(Math.ceil(data.totalItems / 10)); // Menghitung total halaman
       // setTotalItems(data.totalItems)
@@ -166,7 +166,7 @@ const TableRiders = () => {
       if (res.status === 200) {
         setDatas((prevData) =>
           prevData?.map((rider) =>
-            rider?._id === riderId ? { ...rider, isPayment: status } : rider
+            rider?._id === riderId ? { ...rider, isPayment: riderStatus } : rider
           )
         );
         toast.success(`Status Pembayaran ${riderName} diperbarui`);
