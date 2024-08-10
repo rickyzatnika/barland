@@ -61,24 +61,17 @@ const TableRiders = () => {
   const [datas, setDatas] = useState(data);
 
   useEffect(() => {
-    if (data) {
+    if (data && data.riders) {
       const sortedData = data?.riders?.sort((a, b) => a.name.localeCompare(b.name));
-      // setTotalPages(Math.ceil(data.totalItems / 10)); // Menghitung total halaman
-      // setTotalItems(data.totalItems)
       if (searchQuery.length === 0 || searchQuery.length > 2) {
         setRiders(sortedData);
         mutate();
       }
-    }
 
-    if (!data?.riders?.length) {
-      setNoData(true);
+      setNoData(sortedData.length === 0);
     } else {
-      setNoData(false);
+      setNoData(true);
     }
-
-
-
   }, [data, mutate, searchQuery]);
 
   // FOR PAGINATION

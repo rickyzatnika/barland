@@ -41,7 +41,7 @@ export default function DashboardLayout({ children }) {
 
   useEffect(() => {
     if (data && data.riders) {
-      const newRiders = data.riders.filter(
+      const newRiders = data?.riders?.filter(
         (rider) => rider.isPayment === false
       );
       mutate();
