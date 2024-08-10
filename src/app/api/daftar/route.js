@@ -18,33 +18,6 @@ export const GET = async (req = NextRequest) => {
     } else {
       riders = await Riders.find({});
     }
-    // const url = new URL(req.url);
-    // const query = url.searchParams.get("q")?.trim();
-    // const page = parseInt(url.searchParams.get("page")) || 1;
-    // const limit = parseInt(url.searchParams.get("limit")) || 10;
-    // const skip = (page - 1) * limit;
-
-    // let riders;
-    // let totalItems;
-
-    // if (query) {
-    //   const searchRegex = new RegExp(query, "i");
-    //   riders = await Riders.find({
-    //     $or: [{ name: searchRegex }, { kis: searchRegex }],
-    //   })
-    //     .sort({ name: 1 }) // Mengurutkan berdasarkan nama secara ascending
-    //     .skip(skip)
-    //     .limit(limit);
-    //   totalItems = await Riders.countDocuments({
-    //     $or: [{ name: searchRegex }, { kis: searchRegex }],
-    //   });
-    // } else {
-    //   riders = await Riders.find({})
-    //     .sort({ name: 1 }) // Mengurutkan berdasarkan nama secara ascending
-    //     .skip(skip)
-    //     .limit(limit);
-    //   totalItems = await Riders.countDocuments({});
-    // }
 
     return new NextResponse(JSON.stringify({ riders, success: true }), {
       status: 200,
@@ -112,3 +85,32 @@ export const POST = async (req = NextRequest) => {
     );
   }
 };
+
+// FOR PAGINATION
+// const url = new URL(req.url);
+// const query = url.searchParams.get("q")?.trim();
+// const page = parseInt(url.searchParams.get("page")) || 1;
+// const limit = parseInt(url.searchParams.get("limit")) || 10;
+// const skip = (page - 1) * limit;
+
+// let riders;
+// let totalItems;
+
+// if (query) {
+//   const searchRegex = new RegExp(query, "i");
+//   riders = await Riders.find({
+//     $or: [{ name: searchRegex }, { kis: searchRegex }],
+//   })
+//     .sort({ name: 1 }) // Mengurutkan berdasarkan nama secara ascending
+//     .skip(skip)
+//     .limit(limit);
+//   totalItems = await Riders.countDocuments({
+//     $or: [{ name: searchRegex }, { kis: searchRegex }],
+//   });
+// } else {
+//   riders = await Riders.find({})
+//     .sort({ name: 1 }) // Mengurutkan berdasarkan nama secara ascending
+//     .skip(skip)
+//     .limit(limit);
+//   totalItems = await Riders.countDocuments({});
+// }

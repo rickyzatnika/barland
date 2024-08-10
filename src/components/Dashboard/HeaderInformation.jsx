@@ -11,29 +11,27 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const HeaderInformation = () => {
 
-  const [riders, setRiders] = useState([]);
+
   const [user, setUser] = useState([]);
   const [classes, setClasses] = useState([])
 
 
-  // const { data: dataRiders } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/daftar`, fetcher);
+  // const { data, mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/daftar`, fetcher);
   // const { data: dataUser } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/user`, fetcher);
-  // const { data: dataClass } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/daftar`, fetcher);
+  // const { data: dataClass } = useSWR(`${process.env.NEXT_PUBLIC_API_DEV}/api/raceClasses`, fetcher);
 
-  const { data: dataRiders } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher);
+  const { data, mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher);
   const { data: dataUser } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/user`, fetcher);
   const { data: dataClass } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/raceClasses`, fetcher);
 
 
 
   useEffect(() => {
-
-    setRiders(dataRiders);
     setUser(dataUser);
     setClasses(dataClass);
+    mutate();
 
-
-  }, [dataClass, dataRiders, dataUser]);
+  }, [dataClass, dataUser, mutate]);
 
 
   return (
@@ -43,7 +41,7 @@ const HeaderInformation = () => {
           <CiViewBoard size={24} />
           <div className="flex-col flex gap-3">
             <p className="text-sm">Total Riders</p>
-            <p className="text-lg font-medium">{riders?.riders?.length} Orang</p>
+            <p className="text-lg font-medium">{data?.riders?.length} Orang</p>
             <div className="text-sm text-lime-500 ">
               <Link href="/dashboard/list-riders" className="flex gap-1 items-center group">
                 <p>Lihat Detail</p>

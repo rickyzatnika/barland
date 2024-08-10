@@ -163,7 +163,7 @@ const TableRiders = () => {
       // Update state locally
       if (res.status === 200) {
         setDatas((prevData) =>
-          prevData?.map((rider) =>
+          prevData?.riders?.map((rider) =>
             rider?._id === riderId ? { ...rider, isPayment: riderStatus } : rider
           )
         );
@@ -368,7 +368,7 @@ const TableRiders = () => {
                 <td
                   onClick={() => handleModalPayment(rider?._id, !rider?.isPayment, rider?.name)}
                   className={`w-full relative px-1 py-4 flex flex-col items-center justify-center  capitalize antialiased leading-relaxed  ${rider?.isPayment
-                    ? "bg-green-500 text-gray-50 cursor-not-allowed"
+                    ? "bg-green-500 text-gray-50 cursor-pointer"
                     : "text-red-400 cursor-pointer"
                     }`}
                 >

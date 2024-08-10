@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import BarChart from '@/components/Dashboard/BarChart';
 import { TbLogout } from "react-icons/tb";
 import { signOut, useSession } from 'next-auth/react';
+import RightSide from '@/components/Dashboard/RightSide';
 
 
 const HeaderInformation = dynamic(() => import('@/components/Dashboard/HeaderInformation'), { ssr: false });
@@ -52,7 +53,7 @@ const Dashboard = () => {
           <span className='hidden group-hover:block text-[10px] absolute -top-2 -left-12 py-1 px-2 bg-black rounded-lg text-gray-200'>Logout</span>
         </div>
       </div>
-      <div className='w-full  flex gap-3'>
+      <div className='w-full relative flex gap-3'>
         <div className='flex flex-col basis-9/12 '>
           <div className='w-full bg-gray-100 shadow-md dark:bg-slate-800 my-3 rounded-lg'>
             <p className='text-xs antialiased text-center py-2 capitalize'>{currentTime} WIB</p>
@@ -63,10 +64,8 @@ const Dashboard = () => {
             <BarChart />
           </div>
         </div>
-        <div className='basis-3/12 h-full my-3'>
-          <div className='bg-gray-100 shadow-lg dark:bg-slate-800 w-full h-full min-h-screen px-4 py-6 rounded-lg'>
-            RightSide
-          </div>
+        <div className='basis-3/12 h-full my-3 sticky top-5'>
+          <RightSide />
         </div>
       </div>
     </>
