@@ -13,7 +13,6 @@ const Daftar = () => {
   const [step, setStep] = useState("1");
   const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState("");
-
   const [takenNumbers, setTakenNumbers] = useState([]);
   const [raceClasses, setRaceClasses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -156,25 +155,15 @@ const Daftar = () => {
 
     const result = await res.json();
 
-    if (result.success) {
-      const riderId = result.riderId;
+    toast.error(result.message);
 
+    if (result.success) {
+
+      const riderId = result.riderId;
       // Fetch QR code using the rider ID
       const qrCodeResponse = await fetch(`${process.env.NEXT_PUBLIC_API_PRO}/api/qrcode?id=${riderId}`);
       const qrCodeData = await qrCodeResponse.json();
 
-      if (qrCodeData.success) {
-        // Display QR code
-        setQRCode(qrCodeData.qrCode);
-
-      } else {
-        // Handle QR code generation error
-        console.error("Failed to generate QR code");
-        setLoading(false);
-      }
-    }
-
-    if (result.success) {
       const timeoutId = setTimeout(() => {
         setFormData({
           name: '',
@@ -193,6 +182,16 @@ const Daftar = () => {
         toast.success('Data terkirim');
       }, 3000);
 
+      if (qrCodeData.success) {
+        // Display QR code
+        setQRCode(qrCodeData.qrCode);
+
+      } else {
+        // Handle QR code generation error
+        console.error("Failed to generate QR code");
+        toast.error("Failed to generate QR code");
+        setLoading(false);
+      }
       return () => clearTimeout(timeoutId);
     } else {
       console.error("Failed to save data");
