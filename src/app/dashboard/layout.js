@@ -44,7 +44,7 @@ export default function DashboardLayout({ children }) {
       const newRiders = data.riders.filter(
         (rider) => rider.isPayment === false
       );
-
+      mutate();
       // Filter riders that haven't been notified yet
       const newRidersToNotify = newRiders.filter(
         (rider) => !notifiedRiders.includes(rider._id)
@@ -59,7 +59,7 @@ export default function DashboardLayout({ children }) {
           ...newRidersToNotify.map((rider) => rider._id),
         ];
         setNotifiedRiders(updatedNotifiedRiders);
-        mutate();
+
         localStorage.setItem(
           "notifiedRiders",
           JSON.stringify(updatedNotifiedRiders)
