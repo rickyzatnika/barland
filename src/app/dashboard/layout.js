@@ -5,7 +5,7 @@ import ResizeAttention from "@/components/ResizeAttention";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import useSWR from "swr";
 
 const fetcher =
@@ -71,6 +71,7 @@ export default function DashboardLayout({ children }) {
   return (
     <>
       <ResizeAttention />
+      <ToastContainer theme="dark" />
       <div className="w-full flex h-full">
         <div className="basis-[14%]">
           <Aside />

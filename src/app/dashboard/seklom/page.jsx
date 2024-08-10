@@ -31,20 +31,18 @@ const SeklomPage = () => {
 
   // Get all data rider and sorter by name
   useEffect(() => {
-    if (data) {
-      // Mengurutkan data hanya jika data ada
+    if (data && data.riders) {
       const sortedData = data?.riders?.sort((a, b) => a.name.localeCompare(b.name));
-      setRiders(sortedData);
-      mutate(); // Update data
-    }
+      if (searchQuery.length === 0 || searchQuery.length > 2) {
+        setRiders(sortedData);
+        mutate();
+      }
 
-    if (!data?.length) {
-      setNoData(true);
+      setNoData(sortedData.length === 0);
     } else {
-      setNoData(false);
+      setNoData(true);
     }
-
-  }, [data, mutate, searchQuery]); // Tambahkan data ke dependency array
+  }, [data, mutate, searchQuery]);// Tambahkan data ke dependency array
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
