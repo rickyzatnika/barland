@@ -32,7 +32,7 @@ const BarChart = () => {
   useEffect(() => {
     if (data) {
 
-      const dataSort = data.sort((a, b) => a.name.localeCompare(b.name))
+      const dataSort = data?.riders?.sort((a, b) => a.name.localeCompare(b.name))
       return setSortData(dataSort);
     }
     mutate();
@@ -44,7 +44,7 @@ const BarChart = () => {
     datasets: [
       {
         label: `Rp`,
-        data: data?.map(item => item.totalPrice),
+        data: data?.riders?.map(item => item.totalPrice),
         backgroundColor: 'rgb(118,202,41)',
         borderColor: 'rgb(75, 139, 15)',
         borderWidth: 1,

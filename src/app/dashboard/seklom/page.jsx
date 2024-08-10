@@ -33,7 +33,7 @@ const SeklomPage = () => {
   useEffect(() => {
     if (data) {
       // Mengurutkan data hanya jika data ada
-      const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
+      const sortedData = data?.riders?.sort((a, b) => a.name.localeCompare(b.name));
       setRiders(sortedData);
       mutate(); // Update data
     }
