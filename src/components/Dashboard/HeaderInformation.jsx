@@ -43,7 +43,7 @@ const HeaderInformation = () => {
           <CiViewBoard size={24} />
           <div className="flex-col flex gap-3">
             <p className="text-sm">Total Riders</p>
-            <p className="text-lg font-medium">{riders?.length} Orang</p>
+            <p className="text-lg font-medium">{riders?.riders?.length} Orang</p>
             <div className="text-sm text-lime-500 ">
               <Link href="/dashboard/list-riders" className="flex gap-1 items-center group">
                 <p>Lihat Detail</p>
