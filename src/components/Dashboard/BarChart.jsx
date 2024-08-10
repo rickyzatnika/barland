@@ -30,10 +30,8 @@ const BarChart = () => {
   const { data } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher);
 
   useEffect(() => {
-
-    const dataSort = data?.riders?.sort((a, b) => a.name.localeCompare(b.name))
-
     if (data && data.riders) {
+      const dataSort = data?.riders?.sort((a, b) => a.name.localeCompare(b.name))
       return setSortData(dataSort);
     }
 
