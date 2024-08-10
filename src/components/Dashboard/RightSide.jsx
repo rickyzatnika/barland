@@ -101,13 +101,25 @@ const RightSide = () => {
       },
     ],
   };
+  const options = {
+
+    plugins: {
+      legend: {
+        display: true, // Menyembunyikan legend
+        labels: {
+          color: `${theme === "light" ? '#797979' : '#c7c7c7'}`, // Warna font pada title
+        },
+      },
+    },
+  };
+
 
   return (
     <div className='w-full h-screen px-4 flex flex-col gap-4 bg-gray-200/70 rounded-lg dark:bg-slate-900'>
-      <h3 className="py-3">Data Payment Validation :</h3>
+      <h3 className="py-3 text-center">Data Payment Validation</h3>
 
       <div className="bg-gray-100 flex flex-col gap-4 shadow-lg dark:bg-slate-800 px-3 py-8 rounded-lg">
-        <Doughnut data={chartData} />
+        <Doughnut data={chartData} options={options} />
       </div>
 
       <div className="text-sm text-lime-500 mt-4">
