@@ -65,11 +65,12 @@
 "use client"
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import useSWR from "swr";
 import { Doughnut } from "react-chartjs-2";
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
+import { ThemeContext } from "@/context/ThemeContext";
 
 Chart.register(ArcElement, Tooltip, Legend);
 
@@ -78,8 +79,8 @@ const fetcher = (...args) => () => fetch(...args).then(res => res.json());
 const RightSide = () => {
   const [unpaidCount, setUnpaidCount] = useState(0);
   const [paidCount, setPaidCount] = useState(0);
-
   const { data, mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     if (data && data.riders) {
