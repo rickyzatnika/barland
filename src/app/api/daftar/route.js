@@ -46,7 +46,7 @@ export const GET = async (req = NextRequest) => {
     //   totalItems = await Riders.countDocuments({});
     // }
 
-    return new NextResponse(JSON.stringify(riders), {
+    return new NextResponse(JSON.stringify({ riders, success: true }), {
       status: 200,
     });
   } catch (error) {

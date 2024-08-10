@@ -58,7 +58,6 @@ const TableRiders = () => {
     fetcher
   );
 
-
   const [datas, setDatas] = useState(data);
 
   useEffect(() => {
