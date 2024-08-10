@@ -11,7 +11,7 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const HeaderInformation = () => {
 
-
+  const [totalRiders, setTotalRiders] = useState([]);
   const [user, setUser] = useState([]);
   const [classes, setClasses] = useState([])
 
@@ -27,11 +27,14 @@ const HeaderInformation = () => {
 
 
   useEffect(() => {
-    setUser(dataUser);
-    setClasses(dataClass);
-    mutate();
+    if (data && data.riders) {
+      setTotalRiders(data?.riders?.length);
+      setUser(dataUser);
+      setClasses(dataClass);
+      mutate();
+    }
 
-  }, [dataClass, dataUser, mutate]);
+  }, [data, dataClass, dataUser, mutate]);
 
 
   return (
@@ -41,7 +44,7 @@ const HeaderInformation = () => {
           <CiViewBoard size={24} />
           <div className="flex-col flex gap-3">
             <p className="text-sm">Total Riders</p>
-            <p className="text-lg font-medium">{data?.riders?.length} Orang</p>
+            <p className="text-lg font-medium">{totalRiders} Orang</p>
             <div className="text-sm text-lime-500 ">
               <Link href="/dashboard/list-riders" className="flex gap-1 items-center group">
                 <p>Lihat Detail</p>

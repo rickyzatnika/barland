@@ -20,7 +20,6 @@ const RightSide = () => {
 
   useEffect(() => {
     if (data && data.riders) {
-
       const unpaidRiders = data?.riders?.filter((rider) => rider.isPayment === false);
       const paidRiders = data?.riders?.filter((rider) => rider.isPayment === true);
       setUnpaidCount(unpaidRiders?.length);
