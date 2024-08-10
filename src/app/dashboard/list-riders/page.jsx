@@ -66,9 +66,6 @@ const TableRiders = () => {
       const sortedData = data?.riders?.sort((a, b) => a.name.localeCompare(b.name));
       // setTotalPages(Math.ceil(data.totalItems / 10)); // Menghitung total halaman
       // setTotalItems(data.totalItems)
-      if (searchQuery.length === 0 || searchQuery.length > 2) {
-        setRiders(sortedData);
-      }
       setRiders(sortedData);
       mutate();
     }
