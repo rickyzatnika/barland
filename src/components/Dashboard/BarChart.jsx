@@ -42,7 +42,7 @@ const BarChart = () => {
     datasets: [
       {
         label: `Rp`,
-        data: data?.riders?.map(item => item.totalPrice),
+        data: sortData?.map(item => item.totalPrice),
         backgroundColor: 'rgb(118,202,41)',
       },
     ],
