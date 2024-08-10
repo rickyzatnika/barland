@@ -63,8 +63,14 @@ const TableRiders = () => {
   useEffect(() => {
     if (data && data.riders) {
       const sortedData = data?.riders?.sort((a, b) => a.name.localeCompare(b.name));
-      setRiders(sortedData);
-      mutate();
+      if (searchQuery.length === 0 || searchQuery.length > 2) {
+        setRiders(sortedData);
+        mutate();
+      }
+
+      setNoData(sortedData.length === 0);
+    } else {
+      setNoData(true);
     }
   }, [data, mutate, searchQuery]);
 
