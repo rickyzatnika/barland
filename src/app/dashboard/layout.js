@@ -43,10 +43,14 @@ export default function DashboardLayout({ children }) {
   useEffect(() => {
     const checkForNewRiders = () => {
       if (data && data.riders) {
+        const newRiders = data.riders.filter(
+          (rider) => rider.isPayment === false
+        );
+        mutate(); // Ensure data is updated
+
         const newRidersToNotify = newRiders.filter(
           (rider) => !notifiedRiders.includes(rider._id)
         );
-        mutate(); // Ensure data is updated
 
         if (newRidersToNotify.length > 0) {
           toast.info(`Yeay ${newRidersToNotify.length} rider baru mendaftar!`);
@@ -66,7 +70,7 @@ export default function DashboardLayout({ children }) {
     };
 
     checkForNewRiders();
-    const intervalId = setInterval(checkForNewRiders, 10000); // Check every minute
+    const intervalId = setInterval(checkForNewRiders, 60000); // Check every minute
 
     return () => clearInterval(intervalId);
   }, [data, mutate, notifiedRiders]);
