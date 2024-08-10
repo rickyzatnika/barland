@@ -40,33 +40,39 @@ export default function DashboardLayout({ children }) {
   });
 
   useEffect(() => {
-    if (data && data.riders) {
-      const newRiders = data?.riders?.filter(
-        (rider) => rider.isPayment === false
-      );
-      mutate();
-      // Filter riders that haven't been notified yet
-      const newRidersToNotify = newRiders.filter(
-        (rider) => !notifiedRiders.includes(rider._id)
-      );
-
-      if (newRidersToNotify.length > 0) {
-        toast.info(`Yeay ${newRidersToNotify.length} rider baru mendaftar!`);
-
-        // Update the state and localStorage to include the notified riders
-        const updatedNotifiedRiders = [
-          ...notifiedRiders,
-          ...newRidersToNotify.map((rider) => rider._id),
-        ];
-        setNotifiedRiders(updatedNotifiedRiders);
-
-        localStorage.setItem(
-          "notifiedRiders",
-          JSON.stringify(updatedNotifiedRiders)
+    const handleRouteChange = () => {
+      if (data && data.riders) {
+        // Filter riders that haven't been notified yet
+        const newRidersToNotify = newRiders.filter(
+          (rider) => !notifiedRiders.includes(rider._id)
         );
+
+        mutate();
+
+        if (newRidersToNotify.length > 0) {
+          toast.info(`Yeay ${newRidersToNotify.length} rider baru mendaftar!`);
+
+          // Update the state and localStorage to include the notified riders
+          const updatedNotifiedRiders = [
+            ...notifiedRiders,
+            ...newRidersToNotify.map((rider) => rider._id),
+          ];
+          setNotifiedRiders(updatedNotifiedRiders);
+
+          localStorage.setItem(
+            "notifiedRiders",
+            JSON.stringify(updatedNotifiedRiders)
+          );
+        }
       }
-    }
-  }, [data, mutate, notifiedRiders]);
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [data, mutate, notifiedRiders, router.events]);
 
   return (
     <>
