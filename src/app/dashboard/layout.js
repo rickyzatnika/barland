@@ -15,13 +15,12 @@ const fetcher =
 
 export default function DashboardLayout({ children }) {
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   const { data, mutate } = useSWR(
     `${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`,
     fetcher
   );
-
-  const router = useRouter();
 
   useEffect(() => {
     if (status === "authenticated" && session?.user?.role === "user") {
