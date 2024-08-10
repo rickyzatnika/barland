@@ -15,12 +15,13 @@ const fetcher =
 
 export default function DashboardLayout({ children }) {
   const { data: session, status } = useSession();
-  const router = useRouter();
 
   const { data, mutate } = useSWR(
     `${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`,
     fetcher
   );
+
+  const router = useRouter();
 
   useEffect(() => {
     if (status === "authenticated" && session?.user?.role === "user") {
@@ -40,24 +41,16 @@ export default function DashboardLayout({ children }) {
   });
 
   useEffect(() => {
-    if (!router.events) {
-      console.error("Router events are not available");
-      return;
-    }
-
-    const handleRouteChange = () => {
+    const checkForNewRiders = () => {
       if (data && data.riders) {
-        // Filter riders that haven't been notified yet
         const newRidersToNotify = newRiders.filter(
           (rider) => !notifiedRiders.includes(rider._id)
         );
-
-        mutate();
+        mutate(); // Ensure data is updated
 
         if (newRidersToNotify.length > 0) {
           toast.info(`Yeay ${newRidersToNotify.length} rider baru mendaftar!`);
 
-          // Update the state and localStorage to include the notified riders
           const updatedNotifiedRiders = [
             ...notifiedRiders,
             ...newRidersToNotify.map((rider) => rider._id),
@@ -72,12 +65,11 @@ export default function DashboardLayout({ children }) {
       }
     };
 
-    router.events?.on("routeChangeComplete", handleRouteChange);
+    checkForNewRiders();
+    const intervalId = setInterval(checkForNewRiders, 10000); // Check every minute
 
-    return () => {
-      router.events?.off("routeChangeComplete", handleRouteChange);
-    };
-  }, [data, mutate, notifiedRiders, router.events]);
+    return () => clearInterval(intervalId);
+  }, [data, mutate, notifiedRiders]);
 
   return (
     <>
