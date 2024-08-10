@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Image from 'next/image';
+import useSWR from 'swr';
 
 const fetcher = (...args) => () => fetch(...args).then(res => res.json());
 const SITE_KEY = "6Lf7CR4qAAAAAJ7hgQnouK4fA0c58Z1fxEm_6d5a";
