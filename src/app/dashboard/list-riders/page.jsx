@@ -42,35 +42,59 @@ const TableRiders = () => {
   const [riderId, setRiderId] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
 
+  // FOR PAGINATION
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [totalPages, setTotalPages] = useState(1);
+  // const [totalItems, setTotalItems] = useState(0);
+  // const limit = 10;
   // data fetching useSWR
+  // const { data, mutate } = useSWR(
+  //   `${process.env.NEXT_PUBLIC_API_DEV}/api/daftar?q=${searchQuery}&page=${currentPage}&limit=10`,
+  //   fetcher
+  // );
+
   const { data, mutate } = useSWR(
     `${process.env.NEXT_PUBLIC_API_PRO}/api/daftar?q=${searchQuery}`,
     fetcher
   );
 
+
   const [datas, setDatas] = useState(data);
 
   useEffect(() => {
     if (data) {
-      // Mengurutkan data hanya jika data ada
-      const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
-      setRiders(sortedData);
+      const sortedData = data?.riders?.sort((a, b) => a.name.localeCompare(b.name));
 
-      mutate(); // Update data
+      // setTotalPages(Math.ceil(data.totalItems / 10)); // Menghitung total halaman
+      // setTotalItems(data.totalItems)
+      if (searchQuery.length === 0 || searchQuery.length > 2) {
+        setRiders(sortedData);
+        mutate();
+      }
     }
 
-    if (!data?.length) {
+    if (!data?.riders?.length) {
       setNoData(true);
     } else {
       setNoData(false);
     }
+
+
+
   }, [data, mutate, searchQuery]); // Tambahkan data ke dependency array
 
-
+  // FOR PAGINATION
+  // const handlePageChange = (newPage) => {
+  //   if (newPage >= 1 && newPage <= totalPages) {
+  //     setCurrentPage(newPage);
+  //   }
+  // };
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
+
   };
+
 
   const handleImageClick = (imgSrc, name, totalPrice) => {
     setSelectedImage(imgSrc);
@@ -377,6 +401,24 @@ const TableRiders = () => {
             ))}
           </tbody>
         </table>
+        {/*FOR PAGINATION */}
+        {/* <div className="flex items-center mt-4">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded"
+          >
+            Previous
+          </button>
+          <span>{`Page ${currentPage} of ${totalPages}`}</span>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded"
+          >
+            Next
+          </button>
+        </div> */}
         {showModal && deleteId && (
           <div className="fixed top-0 left-0 w-full h-screen shadow-lg z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center">
             <div className="bg-gray-100 dark:bg-slate-800 py-8 px-6 rounded shadow-lg shadow-gray-600 dark:shadow-slate-950">
