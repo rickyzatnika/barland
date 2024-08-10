@@ -27,15 +27,16 @@ const BarChart = () => {
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-  const { data } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher);
+  const { data, mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher);
 
   useEffect(() => {
     if (data && data.riders) {
       const dataSort = data?.riders?.sort((a, b) => a.name.localeCompare(b.name))
+      mutate();
       return setSortData(dataSort);
     }
 
-  }, [data]);
+  }, [data, mutate]);
 
   const chartData = {
     labels: sortData?.map(rider => rider.name),

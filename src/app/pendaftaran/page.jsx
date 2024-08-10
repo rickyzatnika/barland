@@ -6,10 +6,13 @@ import { toast } from 'react-toastify';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Image from 'next/image';
 
-
+const fetcher = (...args) => () => fetch(...args).then(res => res.json());
 const SITE_KEY = "6Lf7CR4qAAAAAJ7hgQnouK4fA0c58Z1fxEm_6d5a";
 
 const Daftar = () => {
+
+  const { mutate } = useSWR(`${process.env.NEXT_PUBLIC_API_PRO}/api/daftar`, fetcher)
+
   const [step, setStep] = useState("1");
   const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState("");
@@ -177,6 +180,7 @@ const Daftar = () => {
           raceClass: [],
           totalPrice: 0, // Reset total price
         });
+        mutate();
         setLoading(false);
         setStep("6");
         toast.success('Data terkirim');

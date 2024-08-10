@@ -65,7 +65,7 @@ export default function DashboardLayout({ children }) {
         );
       }
     }
-  }, [data, notifiedRiders]);
+  }, [data, notifiedRiders, mutate]);
 
   return (
     <>
