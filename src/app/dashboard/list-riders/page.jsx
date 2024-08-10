@@ -79,7 +79,7 @@ const TableRiders = () => {
 
 
 
-  }, [data, mutate, searchQuery]); // Tambahkan data ke dependency array
+  }, [data, mutate, searchQuery]);
 
   // FOR PAGINATION
   // const handlePageChange = (newPage) => {
