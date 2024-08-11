@@ -9,7 +9,6 @@ const EventSchema = new mongoose.Schema(
     slug: { type: String },
     category: { type: String },
     url: { type: String },
-    publishedAt: { type: String, required: true },
   },
   {
     timestamps: true,

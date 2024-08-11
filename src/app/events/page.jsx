@@ -65,7 +65,7 @@ const EventPage = () => {
             <div className="flex flex-col md:flex-row items-start gap-2 md:gap-0 md:items-center justify-between w-full px-1.5">
               <div className="flex items-center gap-1 ">
                 <span className="text-xs text-gray-500 dark:text-gray-200" >Di posting :</span>
-                <span className="text-xs px-2 py-0.5 rounded-full text-gray-500 bg-slate-200 shadow dark:bg-slate-700 dark:text-gray-200 w-fit">{moment(e?.createdAt).format(ll)}</span>
+                <span className="text-xs px-2 py-0.5 rounded-full text-gray-500 bg-slate-200 shadow dark:bg-slate-700 dark:text-gray-200 w-fit">{moment(e?.createdAt).format('ll')}</span>
               </div>
               <div className="flex items-center gap-1">
                 <span className="text-xs text-gray-500 dark:text-gray-200" >Kategory :</span>
