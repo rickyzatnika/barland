@@ -1,11 +1,11 @@
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Import Quill styles
+import QuillEditor from "react-quill"
+import "react-quill/dist/quill.snow.css";
 
 const MyEditor = ({ value, onChange }) => (
-  <ReactQuill
+  <QuillEditor
     value={value}
     onChange={onChange}
-
+    theme="snow"
     formats={MyEditor.formats}
     className="w-full custom-quill text-sm bg-gray-50 dark:bg-slate-800 border-none outline-none dark:text-gray-200 h-full "
   />

@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import useSWR from "swr";
-import { IoMdAdd } from "react-icons/io";
 import Link from "next/link";
 
 const fetcher = (...args) => fetch(...args).then(res => res.json());
