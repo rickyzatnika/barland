@@ -46,7 +46,6 @@ export const POST = async (req = NextRequest) => {
       url,
       category,
       slug,
-      publishedAt,
     });
     await newEvents.save();
     return NextResponse.json(

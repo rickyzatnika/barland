@@ -13,7 +13,7 @@ const FormAddEvent = () => {
   const [photo, setPhoto] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const currentDate = new Date().toString();
+
 
   const [formData, setFormData] = useState({
     title: '',
@@ -21,7 +21,6 @@ const FormAddEvent = () => {
     content: '',
     slug: '',
     category: '',
-    publishedAt: currentDate,
     url: '',
   });
 
@@ -85,7 +84,6 @@ const FormAddEvent = () => {
             slug: '',
             category: '',
             url: '',
-            publishedAt: currentDate,
           });
           setLoading(false);
           toast.success('Oke Event berhasil dibuat');
