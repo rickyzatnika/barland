@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import useSWR from "swr";
 import Image from "next/image";
+import moment from "moment";
 
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -57,14 +58,14 @@ const EventPage = () => {
       )}
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-1">
         {data?.events?.map((e, i) => (
-          <Link href={`/events/${e?.slug}`} key={i} className={`w-full group overflow-hidden h-full   flex items-center flex-col gap-2 rounded-md shadow-lg ${theme === "light" ? "bg-gray-100 text-gray-600 shadow-slate-300" : "bg-slate-800 text-gray-300 shadow-gray-950"}`}>
-            <div className="overflow-hidden w-full">
-              <Image src={e?.imageUrl} alt={e?.title} width={384} height={384} className="w-full group-hover:scale-150 transition-all ease-in-out duration-[4000ms] object-contain" priority={true} />
+          <Link href={`/events/${e?.slug}`} key={i} className={`w-full group overflow-hidden h-full items-center flex flex-col gap-3 rounded-md shadow-lg ${theme === "light" ? "bg-gray-100 text-gray-600 shadow-slate-300" : "bg-slate-800 text-gray-300 shadow-gray-950"}`}>
+            <div className="overflow-hidden w-full ">
+              <Image src={e?.imageUrl} alt={e?.title} width={384} height={288} className="w-full object-cover h-72 group-hover:scale-150 transition-all ease-in-out duration-[4000ms] " priority={true} />
             </div>
-            <div className="flex flex-col md:flex-row items-start gap-2 md:gap-0 md:items-center justify-between w-full px-1">
+            <div className="flex flex-col md:flex-row items-start gap-2 md:gap-0 md:items-center justify-between w-full px-1.5">
               <div className="flex items-center gap-1 ">
                 <span className="text-xs text-gray-500 dark:text-gray-200" >Di posting :</span>
-                <span className="text-xs px-2 py-0.5 rounded-full text-gray-500 bg-slate-200 shadow dark:bg-slate-700 dark:text-gray-200 w-fit">{e?.publishedAt}</span>
+                <span className="text-xs px-2 py-0.5 rounded-full text-gray-500 bg-slate-200 shadow dark:bg-slate-700 dark:text-gray-200 w-fit">{moment(e?.publishedAt).format("ll")}</span>
               </div>
               <div className="flex items-center gap-1">
                 <span className="text-xs text-gray-500 dark:text-gray-200" >Kategory :</span>

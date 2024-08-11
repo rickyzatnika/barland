@@ -32,7 +32,8 @@ const DetailsEvent = async ({ params }) => {
         </div>
       </div>
       <p className='text-md font-medium'>{event?.desc}</p>
-      <p className='leading-relaxed text-sm text-gray-600 dark:text-gray-400'>{event?.content}</p>
+      <div className='leading-relaxed text-sm text-gray-600 dark:text-gray-400' dangerouslySetInnerHTML={{ __html: event?.content }} />
+
       {event?.url === "" ? <p className='hidden'></p> : <Link href={event?.url} className='underline w-fit text-blue-500 hover:text-blue-600'>Formulir Pendaftaran</Link>}
     </div>
   )

@@ -49,11 +49,14 @@ export const POST = async (req = NextRequest) => {
       publishedAt,
     });
     await newEvents.save();
-    return new NextResponse({ status: 201 });
+    return NextResponse.json(
+      { message: "Event created successfully!" },
+      { status: 201 }
+    );
   } catch (error) {
-    console.log(error.message);
-    return new NextResponse(
-      JSON.stringify({ message: "Mohon maaf, ada kesalahan pada server" }),
+    console.error("Error saving event:", error);
+    return NextResponse.json(
+      { error: "Failed to save event." },
       { status: 500 }
     );
   }

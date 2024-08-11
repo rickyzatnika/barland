@@ -66,3 +66,29 @@
 
 /* background-color: #121212;
   color: #E0E0E0; */
+
+.custom-quill .ql-toolbar {
+  background-color: #1a263a; /* Background color */
+  color: white;
+}
+
+.custom-quill .ql-toolbar .ql-formats button,
+.custom-quill .ql-toolbar .ql-formats button .ql-stroke {
+  color: white; /* Button icon color */
+}
+
+.custom-quill .ql-toolbar .ql-formats button:hover,
+.custom-quill .ql-toolbar .ql-formats button:hover .ql-stroke {
+  color: #000000; /* Hover color */
+}
+
+/* Optional: Customize dropdown menus */
+.custom-quill .ql-toolbar .ql-picker {
+  color: white;
+  background-color: #2c3e50;
+}
+
+.custom-quill .ql-toolbar .ql-picker-options {
+  background-color: #34495e;
+  color: white;
+}
