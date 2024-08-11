@@ -18,20 +18,18 @@ const EventPage = () => {
     if (data && data.events) {
       setEvents(data);
       mutate()
-    } else {
-      setNodata(true);
     }
   }, [data, mutate])
 
   return (
     <div className=''>
       <div className="w-full flex items-center justify-between border-b border-gray-400 dark:border-gray-800 pb-5">
-        {noData ? "No data found" : <Link
+        <Link
           prefetch={false}
           href="/dashboard/event/add-events"
           className="second dark:bg-slate-800 text-gray-50 py-2 px-5 rounded shadow-lg">
           Add Event
-        </Link>}
+        </Link>
         <div>
           {events.length} Event
         </div>
