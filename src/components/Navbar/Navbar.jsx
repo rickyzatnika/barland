@@ -24,11 +24,11 @@ const Navbar = () => {
       <div onClick={() => setShowMenu(false)} className="flex flex-1">
         <Link prefetch={false} href={"/"}>
           <Image
-            src="/logo.png"
+            src="/bar.png"
             alt=""
-            width={45}
-            height={45}
-            style={{ width: "auto", height: "auto" }}
+            width={176}
+            height={176}
+            className="w-64 h-44 object-contain"
             priority={true}
           />
         </Link>
