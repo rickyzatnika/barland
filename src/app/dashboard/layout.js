@@ -72,10 +72,10 @@ export default function DashboardLayout({ children }) {
       <ResizeAttention />
       <ToastContainer theme="dark" />
       <div className="w-full flex h-full">
-        <div className="basis-[14%]">
+        <div className="basis-[16%]">
           <Aside />
         </div>
-        <div className="w-full basis-[86%] border-l border-gray-400 dark:border-gray-800 overflow-x-auto h-full px-3 py-4">
+        <div className="w-full basis-[84%] border-l border-gray-400 dark:border-gray-800 overflow-x-auto h-full px-3 py-4">
           {children}
         </div>
       </div>

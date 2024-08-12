@@ -6,6 +6,7 @@ import BarChart from '@/components/Dashboard/BarChart';
 import { TbLogout } from "react-icons/tb";
 import { signOut, useSession } from 'next-auth/react';
 import RightSide from '@/components/Dashboard/RightSide';
+import DarkModeToggle from '@/components/Darkmode/DarkMode';
 
 
 const HeaderInformation = dynamic(() => import('@/components/Dashboard/HeaderInformation'), { ssr: false });
@@ -48,9 +49,12 @@ const Dashboard = () => {
           <h3 className="text-sm">Hi {session?.user?.name}, Enjoy your work.</h3>
         </div>
 
-        <div className='relative group flex justify-between items-center gap-3'>
-          <TbLogout size={28} onClick={() => signOut()} className='cursor-pointer ' />
-          <span className='hidden group-hover:block text-[10px] absolute -top-2 -left-12 py-1 px-2 bg-black rounded-lg text-gray-200'>Logout</span>
+        <div className='relative flex gap-3'>
+          <DarkModeToggle />
+          <div className='relative group flex justify-between items-center gap-3'>
+            <TbLogout size={28} onClick={() => signOut()} className='cursor-pointer ' />
+            <span className='hidden group-hover:block text-[10px] absolute -top-2 -left-12 py-1 px-2 bg-black rounded-lg text-gray-200'>Logout</span>
+          </div>
         </div>
       </div>
       <div className='w-full relative flex gap-3'>

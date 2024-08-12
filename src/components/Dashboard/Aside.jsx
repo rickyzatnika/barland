@@ -20,11 +20,11 @@ const Aside = () => {
 
   return (
     <div className="h-screen w-full min-h-screen flex items-center flex-col justify-between sticky left-0 top-0 z-10 ">
-      <div className="w-full flex py-2.5 items-center justify-between border-b border-gray-400 dark:border-gray-800 px-2 ">
-        <Link href="/" className="flex gap-2">
-          <Image src="/logo.png" alt="logo-barland" width={40} height={40} priority={true} style={{ width: "auto", height: "auto" }} />
+      <div className="w-full py-4 border-b border-gray-400 dark:border-gray-800 px-2 ">
+        <Link href="/" className="">
+          <Image src="/bar.png" alt="bar-logo" width={140} height={140} priority={true} className="object-contain w-full h-auto py-4" />
         </Link>
-        <DarkModeToggle />
+
       </div>
 
       {asideLink.map((item) => (
