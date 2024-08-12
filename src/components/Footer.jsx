@@ -16,7 +16,7 @@ const Footer = () => {
         <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
           <div className="md:flex md:items-center md:justify-between">
             <Link prefetch={false} href="/" className="w-fit flex flex-col gap-3 items-start mb-4 sm:mb-0  rtl:space-x-reverse">
-              <Image src="/logo.png" priority={true} width={60} height={60} style={{ width: "auto", height: "auto" }} className="object-cover" alt="Logo Barland" />
+              <Image src="/bar.png" priority={true} width={260} height={160} className="object-contain w-80 h-20" alt="Logo Barland" />
               <span className="text-xs sm:text-sm text-gray-400 mb-6 md:mb-0" >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error, magnam.</span>
             </Link>
             <ul className="flex flex-col gap-3 md:gap-0 md:flex-row flex-wrap items-start md:items-center mb-6 text-sm font-medium text-gray-400 sm:mb-0">
