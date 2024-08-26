@@ -347,7 +347,7 @@ const Daftar = () => {
           </div>
         )}
         {step === "4" && (
-          <div className="overflow-y-auto w-full min-h-screen h-full">
+          <div className="overflow-y-auto w-full h-auto py-5">
             <h1 className='text-xl text-center bg-gradient-to-tr from-green-400 to-lime-500 py-4 font-bold text-white/90'>INFORMASI PEMBAYARAN</h1>
             <div className='flex flex-col gap-4 pb-12 sm:pb-4'>
               <div className='border rounded-b-md border-gray-400 px-4 pt-2 pb-4'>
